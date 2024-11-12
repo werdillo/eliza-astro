@@ -1,0 +1,128 @@
+---
+import { Image } from "astro:assets";
+
+import collection_2018 from "../assets/images/catalog/collection_2018.jpg";
+import collection_2019 from "../assets/images/catalog/collection_2019.jpg";
+import collection_2021 from "../assets/images/catalog/collection_2021.jpg";
+const { lang } = Astro.params;
+function t(key) {
+	return translate[lang][key] || key;
+}
+const translate = {
+	en: {
+		pageTitle: "Catalogue",
+		catalog: "Catalogue",
+	},
+	ru: {
+		pageTitle: "Каталоги",
+		catalog: "Каталог",
+	},
+	lv: {
+		pageTitle: "Katalogi",
+		catalog: "Katalogs",
+	},
+};
+---
+
+<div class="catalogs-title">{t("pageTitle")}</div>
+<div class="catalogs">
+	<div class="catalog">
+		<a
+			href="/catalog_2018.pdf"
+			class="-link"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<Image src={collection_2018} alt="" class="-img" />
+		</a>
+		<span class="-text">{t("catalog")} 2018</span>
+	</div>
+
+	<div class="catalog">
+		<a
+			href="/catalog_2019.pdf"
+			class="-link"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<Image src={collection_2019} alt="" class="-img" />
+		</a>
+		<span class="-text">{t("catalog")} 2019</span>
+	</div>
+	<div class="catalog">
+		<a
+			href="/catalog_2021.pdf"
+			class="-link"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<Image src={collection_2021} alt="" class="-img" />
+		</a>
+		<span class="-text">{t("catalog")} 2021</span>
+	</div>
+</div>
+
+<style>
+	.catalogs {
+		display: grid;
+		gap: 100px;
+		grid-template-columns: 1fr 1fr 1fr;
+		@media screen and (max-width: 1200px) {
+			grid-template-columns: 1fr;
+			gap: 10px;
+		}
+	}
+	.catalogs-title {
+		font-family: "Avenir", sans-serif;
+		font-size: 36px;
+		text-align: center;
+		margin-top: 10px;
+	}
+
+	.catalog {
+		margin-bottom: 50px;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+
+		.-link {
+			display: flex;
+			justify-content: center;
+
+			.-img {
+				filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.15));
+				min-height: 355px;
+				background-color: #f0f0f0;
+				height: 355px;
+				display: flex;
+				width: auto;
+				margin-top: 20px;
+				margin-bottom: 10px;
+				transition: 250ms;
+
+				&:hover {
+					filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2));
+				}
+
+				@media screen and (max-width: 1500px) {
+					height: 305px;
+					min-height: 305px;
+				}
+
+				@media screen and (max-width: 1200px) {
+					height: 260px;
+					min-height: 260px;
+				}
+			}
+		}
+
+		.-text {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+			font-family: "Avenir", sans-serif;
+			font-size: 16px;
+		}
+	}
+</style>

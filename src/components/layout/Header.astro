@@ -1,0 +1,173 @@
+---
+import location from "../../assets/img/icons/location.svg";
+import phone from "../../assets/img/icons/phone.svg";
+import instagram from "../../assets/img/icons/instagram.svg";
+import telegram from "../../assets/img/icons/telegram.svg";
+import whatsapp from "../../assets/img/icons/whatsapp.svg";
+import mail from "../../assets/img/icons/mail.svg";
+import { Image } from "astro:assets";
+
+const currentPath = Astro.url.pathname;
+const { lang } = Astro.params;
+---
+
+<nav class="header">
+	<div class="-wrapper">
+		<div class="-container">
+			<a href="/">
+				{lang}
+				<!-- <img src="/logo.png" class="-logo" alt="" /> -->
+			</a>
+			<div class="-links">
+				<a
+					href="/textile"
+					class={currentPath === "/textile/" ||
+					currentPath.includes("/collection") ||
+					currentPath.includes("/product")
+						? "-link active"
+						: "-link "}>Коллекции</a
+				>
+				<a
+					href="/cleaning"
+					class={currentPath === "/cleaning/"
+						? "-link active"
+						: "-link "}>Как очистить ткань</a
+				>
+				<a
+					href="/furniture"
+					class={currentPath === "/furniture/"
+						? "-link active"
+						: "-link "}>Фурнитура</a
+				>
+				<a
+					href="/blog"
+					class={currentPath === "/blog/" ||
+					currentPath.includes("/post")
+						? "-link active"
+						: "-link "}>Блог</a
+				>
+			</div>
+		</div>
+
+		<div class="-container">
+			<div class="-socials">
+				<a href="https://www.instagram.com/tknortex/">
+					<!-- <Image class="-img" src={instagram} alt="" /> -->
+				</a>
+				<a href="https://t.me/tknortex">
+					<!-- <Image class="-img" src={telegram} alt="" /> -->
+				</a>
+				<!-- <Image class="-img" src={whatsapp} alt="" /> -->
+			</div>
+		</div>
+	</div>
+</nav>
+<style>
+	.header {
+		z-index: 10;
+		position: fixed;
+		top: 0;
+		background: var(--layout);
+		width: 100%;
+		border: 0;
+		color: #fff;
+		height: var(--header);
+		@media (max-width: 768px) {
+			height: 70px;
+		}
+		.-wrapper {
+			padding: 0 100px;
+			display: flex;
+			width: 1fr;
+			height: var(--header);
+			/* align-items: center; */
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 10px;
+			@media (max-width: 1600px) {
+				padding: 0 10px;
+			}
+			@media (max-width: 768px) {
+				height: 70px;
+			}
+		}
+
+		.-container {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+
+			gap: 55px;
+		}
+		.-logo {
+			cursor: pointer;
+			margin-top: 2px;
+			height: auto;
+			width: 120px;
+			@media (max-width: 768px) {
+				width: 110px;
+			}
+		}
+		.-links {
+			display: flex;
+			gap: 60px;
+			flex-wrap: wrap;
+			@media (max-width: 768px) {
+				display: none;
+			}
+
+			.-link {
+				color: #fff;
+				font-size: 16px;
+				text-decoration: none;
+				&.active {
+					color: aqua;
+				}
+				&:hover {
+					color: aqua;
+				}
+			}
+		}
+		.-socials {
+			display: flex;
+			gap: 24px;
+			.-img {
+				height: 24px;
+				width: auto;
+				cursor: pointer;
+			}
+		}
+		.-contacts {
+			display: flex;
+			gap: 8px;
+			align-items: flex-start;
+			flex-direction: column;
+			@media (max-width: 768px) {
+				display: none;
+			}
+			.-text {
+				font-size: 12px;
+				&.link {
+					&:hover {
+						color: aquamarine;
+					}
+				}
+			}
+			.-wrap {
+				display: flex;
+				justify-content: center;
+				gap: 12px;
+				.-img {
+					width: 14px;
+					height: auto;
+				}
+			}
+			.-phones {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+		}
+	}
+</style>

@@ -1,0 +1,88 @@
+---
+import { Image } from "astro:assets";
+
+import textile from "../assets/images/components/textile.png";
+import porolon from "../assets/images/components/porolon.png";
+
+const { lang } = Astro.params;
+function t(key) {
+	return translate[lang][key] || key;
+}
+const translate = {
+	en: {
+		"porolon-title": "Foam",
+		"porolon-text":
+			"Our company creates goods from foam rubber of any complexity.",
+		"textile-title": "Textile",
+		"textile-text":
+			"A wide selection of fabrics from any type of fiber for upholstered furniture is available.",
+	},
+	ru: {
+		"porolon-title": "Поролон",
+		"porolon-text": "Изготавливаем из поролона изделия любой сложности.",
+		"textile-title": "Ткань",
+		"textile-text":
+			"Предлагаем широкий выбор тканей из любого вида волокна для мягкой мебели.",
+	},
+	lv: {
+		"porolon-title": "Porolons",
+		"porolon-text": "Mēs ražojam izstrādājumus no porolona.",
+		"textile-title": "Audumi",
+		"textile-text":
+			"Piedāvājam lielu audumu un materiālu izvēli mīkstajām mēbelēm.",
+	},
+};
+---
+
+<div class="furniture-components">
+	<div>
+		<a href="http://porolons.lv/" target="_blank" rel="noopener noreferrer">
+			<Image class="-img" alt="" src={porolon} />
+		</a>
+		<p class="-text xl">{t("porolon-title")}</p>
+		<p class="-text">{t("porolon-text")}</p>
+	</div>
+	<div>
+		<a href="">
+			<Image class="-img" alt="" src={textile} />
+		</a>
+		<p class="-text xl">{t("textile-title")}</p>
+		<p class="-text">{t("textile-text")}</p>
+	</div>
+</div>
+
+<style>
+	.furniture-components {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+		margin: 20px 0;
+		@media screen and (max-width: 1200px) {
+			grid-template-columns: 1fr;
+			gap: 10px;
+		}
+		.-text {
+			font-family: "Avenir", sans-serif;
+			font-size: 16px;
+			margin-left: 5px;
+			&.xl {
+				font-weight: 700;
+				font-size: 24px;
+				margin-bottom: 5px;
+				margin-top: 15px;
+			}
+		}
+		.-img {
+			width: 100%;
+			height: auto;
+			min-height: 200px;
+			background-color: #f0f0f0;
+			box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+			transition: 350ms;
+			cursor: pointer;
+			&:hover {
+				box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5);
+			}
+		}
+	}
+</style>

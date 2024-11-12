@@ -1,0 +1,20 @@
+---
+import Catalogs from "../../components/Catalogs.astro";
+import Components from "../../components/Components.astro";
+import Layout from "../../layouts/Layout.astro";
+// Получаем параметр `lang` из URL
+const { lang } = Astro.params;
+export function getStaticPaths() {
+	return [
+		{ params: { lang: "en" } },
+		{ params: { lang: "lv" } },
+		{ params: { lang: "ru" } },
+	];
+}
+---
+
+<Layout>
+	{lang}
+	<Components />
+	<Catalogs />
+</Layout>

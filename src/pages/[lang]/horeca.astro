@@ -1,0 +1,131 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import Hotel from "../../assets/images/hoReCa/Ho.png";
+import Cafe from "../../assets/images/hoReCa/Ca.png";
+import Restaraunt from "../../assets/images/hoReCa/Re.png";
+export function getStaticPaths() {
+	return [
+		{ params: { lang: "en" } },
+		{ params: { lang: "lv" } },
+		{ params: { lang: "ru" } },
+	];
+}
+const { lang } = Astro.params;
+function t(key) {
+	return translate[lang][key] || key;
+}
+const translate = {
+	en: {
+		"hotel-title": "Hotels",
+		"hotel-text":
+			"Our company manufactures upholstered furniture of the highest quality. Products made by Eliza are ergonomic, comfortable, and suitable for any interior.",
+		"restaurant-title": "Restaurants",
+		"restaurant-text":
+			"We help our clients to choose the most suitable style and high-quality materials for the furniture. It is important to us that our production fits the interior in shape, size, and texture.",
+		"cafe-title": "Café",
+		"cafe-text":
+			"With the highly qualified employees and the newest equipment, our company can embody an idea of any complexity. All our products are handmade. we adapt products to the individual requirements to satisfy clients.",
+	},
+	ru: {
+		"hotel-title": "Отели",
+		"hotel-text":
+			"Наше предприятие изготавливает мягкую мебель высшего класса. Продукция Eliza эргономичная, удобная, выносливая, подходит под любой интерьер.",
+		"restaurant-title": "Рестораны",
+		"restaurant-text":
+			"Мы помогаем нашим клиентам подобрать наиболее подходящий стиль и высококачественные материалы для изготовления мебели. Нам важно чтобы наша мебель органично вписалась в интерьер по форме, размеру и текстуре. ",
+		"cafe-title": "Кафе",
+		"cafe-text":
+			"Благодаря высококвалифицированным сотрудникам и новейшему оборудованию, наша компания может реализовать идею любой сложности. Все изделия выполнены вручную, опытным и любящим свое дело коллективом. Мебель изготавливается под индивидуальные требования клиента. ",
+	},
+	lv: {
+		"hotel-title": "Viesnīcas",
+		"hotel-text":
+			"Mūsu uzņēmums nodarbojas ar augstākās kvalitātes mēbeļu izstrādi. Elīza mēbelēm piemīt ergonomika, ērtība, izturība, kā arī maksimāla atbilstība interjeram, kuram tās ir izveidotas.",
+		"restaurant-title": "Restorāni",
+		"restaurant-text":
+			"Konkrētam interjeram mēs palīdzēsim izvēlēties atbilstoša stila un materiāla mēbeles, kas pēc formas, izmēra un tekstūras organiski iekļausies iestādes interjerā.",
+		"cafe-title": "Kafejnīcas",
+		"cafe-text":
+			"Pateicoties plašajam risinājumu klāstam, katrs klients var izvēlēties mēbeļu komplektu, kas 100% apmierinās viņa redzējumu par telpu noformēšanu.",
+	},
+};
+---
+
+---
+
+<Layout>
+	<div class="horeca">
+		<Image class="-img" alt="" src={Hotel} />
+		<div class="-block">
+			<div class="-text xl">{t("hotel-title")}</div>
+			<div class="-text">{t("hotel-text")}</div>
+		</div>
+	</div>
+	<div class="horeca">
+		<Image class="-img" alt="" src={Cafe} />
+		<div class="-block">
+			<div class="-text xl">{t("cafe-title")}</div>
+			<div class="-text">{t("cafe-text")}</div>
+		</div>
+	</div>
+	<div class="horeca">
+		<Image class="-img" alt="" src={Restaraunt} />
+		<div class="-block">
+			<div class="-text xl">{t("restaurant-title")}</div>
+			<div class="-text">{t("restaurant-text")}</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.horeca {
+		position: relative;
+		text-align: center;
+		transition: 250ms;
+		overflow: hidden;
+		object-fit: contain;
+		background-color: rgba(0, 0, 0, 9);
+		margin-bottom: 3px;
+		.-img {
+			width: 100% !important;
+			height: auto !important;
+			min-height: 400px;
+			background-color: #ffffff;
+			width: 100%;
+			opacity: 0.5;
+			filter: grayscale(0.25);
+			object-fit: cover;
+			@media screen and (max-width: 768px) {
+				min-height: 150px;
+				background-color: #f0f0f0;
+			}
+		}
+		.-block {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 80%;
+			color: #ffffff;
+			.-text {
+				font-family: "Avenir", sans-serif;
+				font-weight: 400;
+				font-size: 24px;
+				align-items: center;
+				text-align: center;
+				color: #ffffff;
+				@media screen and (max-width: 768px) {
+					font-size: 12px;
+				}
+				&.xl {
+					font-weight: 700;
+					font-size: 48px;
+					@media screen and (max-width: 768px) {
+						font-size: 24px;
+					}
+				}
+			}
+		}
+	}
+</style>

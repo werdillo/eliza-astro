@@ -1,6 +1,9 @@
 ---
 import Catalogs from "../../components/Catalogs.astro";
 import Components from "../../components/Components.astro";
+import Contacts from "../../components/Contacts";
+import Products from "../../components/Products";
+import Textile from "../../components/Textile";
 import Layout from "../../layouts/Layout.astro";
 // Получаем параметр `lang` из URL
 const { lang } = Astro.params;
@@ -15,6 +18,9 @@ export function getStaticPaths() {
 
 <Layout>
 	{lang}
+	<!-- <Products client:only /> -->
+	<Textile client:only />
+	<!-- <Contacts client:only /> -->
 	<Components />
 	<Catalogs />
 </Layout>

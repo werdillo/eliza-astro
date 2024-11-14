@@ -2,7 +2,7 @@ import { For, createSignal, onMount } from "solid-js";
 import { client } from '../lib/pocketbase';
 
 
-export default function Contacts() {
+export default function Contacts({lang}) {
 	const [items, setItems] = createSignal([]);
 	const [loading, setLoading] = createSignal(true);
 
@@ -16,31 +16,37 @@ export default function Contacts() {
 			console.error('Error fetching items:', err);
 		}
 	});
+	const title = {
+		en: "Working time",
+		ru: "Время работы",
+		lv: "Darba laiks"
+	};
 	return <>
-		<div class="container disable-top">
-			<div class="product-list">
-				<Show when={loading()}>
-					<div class="skeleton"></div>
-					<div class="skeleton"></div>
-					<div class="skeleton"></div>
-					<div class="skeleton"></div>
-					<div class="skeleton"></div>
-					<div class="skeleton"></div>
-				</Show>
-				<Show when={!loading()}>
-					<For each={items()}>
-						{(item) => (
-							<a href={"/collection?name=" + item.path}>
-								<div key={item.id} class="-item">
-									<div class="-text">{item.address}</div>
-									<div class="-text">{item.email}</div>
-									<div class="-text">{item.phone}</div>
-								</div>
-							</a>
-						)}
-					</For>
-				</Show>
-			</div>
+		<div class="contacts">
+			<Show when={loading()}>
+				<div class="skeleton"></div>
+				<div class="skeleton"></div>
+				<div class="skeleton"></div>
+				<div class="skeleton"></div>
+				<div class="skeleton"></div>
+				<div class="skeleton"></div>
+			</Show>
+			<Show when={!loading()}>
+				<For each={items()}>
+					{(item) => (
+						<div className='contacts-wrapper'>
+							<p className='-text xl special'>{item['title_' + lang]}</p>
+							<p className='-text'>{item.address}</p>
+							<p className='-text'>{item.email}</p>
+							<p className='-text'>{item.phone}</p>
+							<p className='-text xl work-time'>{title[lang]}</p>
+							<p className='-text'>{item['weekday_' + lang]}</p>
+							<p className='-text'>{item['weeken_' + lang]}</p>
+							<p className='-text'>{item['break_' + lang]}</p>
+						</div>
+					)}
+				</For>
+			</Show>
 		</div>
 		{/* <Show when={!loading() && showEmail}>
 			<EmailBottom />

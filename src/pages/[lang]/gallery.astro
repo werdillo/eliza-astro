@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Contacts from "../../components/Contacts";
+import GalleryImages from "../../components/GalleryImages";
 
 export function getStaticPaths() {
 	return [
@@ -14,6 +14,6 @@ const { lang } = Astro.params;
 ---
 
 <Layout>
-	<Contacts lang={lang} client:only />
+	<GalleryImages client:only />
 </Layout>
 

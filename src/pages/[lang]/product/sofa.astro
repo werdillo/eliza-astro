@@ -1,0 +1,18 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Products from "../../../components/Products";
+
+export function getStaticPaths() {
+	return [
+		{ params: { lang: "en" } },
+		{ params: { lang: "lv" } },
+		{ params: { lang: "ru" } },
+	];
+}
+
+---
+
+<Layout>
+	<Products type='sofa' client:only />
+</Layout>
+

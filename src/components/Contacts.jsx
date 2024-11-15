@@ -41,15 +41,12 @@ export default function Contacts({lang}) {
 							<p className='-text'>{item.phone}</p>
 							<p className='-text xl work-time'>{title[lang]}</p>
 							<p className='-text'>{item['weekday_' + lang]}</p>
-							<p className='-text'>{item['weeken_' + lang]}</p>
 							<p className='-text'>{item['break_' + lang]}</p>
+							<p className='-text'>{item['weeken_' + lang]}</p>
 						</div>
 					)}
 				</For>
 			</Show>
 		</div>
-		{/* <Show when={!loading() && showEmail}>
-			<EmailBottom />
-		</Show> */}
 	</>
 }

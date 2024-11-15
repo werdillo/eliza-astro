@@ -2,7 +2,7 @@ import { For, createSignal, onMount } from "solid-js";
 import { client } from '../lib/pocketbase';
 
 
-export default function Products({type}) {
+export default function Collections({brand}) {
 	const [items, setItems] = createSignal([]);
 	const [loading, setLoading] = createSignal(true);
 	const url = 'https://eliza.pockethost.io/';
@@ -14,7 +14,7 @@ export default function Products({type}) {
 	onMount(async () => {
 		try {
 			const res = await client.collection('products').getList(1, 50, {
-				filter: `type="${type}"`,
+				filter: `collection="${brand}"`,
 			});
 			setItems(res.items);
 			console.log(res.items)

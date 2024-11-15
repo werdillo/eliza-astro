@@ -1,0 +1,18 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Collection from "../../../components/Collection";
+
+export function getStaticPaths() {
+	return [
+		{ params: { lang: "en" } },
+		{ params: { lang: "lv" } },
+		{ params: { lang: "ru" } },
+	];
+}
+
+---
+
+<Layout>
+	<Collection brand='bbold' client:only />
+</Layout>
+

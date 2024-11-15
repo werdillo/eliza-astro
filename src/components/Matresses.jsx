@@ -1,22 +1,20 @@
 import { For, createSignal, onMount } from "solid-js";
-import { client } from '../lib/pocketbase';
+import { client, getImageUrl } from '../lib/pocketbase';
 
 
-export default function Products({type}) {
+export default function Matresses() {
 	const [items, setItems] = createSignal([]);
 	const [loading, setLoading] = createSignal(true);
-	const url = 'https://eliza.pockethost.io/';
-	const getImage = (item, fileName) => {
-		const collectionId = item.collectionId || 'pmlzc10hatw7ufi';
-		const fileId = item.id;
-		return `${url}/api/files/${collectionId}/${fileId}/${fileName}`;
-	};
 	onMount(async () => {
 		try {
-			const res = await client.collection('products').getList(1, 50, {
-				filter: `type="${type}"`,
-			});
-			setItems(res.items);
+			const res = await client.collection('mattresses').getList(1, 50);
+            const sortedItems = res.items.sort((a, b) => {
+                if (a.type < b.type) return -1;
+                if (a.type > b.type) return 1;
+                return 0;
+            });
+			setItems(sortedItems);
+
 			console.log(res.items)
 			setLoading(false);
 		} catch (err) {
@@ -37,9 +35,9 @@ export default function Products({type}) {
 				<div class="textile">
 					<For each={items()}>
 						{(item) => (
-							<a href={"/collection?name=" + item.path}>
+							<a href={"/product?name=" + item.path}>
 								<div className='product-landing'>
-									<img src={getImage(item, item.images[0])} alt='' className='-img'></img>
+									<img src={getImageUrl(item)} alt='' className='-img'></img>
 									<p className='-text'>{item.name.toUpperCase()}</p>
 								</div>
 							</a>

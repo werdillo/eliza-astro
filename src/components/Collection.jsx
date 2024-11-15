@@ -1,7 +1,7 @@
 import { For, Show, createSignal, onMount } from "solid-js";
 import { client, getImage } from '../lib/pocketbase';
 
-export default function Collections({ brand }) {
+export default function Collections({ brand, lang }) {
 	const [groupedItems, setGroupedItems] = createSignal({});
 	const [loading, setLoading] = createSignal(true);
 
@@ -42,7 +42,7 @@ export default function Collections({ brand }) {
 							<div class="textile">
 								<For each={groupedItems()[type]}>
 									{(item) => (
-										<a href={"/collection?name=" + item.path}>
+                                        <a href={ "/" + lang + "/product?name=" + item.path}>
 											<div class='product-landing'>
 												<img src={getImage(item, item.images[0])} alt='' class='-img' />
 												<p class='-text'>{item.name.toUpperCase()}</p>

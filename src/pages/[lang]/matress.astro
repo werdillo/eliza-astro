@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import GalleryImages from "../../components/GalleryImages";
+import ProductItem from "../../components/ProductItem";
 
 export function getStaticPaths() {
 	return [
@@ -13,6 +13,6 @@ export function getStaticPaths() {
 ---
 
 <Layout>
-	<GalleryImages client:only />
+	<ProductItem client:only type="mattress" />
 </Layout>
 

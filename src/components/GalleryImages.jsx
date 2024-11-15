@@ -7,9 +7,6 @@ export default function GalleryImages() {
 	const [collectionId, setCollectionId] = createSignal();
 	const [fileId, setFileId] = createSignal();
 	const url = 'https://eliza.pockethost.io/';
-	const getImage = (img) => {
-		return `${url}/api/files/${collectionId()}/${fileId()}/${img}`;
-	};
 	onMount(async () => {
 		try {
 			const res = await client.collection('gallery').getList(1, 50);
@@ -33,7 +30,10 @@ export default function GalleryImages() {
 			</Show>
 			<Show when={!loading()}>
 				<For each={items()}>
-					{(item) => <img class="-img" src={getImage(item)} />}
+					{(item) => <img 
+						class="-img" 
+						src={`${url}/api/files/${collectionId()}/${fileId()}/${getImage(item)}`} 
+					/>}
 				</For>
 			</Show>
 		</div>

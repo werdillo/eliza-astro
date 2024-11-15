@@ -5,7 +5,6 @@ import { client, getImage } from '../lib/pocketbase';
 export default function TextileItems() {
 	const [items, setItems] = createSignal([]);
 	const [loading, setLoading] = createSignal(true);
-	const url = 'https://eliza.pockethost.io/';
 	onMount(async () => {
 		try {
 			const res = await client.collection('textile').getList(1, 50);

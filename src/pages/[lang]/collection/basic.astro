@@ -9,10 +9,11 @@ export function getStaticPaths() {
 		{ params: { lang: "ru" } },
 	];
 }
+const { lang } = Astro.params;
 
 ---
 
 <Layout>
-	<Collection brand='basic' client:only />
+	<Collection lang={lang} brand='basic' client:only />
 </Layout>
 

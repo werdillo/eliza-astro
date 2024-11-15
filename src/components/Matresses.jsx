@@ -2,7 +2,7 @@ import { For, createSignal, onMount } from "solid-js";
 import { client, getImageUrl } from '../lib/pocketbase';
 
 
-export default function Matresses() {
+export default function Matresses({lang}) {
 	const [items, setItems] = createSignal([]);
 	const [loading, setLoading] = createSignal(true);
 	onMount(async () => {
@@ -35,7 +35,7 @@ export default function Matresses() {
 				<div class="textile">
 					<For each={items()}>
 						{(item) => (
-							<a href={"/product?name=" + item.path}>
+							<a href={ "/" + lang + "/matress?name=" + item.path}>
 								<div class='product-landing'>
 									<img src={getImageUrl(item)} alt='' class='-img'></img>
 									<p class='-text'>{item.name.toUpperCase()}</p>

@@ -48,9 +48,9 @@ export default function Products({ type }) {
                                 <For each={groupedItems()[brand]}>
                                     {(item) => (
                                         <a href={"/collection?name=" + item.path}>
-                                            <div className='product-landing'>
-                                                <img src={getImage(item, item.images[0])} alt='' className='-img' />
-                                                <p className='-text'>{item.name.toUpperCase()}</p>
+                                            <div class='product-landing'>
+                                                <img src={getImage(item, item.images[0])} alt='' class='-img' />
+                                                <p class='-text'>{item.name.toUpperCase()}</p>
                                             </div>
                                         </a>
                                     )}

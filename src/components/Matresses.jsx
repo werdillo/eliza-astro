@@ -36,9 +36,9 @@ export default function Matresses() {
 					<For each={items()}>
 						{(item) => (
 							<a href={"/product?name=" + item.path}>
-								<div className='product-landing'>
-									<img src={getImageUrl(item)} alt='' className='-img'></img>
-									<p className='-text'>{item.name.toUpperCase()}</p>
+								<div class='product-landing'>
+									<img src={getImageUrl(item)} alt='' class='-img'></img>
+									<p class='-text'>{item.name.toUpperCase()}</p>
 								</div>
 							</a>
 						)}

@@ -34,15 +34,15 @@ export default function Contacts({lang}) {
 			<Show when={!loading()}>
 				<For each={items()}>
 					{(item) => (
-						<div className='contacts-wrapper'>
-							<p className='-text xl special'>{item['title_' + lang]}</p>
-							<p className='-text'>{item.address}</p>
-							<p className='-text'>{item.email}</p>
-							<p className='-text'>{item.phone}</p>
-							<p className='-text xl work-time'>{title[lang]}</p>
-							<p className='-text'>{item['weekday_' + lang]}</p>
-							<p className='-text'>{item['break_' + lang]}</p>
-							<p className='-text'>{item['weeken_' + lang]}</p>
+						<div class='contacts-wrapper'>
+							<p class='-text xl special'>{item['title_' + lang]}</p>
+							<p class='-text'>{item.address}</p>
+							<p class='-text'>{item.email}</p>
+							<p class='-text'>{item.phone}</p>
+							<p class='-text xl work-time'>{title[lang]}</p>
+							<p class='-text'>{item['weekday_' + lang]}</p>
+							<p class='-text'>{item['break_' + lang]}</p>
+							<p class='-text'>{item['weeken_' + lang]}</p>
 						</div>
 					)}
 				</For>

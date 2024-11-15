@@ -34,7 +34,7 @@ export default function TextileItems() {
 			<For each={items()}>
 				{(item) => (
 					<>
-						<div className="textile-title">
+						<div class="textile-title">
 							{item.title}
 						</div>
 						<div class="textile">

@@ -1,15 +1,9 @@
 import { For, Show, createSignal, onMount } from "solid-js";
-import { client } from '../lib/pocketbase';
+import { client, getImage } from '../lib/pocketbase';
 
 export default function Products({ type }) {
     const [groupedItems, setGroupedItems] = createSignal({});
     const [loading, setLoading] = createSignal(true);
-    const url = 'https://eliza.pockethost.io/';
-    const getImage = (item, fileName) => {
-        const collectionId = item.collectionId || 'pmlzc10hatw7ufi';
-        const fileId = item.id;
-        return `${url}/api/files/${collectionId}/${fileId}/${fileName}`;
-    };
 
     onMount(async () => {
         try {

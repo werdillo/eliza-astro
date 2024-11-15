@@ -1,9 +1,8 @@
-import { For, createSignal, onMount } from "solid-js";
+import { For, Show, createSignal, onMount } from "solid-js";
 import { client } from '../lib/pocketbase';
 
-
-export default function Collections({brand}) {
-	const [items, setItems] = createSignal([]);
+export default function Collections({ brand }) {
+	const [groupedItems, setGroupedItems] = createSignal({});
 	const [loading, setLoading] = createSignal(true);
 	const url = 'https://eliza.pockethost.io/';
 	const getImage = (item, fileName) => {
@@ -11,19 +10,27 @@ export default function Collections({brand}) {
 		const fileId = item.id;
 		return `${url}/api/files/${collectionId}/${fileId}/${fileName}`;
 	};
+
 	onMount(async () => {
 		try {
 			const res = await client.collection('products').getList(1, 50, {
 				filter: `collection="${brand}"`,
 			});
-			setItems(res.items);
-			console.log(res.items)
+
+			const grouped = res.items.reduce((acc, item) => {
+				if (!acc[item.type]) acc[item.type] = [];
+				acc[item.type].push(item);
+				return acc;
+			}, {});
+
+			setGroupedItems(grouped);
 			setLoading(false);
 		} catch (err) {
-			console.error('Error fetching items:', err); 
+			console.error('Error fetching items:', err);
 		}
 	});
-	return <>
+
+	return (
 		<div class="texitle">
 			<Show when={loading()}>
 				<div class="skeleton"></div>
@@ -34,19 +41,26 @@ export default function Collections({brand}) {
 				<div class="skeleton"></div>
 			</Show>
 			<Show when={!loading()}>
-				<div class="textile">
-					<For each={items()}>
-						{(item) => (
-							<a href={"/collection?name=" + item.path}>
-								<div className='product-landing'>
-									<img src={getImage(item, item.images[0])} alt='' className='-img'></img>
-									<p className='-text'>{item.name.toUpperCase()}</p>
-								</div>
-							</a>
-						)}
-					</For>	
-				</div>
+				<For each={Object.keys(groupedItems())}>
+					{(type) => (
+						<div>
+							<h2>{type.toUpperCase()}</h2>
+							<div class="textile">
+								<For each={groupedItems()[type]}>
+									{(item) => (
+										<a href={"/collection?name=" + item.path}>
+											<div className='product-landing'>
+												<img src={getImage(item, item.images[0])} alt='' className='-img' />
+												<p className='-text'>{item.name.toUpperCase()}</p>
+											</div>
+										</a>
+									)}
+								</For>
+							</div>
+						</div>
+					)}
+				</For>
 			</Show>
 		</div>
-	</>
+	);
 }

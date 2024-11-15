@@ -16,7 +16,6 @@ export default function GalleryImages() {
 			setCollectionId(res.items[0].collectionId)
 			setFileId(res.items[0].id)
 			setItems(res.items[0].image);
-			console.log(res.items[0].image)
 			setLoading(false);
 		} catch (err) {
 			console.error('Error fetching items:', err);

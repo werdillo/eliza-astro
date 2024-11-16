@@ -1,6 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-const { lang } = Astro.params;
+import Slider from "../../components/Slider";
+import Catalogs from "../../components/Catalogs.astro";
+import Components from "../../components/Components.astro";
+
 export function getStaticPaths() {
 	return [
 		{ params: { lang: "en" } },
@@ -11,5 +14,7 @@ export function getStaticPaths() {
 ---
 
 <Layout>
-	Home page
+	<Slider client:only/>
+	<Components />
+	<Catalogs />
 </Layout>

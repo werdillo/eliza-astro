@@ -1,6 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Components from "../../components/Components.astro";
 import Catalogs from "../../components/Catalogs.astro";
+import Horeca from "../../components/Horeca.astro";
 
 export function getStaticPaths() {
 	return [
@@ -11,8 +13,16 @@ export function getStaticPaths() {
 }
 
 ---
-
 <Layout>
+    <h1>
+        About us
+    </h1>
+    <Horeca />
+    <Components />
     <Catalogs />
 </Layout>
+
+<style>
+
+</style>
 

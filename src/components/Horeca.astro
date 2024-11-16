@@ -1,16 +1,9 @@
 ---
-import Layout from "../../layouts/Layout.astro";
 import { Image } from "astro:assets";
-import Hotel from "../../assets/images/hoReCa/Ho.png";
-import Cafe from "../../assets/images/hoReCa/Ca.png";
-import Restaraunt from "../../assets/images/hoReCa/Re.png";
-export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
-}
+import Hotel from "../assets/images/hoReCa/Ho.png";
+import Cafe from "../assets/images/hoReCa/Ca.png";
+import Restaraunt from "../assets/images/hoReCa/Re.png";
+
 const { lang } = Astro.params;
 function t(key) {
 	return translate[lang][key] || key;
@@ -52,49 +45,59 @@ const translate = {
 };
 ---
 
----
-
-<Layout>
-	<div class="horeca">
+<div class="horeca">
+	<div class="horeca-wrapper">
 		<Image class="-img" alt="" src={Hotel} />
 		<div class="-block">
 			<div class="-text xl">{t("hotel-title")}</div>
 			<div class="-text">{t("hotel-text")}</div>
 		</div>
 	</div>
-	<div class="horeca">
+	<div class="horeca-wrapper">
 		<Image class="-img" alt="" src={Cafe} />
 		<div class="-block">
 			<div class="-text xl">{t("cafe-title")}</div>
 			<div class="-text">{t("cafe-text")}</div>
 		</div>
 	</div>
-	<div class="horeca">
+	<div class="horeca-wrapper">
 		<Image class="-img" alt="" src={Restaraunt} />
 		<div class="-block">
 			<div class="-text xl">{t("restaurant-title")}</div>
 			<div class="-text">{t("restaurant-text")}</div>
 		</div>
 	</div>
-</Layout>
+</div>
 
 <style>
 	.horeca {
+		width: 90%;
+		place-items: center;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 0px 8px;
+		@media screen and (max-width: 1200px) {
+			grid-template-columns: 1fr;
+			
+		}
+	}
+	.horeca-wrapper {
 		position: relative;
 		text-align: center;
 		transition: 250ms;
 		overflow: hidden;
 		object-fit: contain;
 		background-color: rgba(0, 0, 0, 9);
-		margin-bottom: 3px;
+		border-bottom: 1px solid #cdcdcd;
+
 		.-img {
-			width: 100% !important;
-			height: auto !important;
-			min-height: 400px;
+			width: 100%;
+			height: 100%;
+			min-height: 280px;
 			background-color: #ffffff;
 			width: 100%;
 			opacity: 0.5;
-			filter: grayscale(0.25);
+			filter: grayscale(0.15);
 			object-fit: cover;
 			@media screen and (max-width: 768px) {
 				min-height: 150px;
@@ -111,16 +114,16 @@ const translate = {
 			.-text {
 				font-family: "Avenir", sans-serif;
 				font-weight: 400;
-				font-size: 24px;
+				font-size: 16px;
 				align-items: center;
 				text-align: center;
 				color: #ffffff;
 				@media screen and (max-width: 768px) {
-					font-size: 12px;
+					font-size: 14px;
 				}
 				&.xl {
 					font-weight: 700;
-					font-size: 48px;
+					font-size: 36px;
 					@media screen and (max-width: 768px) {
 						font-size: 24px;
 					}

@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-const { lang } = Astro.params;
+import Components from "../../components/Components.astro";
+
 export function getStaticPaths() {
 	return [
 		{ params: { lang: "en" } },
@@ -8,8 +9,10 @@ export function getStaticPaths() {
 		{ params: { lang: "ru" } },
 	];
 }
+
 ---
 
 <Layout>
-	Home page
+    <Components />
 </Layout>
+

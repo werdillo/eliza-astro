@@ -17,7 +17,10 @@ const links = [
 	{ "href": "/collection/basic", "label": "Basic", "activePaths": ["/basic"] },
 	{ "href": "/textile", "label": "Ткани", "activePaths": ["/textile"] },
 	{ "href": "/gallery", "label": "Галерея", "activePaths": ["/gallery"] },
-  	{ "href": "/contact", "label": "Контакты", "activePaths": ["/contact"] }
+	{ "href": "/component", "label": "Компоненты", "activePaths": ["/component"] },
+	{ "href": "/horeca", "label": "Horeca", "activePaths": ["/horeca"] },
+	{ "href": "/catalog", "label": "Каталоги", "activePaths": ["/catalog"] },
+  	{ "href": "/contact", "label": "Контакты", "activePaths": ["/contact"] },
 ]
 const isActive = (currentPath, activePaths) => {
   return activePaths.some(path => currentPath.includes(path)) ? "-link active" : "-link";

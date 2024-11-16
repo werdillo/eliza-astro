@@ -9,6 +9,20 @@ import { Image } from "astro:assets";
 
 const currentPath = Astro.url.pathname;
 const { lang } = Astro.params;
+const links = [
+	{ "href": "/products/bed", "label": "Кровати", "activePaths": ["/bed"] },
+	{ "href": "/products/sofa", "label": "Диваны", "activePaths": ["/sofa"] },
+	{ "href": "/products/matress", "label": "Матрацы", "activePaths": ["/matress"] },
+	{ "href": "/collection/bbold", "label": "Bbold", "activePaths": ["/bbold"] },
+	{ "href": "/collection/basic", "label": "Basic", "activePaths": ["/basic"] },
+	{ "href": "/textile", "label": "Ткани", "activePaths": ["/textile"] },
+	{ "href": "/gallery", "label": "Галерея", "activePaths": ["/gallery"] },
+  	{ "href": "/contact", "label": "Контакты", "activePaths": ["/contact"] }
+]
+const isActive = (currentPath, activePaths) => {
+  return activePaths.some(path => currentPath.includes(path)) ? "-link active" : "-link";
+};
+
 ---
 
 <nav class="header">
@@ -19,33 +33,14 @@ const { lang } = Astro.params;
 				<!-- <img src="/logo.png" class="-logo" alt="" /> -->
 			</a>
 			<div class="-links">
-				<a
-					href="/textile"
-					class={currentPath === "/textile/" ||
-					currentPath.includes("/collection") ||
-					currentPath.includes("/product")
-						? "-link active"
-						: "-link "}>Коллекции</a
-				>
-				<a
-					href="/cleaning"
-					class={currentPath === "/cleaning/"
-						? "-link active"
-						: "-link "}>Как очистить ткань</a
-				>
-				<a
-					href="/furniture"
-					class={currentPath === "/furniture/"
-						? "-link active"
-						: "-link "}>Фурнитура</a
-				>
-				<a
-					href="/blog"
-					class={currentPath === "/blog/" ||
-					currentPath.includes("/post")
-						? "-link active"
-						: "-link "}>Блог</a
-				>
+				{links.map(link => (
+					<a
+					  href={ '/' + lang + link.href}
+					  class={isActive(currentPath, link.activePaths)}
+					>
+					  {link.label}
+					</a>
+				  ))}
 			</div>
 		</div>
 

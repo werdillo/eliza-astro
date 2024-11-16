@@ -54,7 +54,7 @@ export default function ProductItem({ type = "def" }) {
                 speed="500" 
                 loop="true" 
                 autoplay-delay="5000"
-                class="product-item-swipert"
+                class="product-item-swiper"
               >
                 <For each={item().images}>
                   {(image) => (
@@ -74,16 +74,10 @@ export default function ProductItem({ type = "def" }) {
                 <b>Korpuss -</b> Dabīgskoks,  <br/>
                 <b>Sēde/sēdes pilveni</b> - Porolons,  <br/>
                 <b>Muguras spilveni -  </b>Sintepona vate + spalvas <br/>
-
                 </div>
-                <button class="-button xl">Pievienot grozam</button>
+                <button class="-button xl">Send email</button>
 
             </div>
-            
-         
-            {/* <div className="-card">
-
-            </div> */}
         </div>
         <div class="product-item l">
             <div className="-card">
@@ -95,7 +89,7 @@ export default function ProductItem({ type = "def" }) {
 
                 </div>
                 <div>
-                    <button class="-button">Text</button>
+                    <button class="-button">Dimensions</button>
                 </div>
             </div>
             <div className="-card">
@@ -104,12 +98,12 @@ export default function ProductItem({ type = "def" }) {
                 </div>
                 <div className="-textile">
                     <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=" alt="" className="-img" />
-                    <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=" alt="" className="-img" />
-                    <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=" alt="" className="-img" />
+                    <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/vesgkd1c8ioj1u9/fusion_AL1Ad4TRpU.jpeg?token=" alt="" className="-img" />
+                    <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=" alt="" className="-img" />
 
                 </div>
                 <div>
-                    <button class="-button">Text</button>
+                    <button class="-button">Cleaning</button>
                 </div>
             </div>
         </div>

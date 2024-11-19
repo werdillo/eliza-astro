@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
 
-import textile from "../assets/images/components/textile.png";
-import porolon from "../assets/images/components/porolon.png";
+// import textile from "../assets/images/components/textile.png";
+// import porolon from "../assets/images/components/porolon.png";
 
 const { lang } = Astro.params;
 function t(key) {
@@ -34,7 +34,7 @@ const translate = {
 };
 ---
 
-<div class="furniture-components">
+<!-- <div class="furniture-components">
 	<div>
 		<a href="http://porolons.lv/" target="_blank" rel="noopener noreferrer">
 			<Image class="-img" alt="" src={porolon} />
@@ -49,9 +49,42 @@ const translate = {
 		<p class="-text xl">{t("textile-title")}</p>
 		<p class="-text">{t("textile-text")}</p>
 	</div>
+</div> -->
+<div class="component">
+	<div class="-wrapper">
+		<div class="-text">
+			Предлагаем широкий выбор тканей из любого вида волокна для мягкой мебели.
+		</div>
+		<button class="-button">read more</button>
+	</div>
 </div>
 
-<style>
+<style scoped>
+    .component {
+        width: 100%;
+        height: 600px;
+        background: url('/images/textile.png');
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 70px;
+			width: 80%;
+		}
+		.-text {
+			font-size: 60px;
+			text-align: center;
+			color: rgb(255, 255, 255);
+		}
+		.-button {
+			height: 40px;
+			width: 150px;
+			border: 0;
+		}
+    }
 	.furniture-components {
 		display: grid;
 		grid-template-columns: 1fr 1fr;

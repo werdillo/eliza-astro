@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import Hotel from "../assets/images/hoReCa/Ho.png";
-import Cafe from "../assets/images/hoReCa/Ca.png";
-import Restaraunt from "../assets/images/hoReCa/Re.png";
+import Hotel from "../../assets/images/hoReCa/Ho.png";
+import Cafe from "../../assets/images/hoReCa/Ca.png";
+import Restaraunt from "../../assets/images/hoReCa/Re.png";
 
 const { lang } = Astro.params;
 function t(key) {
@@ -44,8 +44,7 @@ const translate = {
 	},
 };
 ---
-
-<div class="horeca">
+<dv class="horeca">
 	<div class="horeca-wrapper">
 		<Image class="-img" alt="" src={Hotel} />
 		<div class="-block">
@@ -71,11 +70,11 @@ const translate = {
 
 <style>
 	.horeca {
-		width: 90%;
+		width: 100%;
 		place-items: center;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
-		gap: 0px 8px;
+		gap: 0px 4px;
 		@media screen and (max-width: 1200px) {
 			grid-template-columns: 1fr;
 			

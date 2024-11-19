@@ -1,8 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Slider from "../../components/Slider";
-import Catalogs from "../../components/Catalogs.astro";
-import Components from "../../components/Components.astro";
+
 
 export function getStaticPaths() {
 	return [
@@ -15,6 +14,4 @@ export function getStaticPaths() {
 
 <Layout>
 	<Slider client:only/>
-	<Components />
-	<Catalogs />
 </Layout>

@@ -1,13 +1,26 @@
 ---
 import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+
 
 import collection_2018 from "../../assets/images/catalog/collection_2018.jpg";
 import collection_2019 from "../../assets/images/catalog/collection_2019.jpg";
 import collection_2021 from "../../assets/images/catalog/collection_2021.jpg";
 const { lang } = Astro.params;
+
 function t(key) {
 	return translate[lang][key] || key;
 }
+
+
+export function getStaticPaths() {
+	return [
+		{ params: { lang: "en" } },
+		{ params: { lang: "lv" } },
+		{ params: { lang: "ru" } },
+	];
+}
+
 const translate = {
 	en: {
 		pageTitle: "Catalogue",
@@ -24,7 +37,9 @@ const translate = {
 };
 ---
 
-<div class="catalogs-text">{t("pageTitle")}</div>
+<Layout>
+	<div class="catalogs-text">{t("pageTitle")}</div>
+
 <div class="catalogs">
 	<div class="catalog">
 		<a
@@ -61,11 +76,14 @@ const translate = {
 		<span class="-text">{t("catalog")} 2021</span>
 	</div>
 </div>
+</Layout>
+
 
 <style>
 	.catalogs {
 		width: 100%;
 		display: flex;
+		/* flex-wrap: wrap; */
 		gap: 10vw;
 		margin-right: 30px;
 		place-content: center;
@@ -75,7 +93,7 @@ const translate = {
 	.catalogs-text {
 		font-size: 36px;
 		width: 30%;
-		margin-top: 50px;
+		margin-top: 40px;
 		text-align: center;
 		font-family: 'Avenir', sans-serif;
 		font-weight: 500;

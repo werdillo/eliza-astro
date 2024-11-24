@@ -1,9 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Catalogs from "../../components/aboutUs/Catalogs.astro";
 import Horeca from "../../components/aboutUs/Horeca.astro";
 import Comp from "../../components/aboutUs/Comp.astro";
 import Textiles from "../../components/aboutUs/Textiles.astro";
+import Awards from "../../components/Awards";
+
+
 
 export function getStaticPaths() {
 	return [
@@ -15,15 +17,28 @@ export function getStaticPaths() {
 
 ---
 <Layout>
-    <Comp />
+    <Comp type="textile"/>
     <Textiles />
-    <!-- <h2>Отличное решение для вашего бизнеса</h2> -->
+    <Comp type="porolon"/>
+    <div class="title">Отличное решение для вашего бизнеса</div>
     <Horeca />
-    <Comp />
-    <Catalogs />
+    <div class="title">Продукция удостоена лучших наград</div>
+    <Awards client:only />
 </Layout>
 
-<style>
-
+<style scoped>
+    .content {
+        display: grid;
+        grid-template-columns: 50% 1fr;
+        width: 100%;
+    }
+    .title {
+        font-size: 48px;
+        text-align: center;
+        margin: 30px 0;
+        @media screen and (max-width:768px) {
+            font-size: 24px;
+        }
+    }
 </style>
 

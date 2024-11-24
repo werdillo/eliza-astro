@@ -70,14 +70,18 @@ const translate = {
 
 <style>
 	.horeca {
-		width: 100%;
+		margin-bottom: 60px;
+		width: 98%;
 		place-items: center;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
-		gap: 0px 4px;
+		gap: 0px 10px;
 		@media screen and (max-width: 1200px) {
 			grid-template-columns: 1fr;
-			
+			gap: 10px;
+			width: 94%;
+			border-radius: 4px;
+
 		}
 	}
 	.horeca-wrapper {
@@ -101,6 +105,8 @@ const translate = {
 			@media screen and (max-width: 768px) {
 				min-height: 150px;
 				background-color: #f0f0f0;
+				border-radius: 4px;
+
 			}
 		}
 		.-block {
@@ -110,6 +116,9 @@ const translate = {
 			transform: translate(-50%, -50%);
 			width: 80%;
 			color: #ffffff;
+			@media screen and (max-width: 768px) {
+				border-radius: 4px;
+			}
 			.-text {
 				font-family: "Avenir", sans-serif;
 				font-weight: 400;
@@ -119,6 +128,8 @@ const translate = {
 				color: #ffffff;
 				@media screen and (max-width: 768px) {
 					font-size: 14px;
+				border-radius: 4px;
+
 				}
 				&.xl {
 					font-weight: 700;

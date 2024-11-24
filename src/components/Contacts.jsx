@@ -40,9 +40,9 @@ export default function Contacts({lang}) {
 							<p class='-text'>{item.email}</p>
 							<p class='-text'>{item.phone}</p>
 							<p class='-text xl work-time'>{title[lang]}</p>
-							<p class='-text'>{item['weekday_' + lang]}</p>
-							<p class='-text'>{item['break_' + lang]}</p>
-							<p class='-text'>{item['weeken_' + lang]}</p>
+							<p class='-text'>{item['weekday_' + lang]}  </p>
+							<p class='-text'>{item['break_' + lang]}    </p>
+							<p class='-text'>{item['weeken_' + lang]}  </p>
 						</div>
 					)}
 				</For>

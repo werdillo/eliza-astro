@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 
 // import textile from "../assets/images/components/textile.png";
 // import porolon from "../assets/images/components/porolon.png";
+const { type } = Astro.props;
 
 const { lang } = Astro.params;
 function t(key) {
@@ -50,34 +51,60 @@ const translate = {
 		<p class="-text">{t("textile-text")}</p>
 	</div>
 </div> -->
-<div class="component">
-	<div class="-wrapper">
-		<div class="-text">
-			Предлагаем широкий выбор тканей из любого вида волокна для мягкой мебели.
+{ type === "textile" ?
+	<div class="component">
+		<div class="-wrapper">
+			<div class="-text">
+				We offer a wide range of fabrics in all types of fibre for upholstered furniture.
+			</div>
+			<button class="-button">read more</button>
 		</div>
-		<button class="-button">read more</button>
 	</div>
-</div>
+	:
+	<div class="component porolon">
+		<div class="-wrapper">
+			<div class="-text">
+				We make foam products of any difficulty.
+			</div>
+			<button class="-button">read more</button>
+		</div>
+	</div>
+}
 
 <style scoped>
     .component {
-        width: 100%;
+		margin-top: 10px;
+        width: 97%;
         height: 600px;
         background: url('/images/textile.png');
 		display: flex;
 		align-items: center;
+		border-radius: 2px;
 		justify-content: center;
+		&.porolon {
+			background: url('/images/porolon_blur.jpg');
+
+		}
+		@media screen and (max-width: 768px) {
+			height: 240px;
+		}
 		.-wrapper {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			gap: 70px;
 			width: 80%;
+			@media screen and (max-width: 768px) {
+				gap: 20px;
+			}
 		}
 		.-text {
 			font-size: 60px;
 			text-align: center;
 			color: rgb(255, 255, 255);
+			@media screen and (max-width: 768px) {
+				font-size: 24px;
+			}
 		}
 		.-button {
 			height: 40px;

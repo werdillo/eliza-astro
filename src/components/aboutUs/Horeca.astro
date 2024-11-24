@@ -78,8 +78,8 @@ const translate = {
 		gap: 0px 10px;
 		@media screen and (max-width: 1200px) {
 			grid-template-columns: 1fr;
-			gap: 10px;
-			width: 94%;
+			gap: 2px;
+			width: 100%;
 			border-radius: 4px;
 
 		}
@@ -100,9 +100,12 @@ const translate = {
 			background-color: #ffffff;
 			width: 100%;
 			opacity: 0.5;
-			filter: grayscale(0.15);
+			filter: blur(1px);
+			
+			/* filter: grayscale(0.30); */
 			object-fit: cover;
 			@media screen and (max-width: 768px) {
+				filter: blur(1px);
 				min-height: 150px;
 				background-color: #f0f0f0;
 				border-radius: 4px;
@@ -116,6 +119,10 @@ const translate = {
 			transform: translate(-50%, -50%);
 			width: 80%;
 			color: #ffffff;
+			/* background: rgba(83, 83, 83, 0.2); */
+			/* border-radius: 6px; */
+			/* padding: 20px; */
+
 			@media screen and (max-width: 768px) {
 				border-radius: 4px;
 			}

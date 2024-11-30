@@ -22,6 +22,7 @@ swiper-container {
     }
 }
 
+
 .product-item {
     display: grid;
     grid-template-columns: 65% auto;
@@ -203,15 +204,15 @@ a:visited {
 }
 
 .gallery {
-    padding: 10px 20px;
+    padding: 10px 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 25px;
     width: 1fr;
     @media only screen and (max-width: 1200px) {
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 10px;
-        padding: 10px 10px;
+        gap: 12px;
+        padding: 10px 0;
     }
     @media only screen and (max-width: 600px) {
         grid-template-columns: 1fr 1fr;

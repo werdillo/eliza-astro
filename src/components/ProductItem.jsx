@@ -92,20 +92,22 @@ export default function ProductItem({ type = "def" }) {
                     <button class="-button">Dimensions</button>
                 </div>
             </div>
-            <div className="-card">
-                <div className="-text m bd">
-                    Audumi
-                </div>
-                <div className="-textile">
-                    <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=" alt="" className="-img" />
-                    <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/vesgkd1c8ioj1u9/fusion_AL1Ad4TRpU.jpeg?token=" alt="" className="-img" />
-                    <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=" alt="" className="-img" />
+            <Show when={type !== "mattress"}>
+              <div className="-card">
+                  <div className="-text m bd">
+                      Audumi
+                  </div>
+                  <div className="-textile">
+                      <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=" alt="" className="-img" />
+                      <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/vesgkd1c8ioj1u9/fusion_AL1Ad4TRpU.jpeg?token=" alt="" className="-img" />
+                      <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=" alt="" className="-img" />
 
-                </div>
-                <div>
-                    <button class="-button">Cleaning</button>
-                </div>
-            </div>
+                  </div>
+                  <div>
+                      <button class="-button">Cleaning</button>
+                  </div>
+              </div>
+            </Show>
         </div>
       </Show>
     </div>

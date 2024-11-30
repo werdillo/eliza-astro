@@ -4,6 +4,7 @@ import Footer from "../components/layout/Footer.astro";
 import MobileMenu from "../components/layout/MobileMenu.astro";
 import "../../main.css";
 const { lang } = Astro.params;
+const { offset=true } = Astro.props;
 ---
 
 <html lang="ru">
@@ -19,7 +20,7 @@ const { lang } = Astro.params;
 <body>
 	<div id="main">
 		<Header />
-		<article id="content">
+		<article class={offset ? "content offset" : "content"}>
 			<slot />
 		</article>
 		<MobileMenu />
@@ -50,12 +51,15 @@ const { lang } = Astro.params;
 		min-height: 100vh;
 		flex-direction: column;
 	}
-	#content {
+	.content {
 		margin-top: var(--header);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		flex: 1;
+		&.offset {
+			padding: 0 12px;
+		}
 		@media (max-width: 768px) {
 			margin-top: 70px;
 		}

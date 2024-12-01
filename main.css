@@ -1,3 +1,4 @@
+@import '/src/assets/css/skeleton.css';
 :root {
     --layout: #303030;
     --header: 60px;
@@ -159,6 +160,7 @@ swiper-container {
 }
 
 .contacts {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 30px;
@@ -168,10 +170,21 @@ swiper-container {
     }
 }
 
+.product-list {
+	display: grid;
+	width:100%;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 30px 20px;
+	margin: 20px 0;
+    @media only screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
 .product-landing {
     transition: 500ms;
     padding-bottom: 2px;
-    margin-bottom: 25px;
     /* box-shadow: 0px 15px 15px  rgba(59, 59, 59, 0.05); */
     border-radius: 2px;
     &:active {
@@ -204,6 +217,7 @@ a:visited {
 }
 
 .gallery {
+    width: 100%;
     padding: 10px 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;

@@ -27,9 +27,6 @@ export default function Contacts({lang}) {
 				<div class="skeleton"></div>
 				<div class="skeleton"></div>
 				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
 			</Show>
 			<Show when={!loading()}>
 				<For each={items()}>

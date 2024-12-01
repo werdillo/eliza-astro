@@ -24,37 +24,42 @@ export default function Collections({ brand, lang }) {
 		}
 	});
 
-	return (
-		<div class="texitle">
-			<Show when={loading()}>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-			</Show>
-			<Show when={!loading()}>
-				<For each={Object.keys(groupedItems())}>
-					{(type) => (
-						<div>
-							<h2>{type.toUpperCase()}</h2>
-							<div class="textile">
-								<For each={groupedItems()[type]}>
-									{(item) => (
-                                        <a href={ "/" + lang + "/product?name=" + item.path}>
-											<div class='product-landing'>
-												<img src={getImage(item, item.images[0])} alt='' class='-img' />
-												<p class='-text'>{item.name.toUpperCase()}</p>
-											</div>
-										</a>
-									)}
-								</For>
-							</div>
+	return <>
+		<Show when={loading()}>
+			<div>
+				<div class="skeleton text title"></div>
+			</div>
+			<div class="product-list">
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+			</div>
+		</Show>
+		<Show when={!loading()}>
+			<For each={Object.keys(groupedItems())}>
+				{(type) => (
+					<div>
+						<h2>{type.toUpperCase()}</h2>
+						<div class="product-list">
+							<For each={groupedItems()[type]}>
+								{(item) => (
+									<a href={ "/" + lang + "/product?name=" + item.path}>
+										<div class='product-landing'>
+											<img src={getImage(item, item.images[0])} alt='' class='-img' />
+											<p class='-text'>{item.name.toUpperCase()}</p>
+										</div>
+									</a>
+								)}
+							</For>
 						</div>
-					)}
-				</For>
-			</Show>
-		</div>
-	);
+					</div>
+				)}
+			</For>
+		</Show>
+	</>
 }

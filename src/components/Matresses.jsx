@@ -22,29 +22,31 @@ export default function Matresses({lang}) {
 		}
 	});
 	return <>
-		<div class="texitle">
-			<Show when={loading()}>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-			</Show>
-			<Show when={!loading()}>
-				<div class="textile">
-					<For each={items()}>
-						{(item) => (
-							<a href={ "/" + lang + "/matress?name=" + item.path}>
-								<div class='product-landing'>
-									<img src={getImageUrl(item)} alt='' class='-img'></img>
-									<p class='-text'>{item.name.toUpperCase()}</p>
-								</div>
-							</a>
-						)}
-					</For>	
-				</div>
-			</Show>
-		</div>
+		<Show when={loading()}>
+			<div class="product-list">
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+			</div>
+		</Show>
+		<Show when={!loading()}>
+			<div class="product-list">
+				<For each={items()}>
+					{(item) => (
+						<a href={ "/" + lang + "/matress?name=" + item.path}>
+							<div class='product-landing'>
+								<img src={getImageUrl(item)} alt='' class='-img'></img>
+								<p class='-text'>{item.name.toUpperCase()}</p>
+							</div>
+						</a>
+					)}
+				</For>	
+			</div>
+		</Show>
 	</>
 }

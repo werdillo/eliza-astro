@@ -1,0 +1,44 @@
+.skeleton {
+	background: #e2e2e2;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16/10;
+	&.collection {
+		aspect-ratio: 7/6;
+	}
+	&.product {
+		aspect-ratio: 1/1;
+	}
+	&.furniture {
+		aspect-ratio: 9/8;
+	}
+	&.contacts {
+		aspect-ratio: 4/3;
+	}
+	&.blog {
+		aspect-ratio: 7/4;
+	}
+	&.post {
+		margin-top: 10px;
+		width: 88%;
+		height: 450px;
+		margin-bottom: 30px;
+		@media (max-width: 768px) {
+			height: 30vh;
+		}
+	}
+	&.text {
+		margin: 7px 0;
+		height: 16px;
+		max-width: 900px;
+		width: 100%;
+		border-radius: 2px;
+		&.title {
+			height: 40px;
+			max-width: 150px;
+		}
+		&.xl {
+			height: 140px;
+		}
+	}
+}

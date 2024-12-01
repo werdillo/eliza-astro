@@ -23,37 +23,39 @@ export default function Products({ type, lang }) {
         }
     });
 
-    return (
-        <div>
-            <Show when={loading()}>
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
-                <div class="skeleton"></div>
-            </Show>
-            <Show when={!loading()}>
-                <For each={Object.keys(groupedItems())}>
-                    {(brand) => (
-                        <div>
-                            <h2>{brand.toUpperCase()}</h2>
-                            <div class="textile">
-                                <For each={groupedItems()[brand]}>
-                                    {(item) => (
-                                        <a href={ "/" + lang + "/product?name=" + item.path}>
-                                            <div class='product-landing'>
-                                                <img src={getImage(item, item.images[0])} alt='' class='-img' />
-                                                <p class='-text'>{item.name.toUpperCase()}</p>
-                                            </div>
-                                        </a>
-                                    )}
-                                </For>
-                            </div>
+    return <>
+        <Show when={loading()}>
+            <div class="product-list">
+                <div class="skeleton" />
+                <div class="skeleton" />
+                <div class="skeleton" />
+                <div class="skeleton" />
+                <div class="skeleton" />
+                <div class="skeleton" />
+                <div class="skeleton" />
+                <div class="skeleton" />
+            </div>
+        </Show>
+        <Show when={!loading()}>
+            <For each={Object.keys(groupedItems())}>
+                {(brand) => (
+                    <div>
+                        <h2>{brand.toUpperCase()}</h2>
+                        <div class="product-list">
+                            <For each={groupedItems()[brand]}>
+                                {(item) => (
+                                    <a href={ "/" + lang + "/product?name=" + item.path}>
+                                        <div class='product-landing'>
+                                            <img src={getImage(item, item.images[0])} alt='' class='-img' />
+                                            <p class='-text'>{item.name.toUpperCase()}</p>
+                                        </div>
+                                    </a>
+                                )}
+                            </For>
                         </div>
-                    )}
-                </For>
-            </Show>
-        </div>
-    );
+                    </div>
+                )}
+            </For>
+        </Show>
+    </>
 }

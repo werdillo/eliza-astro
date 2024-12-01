@@ -25,14 +25,18 @@ export default function GalleryImages() {
 	return <>
 		<div class="gallery">
 			<Show when={loading()}>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
-				<div class="skeleton"></div>
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
+				<div class="skeleton" />
 			</Show>
 			<Show when={!loading()}>
 				<For each={items()}>

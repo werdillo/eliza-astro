@@ -9,6 +9,8 @@ export default function Collections({ brand, lang }) {
 		try {
 			const res = await client.collection('products').getList(1, 50, {
 				filter: `collection="${brand}"`,
+				fields:
+				  "id, collectionId, collection, path, images, type, name:excerpt(200, true)",
 			});
 
 			const grouped = res.items.reduce((acc, item) => {

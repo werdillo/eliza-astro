@@ -7,7 +7,7 @@
 		aspect-ratio: 7/6;
 	}
 	&.product {
-		aspect-ratio: 1/1;
+		aspect-ratio: 16/9;
 	}
 	&.furniture {
 		aspect-ratio: 9/8;

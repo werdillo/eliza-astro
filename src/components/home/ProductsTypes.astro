@@ -1,14 +1,20 @@
 
 <div class="cards">
-    <div class="card">
-      <span class="card-text">Диваны</span>
-    </div>
-    <div class="card">
-      <span class="card-text">Диваны</span>
-    </div>
-    <div class="card">
-      <span class="card-text">Диваны</span>
-    </div>
+    <a href="/en/products/sofa">
+        <div class="card">
+        <span class="card-text">Диваны</span>
+        </div>
+    </a>
+    <a href="/en/products/matress">
+        <div class="card">
+        <span class="card-text">Матрацы</span>
+        </div>
+    </a>
+    <a href="/en/products/bed">
+        <div class="card">
+        <span class="card-text">Кровати</span>
+        </div>
+    </a>
 </div>
 
 <style>
@@ -34,17 +40,6 @@
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
 }
 
 .card-text {

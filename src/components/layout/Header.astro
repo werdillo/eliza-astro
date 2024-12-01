@@ -6,6 +6,7 @@ import telegram from "../../assets/img/icons/telegram.svg";
 import whatsapp from "../../assets/img/icons/whatsapp.svg";
 import mail from "../../assets/img/icons/mail.svg";
 import { Image } from "astro:assets";
+import Logo from "../../assets/images/eliza-logo.svg";
 import DropdownMenu from "./DropdownMenu";
 
 const currentPath = Astro.url.pathname;
@@ -26,7 +27,7 @@ const isActive = (currentPath, activePaths) => {
 	<div class="-wrapper">
 		<div class="-container">
 			<a href="/en">
-				{lang}
+				<Image src={Logo} alt=""/>
 				<!-- <img src="/logo.png" class="-logo" alt="" /> -->
 			</a>
 			<DropdownMenu lang={lang} client:visible />

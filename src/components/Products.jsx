@@ -38,23 +38,21 @@ export default function Products({ type, lang }) {
         </Show>
         <Show when={!loading()}>
             <For each={Object.keys(groupedItems())}>
-                {(brand) => (
-                    <div>
-                        <h2>{brand.toUpperCase()}</h2>
-                        <div class="product-list">
-                            <For each={groupedItems()[brand]}>
-                                {(item) => (
-                                    <a href={ "/" + lang + "/product?name=" + item.path}>
-                                        <div class='product-landing'>
-                                            <img src={getImage(item, item.images[0])} alt='' class='-img' />
-                                            <p class='-text'>{item.name.toUpperCase()}</p>
-                                        </div>
-                                    </a>
-                                )}
-                            </For>
-                        </div>
+                {(brand) => <>
+                    <h2>{brand.toUpperCase()}</h2>
+                    <div class="product-list">
+                        <For each={groupedItems()[brand]}>
+                            {(item) => (
+                                <a href={ "/" + lang + "/product?name=" + item.path}>
+                                    <div class='product-landing'>
+                                        <img src={getImage(item, item.images[0])} alt='' class='-img' />
+                                        <p class='-text'>{item.name.toUpperCase()}</p>
+                                    </div>
+                                </a>
+                            )}
+                        </For>
                     </div>
-                )}
+                </>}
             </For>
         </Show>
     </>

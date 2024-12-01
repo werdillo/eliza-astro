@@ -42,23 +42,21 @@ export default function Collections({ brand, lang }) {
 		</Show>
 		<Show when={!loading()}>
 			<For each={Object.keys(groupedItems())}>
-				{(type) => (
-					<div>
-						<h2>{type.toUpperCase()}</h2>
-						<div class="product-list">
-							<For each={groupedItems()[type]}>
-								{(item) => (
-									<a href={ "/" + lang + "/product?name=" + item.path}>
-										<div class='product-landing'>
-											<img src={getImage(item, item.images[0])} alt='' class='-img' />
-											<p class='-text'>{item.name.toUpperCase()}</p>
-										</div>
-									</a>
-								)}
-							</For>
-						</div>
+				{(type) => <>
+					<h2>{type.toUpperCase()}</h2>
+					<div class="product-list">
+						<For each={groupedItems()[type]}>
+							{(item) => (
+								<a href={ "/" + lang + "/product?name=" + item.path}>
+									<div class='product-landing'>
+										<img src={getImage(item, item.images[0])} alt='' class='-img' />
+										<p class='-text'>{item.name.toUpperCase()}</p>
+									</div>
+								</a>
+							)}
+						</For>
 					</div>
-				)}
+				</>}
 			</For>
 		</Show>
 	</>

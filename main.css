@@ -171,8 +171,8 @@ swiper-container {
 }
 
 .product-list {
-	display: grid;
 	width:100%;
+	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 	gap: 30px 20px;
 	margin: 20px 0;
@@ -185,6 +185,7 @@ swiper-container {
 .product-landing {
     transition: 500ms;
     padding-bottom: 2px;
+    width: 100%;
     /* box-shadow: 0px 15px 15px  rgba(59, 59, 59, 0.05); */
     border-radius: 2px;
     &:active {
@@ -204,7 +205,10 @@ swiper-container {
         text-decoration: none;
     }
     .-img {
-        max-width: 100%;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        object-fit: cover;
     }
 }
 

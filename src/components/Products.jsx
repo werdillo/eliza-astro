@@ -39,7 +39,9 @@ export default function Products({ type, lang }) {
         <Show when={!loading()}>
             <For each={Object.keys(groupedItems())}>
                 {(brand) => <>
-                    <h2>{brand.toUpperCase()}</h2>
+					<div class="container">
+						<div class="title">{type.toUpperCase()}</div>
+					</div>
                     <div class="product-list">
                         <For each={groupedItems()[brand]}>
                             {(item) => (

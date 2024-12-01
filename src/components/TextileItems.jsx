@@ -28,8 +28,10 @@ export default function TextileItems() {
 			<For each={items()}>
 				{(item) => (
 					<>
-						<div class="textile-title">
-							{item.title}
+						<div class="container">
+							<div class="textile-title">
+								{item.title}
+							</div>
 						</div>
 						<div class="textile">
 							{ item.image1 !== '' &&

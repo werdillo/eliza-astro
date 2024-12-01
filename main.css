@@ -23,6 +23,15 @@ swiper-container {
     }
 }
 
+.container {
+    width: 100%;
+}
+
+.title {
+    font-size: 28px;
+    margin-top: 20px;
+    font-weight: 700;
+}
 
 .product-item {
     display: grid;

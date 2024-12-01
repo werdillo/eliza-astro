@@ -28,7 +28,7 @@ export default function Collections({ brand, lang }) {
 
 	return <>
 		<Show when={loading()}>
-			<div>
+			<div class="container">
 				<div class="skeleton text title"></div>
 			</div>
 			<div class="product-list">
@@ -45,7 +45,9 @@ export default function Collections({ brand, lang }) {
 		<Show when={!loading()}>
 			<For each={Object.keys(groupedItems())}>
 				{(type) => <>
-					<h2>{type.toUpperCase()}</h2>
+					<div class="container">
+						<div class="title">{type.toUpperCase()}</div>
+					</div>
 					<div class="product-list">
 						<For each={groupedItems()[type]}>
 							{(item) => (

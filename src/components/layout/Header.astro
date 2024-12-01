@@ -6,17 +6,14 @@ import telegram from "../../assets/img/icons/telegram.svg";
 import whatsapp from "../../assets/img/icons/whatsapp.svg";
 import mail from "../../assets/img/icons/mail.svg";
 import { Image } from "astro:assets";
+import DropdownMenu from "./DropdownMenu";
 
 const currentPath = Astro.url.pathname;
 const { lang } = Astro.params;
 const links = [
-	{ "href": "/products/bed", "label": "Кровати", "activePaths": ["/bed"] },
-	{ "href": "/products/sofa", "label": "Диваны", "activePaths": ["/sofa"] },
-	{ "href": "/products/matress", "label": "Матрацы", "activePaths": ["/matress"] },
-	{ "href": "/collection/bbold", "label": "Bbold", "activePaths": ["/bbold"] },
-	{ "href": "/collection/basic", "label": "Basic", "activePaths": ["/basic"] },
 	{ "href": "/gallery", "label": "Галерея", "activePaths": ["/gallery"] },
-	{ "href": "/about-us", "label": "О нас", "activePaths": ["/gallery"] },
+	{ "href": "/catalogs", "label": "Каталоги", "activePaths": ["/catalogs"] },
+	{ "href": "/about-us", "label": "О нас", "activePaths": ["/about-us"] },
   	{ "href": "/contact", "label": "Контакты", "activePaths": ["/contact"] },
 ]
 const isActive = (currentPath, activePaths) => {
@@ -32,7 +29,10 @@ const isActive = (currentPath, activePaths) => {
 				{lang}
 				<!-- <img src="/logo.png" class="-logo" alt="" /> -->
 			</a>
-			<div class="-links">
+			<DropdownMenu lang={lang} client:visible />
+
+
+			<div class="-links right">
 				{links.map(link => (
 					<a
 					  href={ '/' + lang + link.href}
@@ -42,6 +42,8 @@ const isActive = (currentPath, activePaths) => {
 					</a>
 				  ))}
 			</div>
+
+
 		</div>
 
 		<div class="-container">
@@ -71,7 +73,7 @@ const isActive = (currentPath, activePaths) => {
 			height: 70px;
 		}
 		.-wrapper {
-			padding: 0 100px;
+			padding: 0 20px;
 			display: flex;
 			width: 1fr;
 			height: var(--header);
@@ -89,11 +91,15 @@ const isActive = (currentPath, activePaths) => {
 		}
 
 		.-container {
-			display: flex;
+			display: grid;
+			width: 100%;
+			grid-template-columns: 1fr auto 1fr; /* Левый, центр, правый */
 			align-items: center;
-			flex-wrap: wrap;
-
-			gap: 55px;
+			gap: 25px;
+			height: 100%;
+		}
+		.-container .right {
+			justify-self: end; /* Вправо */
 		}
 		.-logo {
 			cursor: pointer;
@@ -106,7 +112,7 @@ const isActive = (currentPath, activePaths) => {
 		}
 		.-links {
 			display: flex;
-			gap: 60px;
+			gap: 40px;
 			flex-wrap: wrap;
 			@media (max-width: 768px) {
 				display: none;

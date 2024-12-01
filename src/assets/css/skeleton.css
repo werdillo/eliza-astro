@@ -9,6 +9,9 @@
 	&.product {
 		aspect-ratio: 16/9;
 	}
+	&.matress {
+		aspect-ratio: 16/12;
+	}
 	&.furniture {
 		aspect-ratio: 9/8;
 	}

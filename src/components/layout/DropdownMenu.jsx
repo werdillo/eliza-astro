@@ -15,23 +15,6 @@ const DropdownMenu = ({lang}) => {
   });
 
   const menuData = {
-    products: [
-      {
-        title: 'Диваны',
-        description: 'Комфортные диваны различных стилей',
-        href: '/products/sofa'
-      },
-      {
-        title: 'Кровати',
-        description: 'Спальные кровати всех размеров',
-        href: '/products/bed'
-      },
-      {
-        title: 'Матрацы',
-        description: 'Ортопедические и классические матрацы',
-        href: '/products/matress'
-      }
-    ],
     collections: [
       {
         title: 'Bbold',
@@ -149,7 +132,6 @@ const DropdownMenu = ({lang}) => {
 
   return (
     <div class="dropdowns-container">
-      <DropdownButton id="products" label="Продукты" />
       <DropdownButton id="collections" label="Коллекции" />
       <DropdownButton id="components" label="Компоненты" />
     </div>

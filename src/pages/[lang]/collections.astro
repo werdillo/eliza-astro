@@ -3,118 +3,119 @@ import { Image } from "astro:assets";
 import pic1 from "../../assets/images/collection/Pic6.jpg";
 import pic2 from "../../assets/images/collection/Pic7.jpg";
 import pic3 from "../../assets/images/collection/Pic8.jpg";
+import Layout from "../../layouts/Layout.astro";
+
 const { lang } = Astro.params;
-function t(key) {
-	return translate[lang][key] || key;
-}
+
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+  return [
+    { params: { lang: "en" } },
+    { params: { lang: "lv" } },
+    { params: { lang: "ru" } },
+  ];
 }
-const translate = {
-	en: {
-		pageTitle: "Catalogue",
-		catalog: "Catalogue",
-	},
-	ru: {
-		pageTitle: "Каталоги",
-		catalog: "Каталог",
-	},
-	lv: {
-		pageTitle: "Katalogi",
-		catalog: "Katalogs",
-	},
-};
 ---
 
-<a
-	href="https://www.sophisticated-living.com/"
-	rel="noopener noreferrer"
-	target="_blank"
->
-	<div class="-item">
-		<Image class="-img" alt="" src={pic2} />
-	</div>
-	<span class="-text">Sophisticated Living</span>
-</a>
-
-<a href="https://www.sophisticated-living.com/">
-	<div class="-item">
-		<Image class="-img" alt="" src={pic3} />
-	</div>
-	<span class="-text">BBold</span>
-</a>
-
-<a href="https://www.sophisticated-living.com/">
-	<div class="-item">
-		<Image class="-img" alt="" src={pic1} />
-	</div>
-	<span class="-text">Basic</span>
-</a>
+<Layout offset={false}>
+  <div class="collections">
+    <a
+      href="https://www.sophisticated-living.com/"
+      rel="noopener noreferrer"
+      target="_blank"
+      class="collection-link"
+    >
+      <div class="-item">
+        <Image class="-img" alt="" src={pic2} />
+        <span class="-text">Sophisticated Living</span>
+      </div>
+    </a>
+    <a href="https://www.sophisticated-living.com/" class="collection-link">
+      <div class="-item">
+        <Image class="-img" alt="" src={pic3} />
+        <span class="-text">BBold</span>
+      </div>
+    </a>
+    <a href="https://www.sophisticated-living.com/" class="collection-link">
+      <div class="-item">
+        <Image class="-img" alt="" src={pic1} />
+        <span class="-text">Basic</span>
+      </div>
+    </a>
+  </div>
+</Layout>
 
 <style>
-/* collections */
 .collections {
-	display: grid;
-	grid-template-columns: auto auto auto;
-	padding: 0;
-	margin: 0;
-	gap: 0;
-	width: 100%;
-	@media screen and (max-width: 1024px) {
-		grid-template-columns: auto;
-	}
-	.-item {
-		text-align: center;
-		margin: 0;
-		padding: 0;
-		transition: 200ms;
-		position: relative;
-		text-align: center;
-		color: rgb(0, 0, 0);
-		transition: 250ms;
-		cursor: pointer;
-		overflow: hidden;
-		object-fit: contain;
-		background-color: rgba(0, 0, 0, 9);
-		&:hover > .-img {
-			opacity: 0.5;
-			transition:
-				opacity 250ms linear,
-				transform 250ms linear;
-			cursor: pointer;
-			filter: grayscale(0.5);
-		}
-		.-img {
-			width: 100%;
-			height: 82vh;
-			opacity: 0.85;
-			min-height: 500px;
-			filter: grayscale(0.3);
-			object-fit: cover;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  gap: 0;
+  padding: 0;
+  margin: 0 auto;
 
-			@media screen and (max-width: 1024px) {
-				width: 100%;
-				min-height: 250px;
-				height: auto;
-			}
-		}
-		.-text {
-			font-family: "Avenir", sans-serif;
-			font-size: 48px;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 75%;
-			color: #ffffff;
-			@media screen and (max-width: 1024px) {
-				font-size: 32px;
-			}
-		}
-	}
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.collection-link {
+  display: block;
+  text-decoration: none;
+}
+
+.-item {
+  position: relative;
+  width: 100%;
+  height: 82vh;
+  min-height: 500px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+
+  @media screen and (max-width: 1024px) {
+    height: auto;
+    min-height: 250px;
+  }
+
+  &:hover .-img {
+    opacity: 0.5;
+    transform: scale(1.01);
+    filter: grayscale(0.5);
+  }
+}
+
+.-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  filter: grayscale(0.3);
+  transition: 
+    opacity 250ms linear,
+    transform 250ms linear;
+
+  @media screen and (max-width: 1024px) {
+    height: 250px;
+  }
+}
+
+.-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  color: #ffffff;
+  font-family: "Avenir", sans-serif;
+  font-size: 48px;
+  text-align: center;
+  z-index: 1;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 32px;
+  }
 }
 </style>

@@ -28,9 +28,32 @@ const isActive = (currentPath, activePaths) => {
 		<div class="-container">
 			<a href="/en">
 				<Image src={Logo} alt=""/>
-				<!-- <img src="/logo.png" class="-logo" alt="" /> -->
 			</a>
-			<DropdownMenu lang={lang} client:visible />
+
+
+			<!-- <DropdownMenu lang={lang} client:visible /> -->
+			<div class="-links">
+				<a
+					  href="https://porolons.lv/"
+				>
+					Porolons
+				</a>
+				<a
+					  href={"/" +lang + "/collections"}
+				>
+					Collections
+				</a>
+				<a
+					  href={"/" +lang + "/horeca"}
+				>
+					HoReCa
+				</a>
+				<a
+					  href={"/" +lang + "/products"}
+				>
+					Mattrases
+				</a>
+			</div>
 
 
 			<div class="-links right">

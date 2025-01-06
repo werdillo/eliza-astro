@@ -1,8 +1,20 @@
 ---
+// src/pages/[lang]/index.astro
+const { lang } = Astro.params;
 
-import Layout from "../layouts/Layout.astro";
+// Validate language parameter
+const supportedLanguages = ['en', 'es', 'fr'];
+if (!supportedLanguages.includes(lang)) {
+  return Astro.redirect('/lv'); // Redirect to default language if invalid
+}
 ---
 
-<Layout>
-	test
-</Layout>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Multilingual Site</title>
+  </head>
+  <body>
+    <!-- Your content here -->
+  </body>
+</html>

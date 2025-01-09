@@ -22,7 +22,7 @@ export default function Awards() {
                         slidesPerView: 3,
                     },
                     300: {
-                        slidesPerView: 2,
+                        slidesPerView: 3,
                     },
                 }}
                 // slides-per-view="8"

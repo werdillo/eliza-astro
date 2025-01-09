@@ -43,6 +43,23 @@ const DropdownMenu = ({lang}) => {
         description: 'Разнообразные варианты обивки',
         href: '/textile'
       }
+    ],
+    language: [
+      {
+        title: 'LV',
+        description: 'Высококачественные наполнители',
+        href: '/components/foam'
+      },
+      {
+        title: 'RU',
+        description: 'Высококачественные наполнители',
+        href: '/components/foam'
+      },
+      {
+        title: 'EN',
+        description: 'Высококачественные наполнители',
+        href: '/components/foam'
+      },
     ]
   };
 

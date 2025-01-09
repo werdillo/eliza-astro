@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Logo from "../../assets/images/eliza-logo.svg";
+import LanguageDropdown from "./LanguageDropdown";
 
 const { lang } = Astro.params;
 const currentPath = Astro.url.pathname;
@@ -50,6 +51,7 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
             {link.label}
           </a>
         ))}
+		<LanguageDropdown client:load currentLang={lang} currentPath={currentPath} />
       </div>
     </div>
   </div>
@@ -112,6 +114,7 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
     display: flex;
     gap: var(--link-gap);
     flex-wrap: wrap;
+	align-items: center;
 
     &.right {
       justify-self: end;
@@ -134,4 +137,5 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
     }
   }
 }
+
 </style>

@@ -1,190 +1,137 @@
 ---
-import location from "../../assets/img/icons/location.svg";
-import phone from "../../assets/img/icons/phone.svg";
-import instagram from "../../assets/img/icons/instagram.svg";
-import telegram from "../../assets/img/icons/telegram.svg";
-import whatsapp from "../../assets/img/icons/whatsapp.svg";
-import mail from "../../assets/img/icons/mail.svg";
 import { Image } from "astro:assets";
 import Logo from "../../assets/images/eliza-logo.svg";
-import DropdownMenu from "./DropdownMenu";
 
-const currentPath = Astro.url.pathname;
 const { lang } = Astro.params;
-const links = [
-	{ "href": "/gallery", "label": "Галерея", "activePaths": ["/gallery"] },
-	{ "href": "/catalogs", "label": "Каталоги", "activePaths": ["/catalogs"] },
-	{ "href": "/about-us", "label": "О нас", "activePaths": ["/about-us"] },
-  	{ "href": "/contact", "label": "Контакты", "activePaths": ["/contact"] },
-]
-const isActive = (currentPath, activePaths) => {
-  return activePaths.some(path => currentPath.includes(path)) ? "-link active" : "-link";
-};
+const currentPath = Astro.url.pathname;
 
+const mainLinks = [
+  { href: "/collections", label: "Collections" },
+  { href: "/horeca", label: "HoReCa" },
+  { href: "/matressess", label: "Mattrases" },
+  { href: "/components", label: "Components" },
+];
+
+const secondaryLinks = [
+  { href: "/gallery", label: "Галерея" },
+  { href: "/catalogs", label: "Каталоги" },
+  { href: "/about-us", label: "О нас" },
+  { href: "/contact", label: "Контакты" },
+];
+
+const isActive = (path: string) => currentPath.includes(path) ? "-link active" : "-link";
 ---
 
 <nav class="header">
-	<div class="-wrapper">
-		<div class="-container">
-			<a href="/en">
-				<Image src={Logo} alt=""/>
-			</a>
+  <div class="-wrapper">
+    <div class="-container">
+      <a href={`/${lang}`} class="-logo-link">
+        <Image src={Logo} alt="Logo" class="-logo"/>
+      </a>
 
-			<div class="-links">
-				<a
-					  href="https://porolons.lv/"
-				>
-					Porolons
-				</a>
-				<a
-					  href={"/" +lang + "/collections"}
-				>
-					Collections
-				</a>
-				<a
-					  href={"/" +lang + "/horeca"}
-				>
-					HoReCa
-				</a>
-				<a
-					  href={"/" +lang + "/matressess"}
-				>
-					Mattrases
-				</a>
-				<a
-					  href={"/" +lang + "/components"}
-				>
-					Components
-				</a>
-			</div>
+      <div class="-links">
+        <a href="https://porolons.lv/" class="-link external">Porolons</a>
+        {mainLinks.map(link => (
+          <a 
+            href={`/${lang}${link.href}`}
+            class={isActive(link.href)}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
 
-
-			<div class="-links right">
-				{links.map(link => (
-					<a
-					  href={ '/' + lang + link.href}
-					  class={isActive(currentPath, link.activePaths)}
-					>
-					  {link.label}
-					</a>
-				  ))}
-			</div>
-
-
-		</div>
-
-	</div>
+      <div class="-links right">
+        {secondaryLinks.map(link => (
+          <a 
+            href={`/${lang}${link.href}`}
+            class={isActive(link.href)}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
 </nav>
+
 <style>
-	.header {
-		z-index: 10;
-		position: fixed;
-		top: 0;
-		background: var(--layout);
-		width: 100%;
-		border: 0;
-		color: #fff;
-		height: var(--header);
-		@media (max-width: 768px) {
-			height: 70px;
-		}
-		.-wrapper {
-			padding: 0 20px;
-			display: flex;
-			width: 1fr;
-			height: var(--header);
-			/* align-items: center; */
-			justify-content: space-between;
-			align-items: center;
-			flex-wrap: wrap;
-			gap: 10px;
-			@media (max-width: 1600px) {
-				padding: 0 10px;
-			}
-			@media (max-width: 768px) {
-				height: 70px;
-			}
-		}
+.header {
+  --header-height: var(--header, 80px);
+  --mobile-height: 70px;
+  --link-gap: 40px;
+  --wrapper-padding: 20px;
+  
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  height: var(--header-height);
+  background: var(--layout);
+  color: #fff;
 
-		.-container {
-			display: grid;
-			width: 100%;
-			grid-template-columns: 1fr auto 1fr; /* Левый, центр, правый */
-			align-items: center;
-			gap: 25px;
-			height: 100%;
-		}
-		.-container .right {
-			justify-self: end; /* Вправо */
-		}
-		.-logo {
-			cursor: pointer;
-			margin-top: 2px;
-			height: auto;
-			width: 120px;
-			@media (max-width: 768px) {
-				width: 110px;
-			}
-		}
-		.-links {
-			display: flex;
-			gap: 40px;
-			flex-wrap: wrap;
-			@media (max-width: 768px) {
-				display: none;
-			}
+  @media (max-width: 768px) {
+    height: var(--mobile-height);
+  }
 
-			.-link {
-				color: #fff;
-				font-size: 16px;
-				text-decoration: none;
-				&.active {
-					color: aqua;
-				}
-				&:hover {
-					color: aqua;
-				}
-			}
-		}
-		.-socials {
-			display: flex;
-			gap: 24px;
-			.-img {
-				height: 24px;
-				width: auto;
-				cursor: pointer;
-			}
-		}
-		.-contacts {
-			display: flex;
-			gap: 8px;
-			align-items: flex-start;
-			flex-direction: column;
-			@media (max-width: 768px) {
-				display: none;
-			}
-			.-text {
-				font-size: 12px;
-				&.link {
-					&:hover {
-						color: aquamarine;
-					}
-				}
-			}
-			.-wrap {
-				display: flex;
-				justify-content: center;
-				gap: 12px;
-				.-img {
-					width: 14px;
-					height: auto;
-				}
-			}
-			.-phones {
-				display: flex;
-				flex-direction: column;
-				gap: 8px;
-			}
-		}
-	}
+  .-wrapper {
+    height: 100%;
+    padding: 0 var(--wrapper-padding);
+    display: flex;
+    align-items: center;
+    
+    @media (max-width: 1600px) {
+      --wrapper-padding: 10px;
+    }
+  }
+
+  .-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .-logo-link {
+    display: block;
+  }
+
+  .-logo {
+    width: 120px;
+    height: auto;
+    margin-top: 2px;
+    
+    @media (max-width: 768px) {
+      width: 110px;
+    }
+  }
+
+  .-links {
+    display: flex;
+    gap: var(--link-gap);
+    flex-wrap: wrap;
+
+    &.right {
+      justify-self: end;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .-link {
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover,
+    &.active {
+      color: aqua;
+    }
+  }
+}
 </style>

@@ -20,15 +20,15 @@ const { lang } = Astro.params;
             <a href="http://porolons.lv/" target="_blank" rel="noopener noreferrer">
                 <Image class='-img' alt='' src={porolon} />	
             </a>		
-            <p class='-text xl'>Foam</p>
-            <p class='-text'>Our company creates goods from foam rubber of any complexity.</p>
+            <div class='-text xl'>Foam</div>
+            <div class='-text'>Our company creates goods from foam rubber of any complexity.</div>
         </div>
         <div>
             <a href={"/" + lang +"/textile"} rel="noopener noreferrer">
                 <Image class='-img' alt='' src={textile} />			
             </a>
-            <p class='-text xl'>Textile</p>
-            <p class='-text'>A wide selection of fabrics from any type of fiber for upholstered furniture is available.</p>
+            <div class='-text xl'>Textile</div>
+            <div class='-text'>A wide selection of fabrics from any type of fiber for upholstered furniture is available.</div>
         </div>
     </div>
 </Layout>
@@ -45,6 +45,7 @@ const { lang } = Astro.params;
     }
     .-text {
         font-family: 'Avenir', sans-serif;
+        font-weight: 400;
         font-size: 16px;
         margin-left: 5px;
         &.xl {
@@ -67,6 +68,4 @@ const { lang } = Astro.params;
         }
     }
 }
-    
 </style>
-

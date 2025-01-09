@@ -35,7 +35,7 @@ export default function Slider() {
                 "background-size": "cover",
                 "background-position": "center",
                 width: "100%",
-                height: "700px",
+                height: "600px",
             }}
             ></div>
         </swiper-slide>

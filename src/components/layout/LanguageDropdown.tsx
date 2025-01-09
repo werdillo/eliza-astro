@@ -6,7 +6,6 @@ import "../../assets/css/LanguageDropdown.css"
 interface Language {
   code: string;
   title: string;
-  description: string;
 }
 
 interface Props {
@@ -18,17 +17,14 @@ const languages: Language[] = [
   {
     code: 'en',
     title: 'English',
-    description: 'United States'
   },
   {
     code: 'lv',
     title: 'Latviešu',
-    description: 'Latvija'
   },
   {
     code: 'ru',
     title: 'Русский',
-    description: 'Россия'
   }
 ];
 
@@ -104,7 +100,6 @@ const LanguageDropdown: Component<Props> = (props) => {
                 class="menu-item"
               >
                 <div class="item-title">{lang.title}</div>
-                <div class="item-description">{lang.description}</div>
               </a>
             ))}
           </div>

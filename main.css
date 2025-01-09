@@ -398,7 +398,7 @@ a:visited {
 
 
 .awards {
-    padding: 0 10px;
+    /* padding: 0 10px; */
     /* display: grid; */
     /* grid-template-columns: repeat(8, 1fr); */
     /* place-items: center; */

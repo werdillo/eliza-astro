@@ -3,21 +3,61 @@ import { Image } from "astro:assets";
 import Logo from "../../assets/images/eliza-logo.svg";
 import LanguageDropdown from "./LanguageDropdown";
 
-const { lang } = Astro.params;
+const { lang = 'lv' } = Astro.params;
 const currentPath = Astro.url.pathname;
 
 const mainLinks = [
-  { href: "/collections", label: "Collections" },
-  { href: "/horeca", label: "HoReCa" },
-  { href: "/matressess", label: "Mattrases" },
-  { href: "/components", label: "Components" },
+  { 
+    href: "/collections", 
+    label_en: "Collections",
+    label_lv: "Kolekcijas",
+    label_ru: "Коллекции"
+  },
+  { 
+    href: "/horeca", 
+    label_en: "HoReCa",
+    label_lv: "HoReCa",
+    label_ru: "HoReCa"
+  },
+  { 
+    href: "/matressess", 
+    label_en: "Mattreses",
+    label_lv: "Matrači",
+    label_ru: "Матрасы"
+  },
+  { 
+    href: "/components", 
+    label_en: "Components",
+    label_lv: "Komponenti",
+    label_ru: "Компоненты"
+  }
 ];
 
 const secondaryLinks = [
-  { href: "/gallery", label: "Галерея" },
-  { href: "/catalogs", label: "Каталоги" },
-  { href: "/about-us", label: "О нас" },
-  { href: "/contact", label: "Контакты" },
+  { 
+    href: "/gallery", 
+    label_en: "Gallery",
+    label_lv: "Galerija",
+    label_ru: "Галерея"
+  },
+  { 
+    href: "/catalogs", 
+    label_en: "Catalogs",
+    label_lv: "Katalogi",
+    label_ru: "Каталоги"
+  },
+  { 
+    href: "/about-us", 
+    label_en: "About us",
+    label_lv: "Par mums",
+    label_ru: "О нас"
+  },
+  { 
+    href: "/contact", 
+    label_en: "Contact",
+    label_lv: "Kontakti",
+    label_ru: "Контакты"
+  }
 ];
 
 const isActive = (path: string) => currentPath.includes(path) ? "-link active" : "-link";
@@ -29,29 +69,27 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
       <a href={`/${lang}`} class="-logo-link">
         <Image src={Logo} alt="Logo" class="-logo"/>
       </a>
-
       <div class="-links">
         <a href="https://porolons.lv/" class="-link external">Porolons</a>
         {mainLinks.map(link => (
-          <a 
+          <a
             href={`/${lang}${link.href}`}
             class={isActive(link.href)}
           >
-            {link.label}
+            {link[`label_${lang}`]}
           </a>
         ))}
       </div>
-
       <div class="-links right">
         {secondaryLinks.map(link => (
-          <a 
+          <a
             href={`/${lang}${link.href}`}
             class={isActive(link.href)}
           >
-            {link.label}
+            {link[`label_${lang}`]}
           </a>
         ))}
-		<LanguageDropdown client:load currentLang={lang} currentPath={currentPath} />
+        <LanguageDropdown client:load currentLang={lang} currentPath={currentPath} />
       </div>
     </div>
   </div>
@@ -63,7 +101,6 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
   --mobile-height: 70px;
   --link-gap: 40px;
   --wrapper-padding: 20px;
-  
   position: fixed;
   top: 0;
   z-index: 10;
@@ -71,71 +108,64 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
   height: var(--header-height);
   background: var(--layout);
   color: #fff;
-
   @media (max-width: 768px) {
     height: var(--mobile-height);
   }
+}
 
-  .-wrapper {
-    height: 100%;
-    padding: 0 var(--wrapper-padding);
-    display: flex;
-    align-items: center;
-    
-    @media (max-width: 1600px) {
-      --wrapper-padding: 10px;
-    }
-  }
-
-  .-container {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 25px;
-  }
-
-  .-logo-link {
-    display: block;
-  }
-
-  .-logo {
-    width: 120px;
-    height: auto;
-    margin-top: 2px;
-    
-    @media (max-width: 768px) {
-      width: 110px;
-    }
-  }
-
-  .-links {
-    display: flex;
-    gap: var(--link-gap);
-    flex-wrap: wrap;
-	align-items: center;
-
-    &.right {
-      justify-self: end;
-    }
-
-    @media (max-width: 768px) {
-      display: none;
-    }
-  }
-
-  .-link {
-    color: #fff;
-    font-size: 16px;
-    text-decoration: none;
-    transition: color 0.2s ease;
-
-    &:hover,
-    &.active {
-      color: aqua;
-    }
+.-wrapper {
+  height: 100%;
+  padding: 0 var(--wrapper-padding);
+  display: flex;
+  align-items: center;
+  @media (max-width: 1600px) {
+    --wrapper-padding: 10px;
   }
 }
 
+.-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 25px;
+}
+
+.-logo-link {
+  display: block;
+}
+
+.-logo {
+  width: 120px;
+  height: auto;
+  margin-top: 2px;
+  @media (max-width: 768px) {
+    width: 110px;
+  }
+}
+
+.-links {
+  display: flex;
+  gap: var(--link-gap);
+  flex-wrap: wrap;
+  align-items: center;
+  &.right {
+    justify-self: end;
+  }
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.-link {
+  color: #fff;
+  font-size: 16px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  &:hover,
+  &.active {
+    color: aqua;
+  }
+}
 </style>

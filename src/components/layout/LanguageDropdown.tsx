@@ -1,4 +1,3 @@
-
 import { createSignal, Show } from 'solid-js';
 import type { Component } from 'solid-js';
 import "../../assets/css/LanguageDropdown.css"
@@ -33,7 +32,7 @@ const LanguageDropdown: Component<Props> = (props) => {
   const [isAnimatingOut, setIsAnimatingOut] = createSignal(false);
 
   // Фильтруем текущий язык из списка
-  const availableLanguages = () => 
+  const availableLanguages = () =>
     languages.filter(lang => lang.code !== props.currentLang);
 
   const handleClose = () => {
@@ -70,9 +69,17 @@ const LanguageDropdown: Component<Props> = (props) => {
     document.addEventListener('keydown', handleKeyDown);
   }
 
+  const getLanguageUrl = (langCode: string) => {
+    const url = new URL(window.location.href);
+    const pathParts = url.pathname.split('/');
+    pathParts[1] = langCode;
+    const newPath = pathParts.join('/');
+    return `${newPath}${url.search}${url.hash}`;
+  };
+
   return (
     <div class="dropdown" id="langDropdown">
-      <button 
+      <button
         class={`dropdown-button ${isOpen() ? 'active' : ''}`}
         onClick={toggleDropdown}
         aria-expanded={isOpen()}
@@ -96,7 +103,7 @@ const LanguageDropdown: Component<Props> = (props) => {
           <div class="menu-items">
             {availableLanguages().map(lang => (
               <a
-                href={`/${lang.code}${props.currentPath.substring(3)}`}
+                href={getLanguageUrl(lang.code)}
                 class="menu-item"
               >
                 <div class="item-title">{lang.title}</div>

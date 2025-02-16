@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import BlogList from "../../components/BlogList";
-
+import PostItem from "../../components/PostItem.jsx";
+const { lang } = Astro.params;
 export function getStaticPaths() {
 	return [
 		{ params: { lang: "en" } },
@@ -9,9 +9,8 @@ export function getStaticPaths() {
 		{ params: { lang: "ru" } },
 	];
 }
-const { lang } = Astro.params;
-    
 ---
+
 <Layout>
-    <BlogList lang={lang} type="about" client:only/>
+	<PostItem client:only lang={lang}/>
 </Layout>

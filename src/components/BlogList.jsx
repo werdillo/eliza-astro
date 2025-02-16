@@ -2,12 +2,13 @@ import { For, createSignal, onMount } from "solid-js";
 import { client } from "../lib/pocketbase";
 import { getImageUrl } from "../lib/pocketbase";
 
-export default function BlogList({ lang }) {
+export default function BlogList({ lang, type }) {
   const [items, setItems] = createSignal([]);
 
   onMount(async () => {
     try {
       const res = await client.collection("blog").getFullList(50, {
+        filter: `type="${type}"`,
         fields:
           "id, collectionId, image, path, title, description:excerpt(200, true)",
       });
@@ -33,7 +34,6 @@ export default function BlogList({ lang }) {
             </>
           }
         >
-          asd
           {(item) => (
             <a href={"/" + lang + "/post?name=" + item.path}>
               <img src={getImageUrl(item)} class="-img" alt={item.title} />

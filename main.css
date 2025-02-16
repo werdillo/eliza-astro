@@ -70,13 +70,17 @@ swiper-container {
         flex-direction: column;
         /* align-items: flex-end; */
         justify-content: flex-end;
-        gap: 30px;
+        gap: 15px;
         /* box-sizing: border-box; */
         padding: 0 50px;
         .-title {
             /* width: 100px; */
             font-size: 48px;
             font-weight: 700;
+        }
+        .-buttons {
+            display: flex;
+            gap:15px;
         }
     }
     .-card {

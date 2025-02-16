@@ -68,29 +68,31 @@ export default function ProductItem({ type = "def" }) {
             </div>
                 <div className="-right">
                 <div class="-title">{item().name}</div>
-                <div className="-text">
+                {/* <div className="-text">
                 <b>Gulēšanas funkcija</b> - nav <br/>
                 <b>Veļas kaste</b> - nav <br/>
                 <b>Korpuss -</b> Dabīgskoks,  <br/>
                 <b>Sēde/sēdes pilveni</b> - Porolons,  <br/>
                 <b>Muguras spilveni -  </b>Sintepona vate + spalvas <br/>
-                </div>
+                </div> */}
+                  {/* <div class="-text" innerHTML={item().description}></div> */}
+
                 <button class="-button xl">Send email</button>
 
             </div>
         </div>
         <div class="product-item l">
-            <div className="-card">
+              <div className="-card">
                 <div className="-text m bd">
                     Apraksts
-                </div>
-                <div className="-text">
-                    Atsperu matracis „Diamond De Lux” būs piemērots gulētājiem, kas pastiprināti svīst miega laikā. Kā arī tiem, kam patīk gulēt uz vidēji stingra matrača ar gaisīgi mīkstu virsmu. ClimaLatekss materiāls, ko izmantojam matrača virskārtā ir dabīgs, mīksts materiāls, kas izgatavots no kaučuka koka sulas ekstrakta. Pateicoties īpašajam sastāvam un perforācijai, matracis uzturēs regulāru gaisa cirkulāciju. Matracis ir divpusējs – abas puses vienādas.
-
-                </div>
-                <div>
+                  </div> 
+                
+                  <div class="-text" innerHTML={item().description}></div>
+                  <div>
                     <button class="-button">Dimensions</button>
-                </div>
+                  </div>
+
+
             </div>
             <Show when={type !== "mattress"}>
               <div className="-card">
@@ -104,7 +106,7 @@ export default function ProductItem({ type = "def" }) {
 
                   </div>
                   <div>
-                      <button class="-button">Cleaning</button>
+                    <button class="-button">Cleaning</button>
                   </div>
               </div>
             </Show>

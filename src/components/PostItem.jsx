@@ -2,7 +2,7 @@ import { createResource, Suspense } from "solid-js";
 import { client } from '../lib/pocketbase';
 import { getImageUrl } from '../lib/pocketbase';
 
-const fetchPostItem = async (name) => {
+const fetchPostItem = async ( name) => {
 	const res = await client.collection('blog').getList(1, 50, {
 		filter: `path="${name}"`,
 	});
@@ -12,7 +12,7 @@ const fetchPostItem = async (name) => {
 	throw new Error("Item not found");
 };
 
-export default function PostItem() {
+export default function PostItem({lang}) {
 	const urlSearchParams = new URLSearchParams(window.location.search);
 	const params = Object.fromEntries(urlSearchParams.entries());
 	const [item, { refetch }] = createResource(() => params.name, fetchPostItem);

@@ -1,39 +1,18 @@
 ---
 const { lang } = Astro.params;
 const currentPath = Astro.url.pathname;
+import {mainLinks, secondaryLinks} from "./Links"
 
-const menuItems = [
-  {
-    href: "/collections",
-    label: "Collection",
-    isActive: (path) => path === "/collections" || path.includes("/collection") || path.includes("/product")
-  },
-  {
-    href: "/horeca",
-    label: "Horeca",
-    isActive: (path) => path === "/horeca"
-  },
-  {
-    href: "/matressess",
-    label: "Matressess",
-    isActive: (path) => path === "/matressess"
-  },
-  {
-    href: "/components",
-    label: "Components",
-    isActive: (path) => path === "/components" || path.includes("/post")
-  }
-];
 ---
 
 <nav class="mobile-menu">
   <div class="-wrapper">
-    {menuItems.map(item => (
+    {mainLinks.map(item => (
       <a
         href={`/${lang}${item.href}`}
-        class:list={["-link", { active: item.isActive(currentPath) }]}
+        class:list={"-link"}
       >
-        {item.label}
+        {item["label_" + lang]}
       </a>
     ))}
   </div>

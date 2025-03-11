@@ -83,18 +83,20 @@ export default function ProductItem({ type = "def" }) {
         </div>
         <div class="product-item l">
               <div className="-card">
-                <div className="-text m bd">
-                    Apraksts
-                  </div> 
-                
-                  <div class="-text" innerHTML={item().description}></div>
-                  <div>
-                    <button class="-button">Dimensions</button>
-                  </div>
-
-
+                  <Show when={item()?.description}>
+                    <div className="-text m bd">
+                      Apraksts
+                    </div> 
+                  
+                    <div class="-text" innerHTML={item().description}></div>
+                    <div>
+                      <button class="-button">Dimensions</button>
+                    </div>
+                  </Show>
             </div>
-            <Show when={type !== "mattress"}>
+
+
+            <Show when={type !== "mattress" && item()?.description}>
               <div className="-card">
                   <div className="-text m bd">
                       Audumi
@@ -103,11 +105,10 @@ export default function ProductItem({ type = "def" }) {
                       <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=" alt="" className="-img" />
                       <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/vesgkd1c8ioj1u9/fusion_AL1Ad4TRpU.jpeg?token=" alt="" className="-img" />
                       <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=" alt="" className="-img" />
-
                   </div>
-                  <div>
+                  <a href="/lv/textile">
                     <button class="-button">Cleaning</button>
-                  </div>
+                  </a>
               </div>
             </Show>
         </div>

@@ -144,7 +144,6 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
     width: 110px;
   }
 }
-
 .-links {
   display: flex;
   gap: var(--link-gap);
@@ -153,9 +152,7 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
   &.right {
     justify-self: end;
   }
-  @media (max-width: 768px) {
-    display: none;
-  }
+
 }
 
 .-link {
@@ -166,6 +163,9 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
   &:hover,
   &.active {
     color: aqua;
+  }
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 </style>

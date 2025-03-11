@@ -3,7 +3,7 @@ import { client, getImage } from "../lib/pocketbase";
 import { register } from 'swiper/element/bundle';
 register();
 
-export default function ProductItem({ type = "def" }) {
+export default function ProductItem({ type = "def", lang }) {
   const [item, setItem] = createSignal({});
   const [loading, setLoading] = createSignal(true);
   const urlSearchParams = new URLSearchParams(window.location.search);
@@ -108,20 +108,17 @@ export default function ProductItem({ type = "def" }) {
         </div>
         <div class="product-item l">
               <div className="-card">
-                  <Show when={item()?.description}>
-                    <div className="-text m bd">
+                  <Show when={item()?.description_ru}>
+                    {/* <div className="-text m bd">
                       Apraksts
-                    </div> 
+                    </div>  */}
                   
-                    <div class="-text" innerHTML={item().description}></div>
-                    <div>
-                      <button class="-button">Dimensions</button>
-                    </div>
+                    <div class="-text" innerHTML={item()['description_'+ lang]}></div>
                   </Show>
             </div>
 
 
-            <Show when={type !== "mattress" && item()?.description}>
+            <Show when={type !== "mattress" && item()?.description_ru}>
               <div className="-card">
                   <div className="-text m bd">
                       Audumi
@@ -134,6 +131,9 @@ export default function ProductItem({ type = "def" }) {
                   <a href="/lv/textile">
                     <button class="-button">Cleaning</button>
                   </a>
+                  <div>
+                    <button class="-button">Dimensions</button>
+                  </div>
               </div>
             </Show>
         </div>

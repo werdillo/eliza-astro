@@ -24,6 +24,31 @@ export default function ProductItem({ type = "def", lang }) {
     }
   });
 
+  const translate = {
+    "en": {
+      "sendEmail": "Send email",
+      "dimensions": "Dimensions",
+      "cleaning": "Cleaning",
+      "description": "Description",
+      "fabrics": "Fabrics"
+    },
+    "ru": {
+      "sendEmail": "Отправить email",
+      "dimensions": "Размеры",
+      "cleaning": "Уход",
+      "description": "Описание",
+      "fabrics": "Ткани"
+    },
+    "lv": {
+      "sendEmail": "Sūtīt e-pastu",
+      "dimensions": "Izmēri",
+      "cleaning": "Tīrīšana",
+      "description": "Apraksts",
+      "fabrics": "Audumi"
+    }
+  }
+  ;
+
   return (
     <div>
       <Show when={loading()}>
@@ -103,19 +128,20 @@ export default function ProductItem({ type = "def", lang }) {
             </div>
               <div className="-right">
                 <div class="-title">{item().name}</div>
-                <button class="-button xl">Send email</button>
+                <button class="-button xl">{translate[lang].sendEmail}</button>
             </div>
         </div>
         <div class="product-item l">
               <div className="-card">
                   <Show when={item()?.description_ru}>
                     <div className="-text m bd">
-                      Apraksts
+                      {translate[lang].description}
+
                     </div> 
                   
                     <div class="-text" innerHTML={item()['description_'+ lang]}></div>
                     <a href={getShema(item())} target="_blank">
-                      <button class="-button">Dimensions</button>
+                      <button class="-button">{translate[lang].dimensions}</button>
                     </a>
                   </Show>
             </div>
@@ -124,7 +150,7 @@ export default function ProductItem({ type = "def", lang }) {
             <Show when={type !== "mattress" && item()?.description_ru}>
               <div className="-card">
                   <div className="-text m bd">
-                      Audumi
+                  {translate[lang].fabrics}
                   </div>
                   <div className="-textile">
                       <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=" alt="" className="-img" />
@@ -133,7 +159,7 @@ export default function ProductItem({ type = "def", lang }) {
                   </div>
                   <div style={{display: "flex", gap: "10px"}}>
                     <a href="/files/cleaning.pdf" target="_blank">
-                      <button class="-button">Cleaning</button>
+                      <button class="-button">{translate[lang].cleaning}</button>
                     </a>
 
              

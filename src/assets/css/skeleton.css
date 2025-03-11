@@ -35,7 +35,6 @@
 	}
 	&.post {
 		margin-top: 10px;
-		width: 88%;
 		height: 450px;
 		margin-bottom: 30px;
 		@media (max-width: 768px) {
@@ -61,6 +60,10 @@
 		&.title {
 			height: 40px;
 			max-width: 150px;
+		}
+		&.wide {
+		max-width: 100%;
+
 		}
 		&.l { 
 			height: 24px;

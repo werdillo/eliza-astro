@@ -20,16 +20,18 @@ export default function PostItem({lang}) {
 	return (
 		<Suspense fallback={
 			<>
-				<div class="skeleton post"></div>
-				<div class="left">
-					<div class="skeleton text title"></div>
-					<div class="skeleton text"></div>
-					<div class="skeleton text"></div>
-					<div class="skeleton text"></div>
-					<div class="skeleton text"></div>
-					<div class="skeleton text"></div>
-					<div class="skeleton text"></div>
-					<div class="skeleton text"></div>
+				<div class="container">
+					<div class="skeleton post"></div>
+					<div class="post">
+						<div class="skeleton text title"></div>
+						<div class="skeleton text wide"></div>
+						<div class="skeleton text wide"></div>
+						<div class="skeleton text wide"></div>
+						<div class="skeleton text wide"></div>
+						<div class="skeleton text wide"></div>
+						<div class="skeleton text wide"></div>
+						<div class="skeleton text wide"></div>
+					</div>
 				</div>
 			</>
 		}>

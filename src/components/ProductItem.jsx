@@ -132,7 +132,7 @@ export default function ProductItem({ type = "def", lang }) {
                       <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=" alt="" className="-img" />
                   </div>
                   <div style={{display: "flex", gap: "10px"}}>
-                    <a href="/lv/textile">
+                    <a href="/files/cleaning.pdf" target="_blank">
                       <button class="-button">Cleaning</button>
                     </a>
 

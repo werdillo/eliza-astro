@@ -17,12 +17,28 @@ export default function TextileItems() {
 	});
 	return <>
 		<Show when={loading()}>
-			<div class="skeleton"></div>
-			<div class="skeleton"></div>
-			<div class="skeleton"></div>
-			<div class="skeleton"></div>
-			<div class="skeleton"></div>
-			<div class="skeleton"></div>
+			<div class="container">
+				<div class="skeleton text title margin-40" />
+			</div>
+			<div class="container">
+				<div class="textile">
+					<div class="skeleton textile" />
+					<div class="skeleton textile" />
+					<div class="skeleton textile" />
+					<div class="skeleton textile" />
+				</div>
+			</div>
+			<div class="container">
+				<div class="skeleton text title" />
+			</div>
+			<div class="container">
+				<div class="textile">
+					<div class="skeleton textile" />
+					<div class="skeleton textile" />
+					<div class="skeleton textile" />
+					<div class="skeleton textile" />
+				</div>
+			</div>
 		</Show>
 		<Show when={!loading()}>
 			<For each={items()}>

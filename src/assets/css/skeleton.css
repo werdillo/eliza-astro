@@ -9,6 +9,9 @@
 	&.product {
 		aspect-ratio: 16/9;
 	}
+	&.product {
+		aspect-ratio: 16/9;
+	}
 	&.matress {
 		aspect-ratio: 16/12;
 	}
@@ -21,6 +24,15 @@
 	&.blog {
 		aspect-ratio: 7/4;
 	}
+	&.slider {
+		aspect-ratio: 16/9;
+	}
+	&.textile {
+		aspect-ratio: 1/1;
+	}
+	&.margin-40 {
+		margin-top: 40px;
+	}
 	&.post {
 		margin-top: 10px;
 		width: 88%;
@@ -28,6 +40,16 @@
 		margin-bottom: 30px;
 		@media (max-width: 768px) {
 			height: 30vh;
+		}
+	}
+	&.button {
+		height: 60px;
+		width: 100%;
+		@media screen and (max-width: 600px) {
+			height: 50px;
+			width: 60%;
+			font-size: 24px;
+			margin-bottom: 20px;
 		}
 	}
 	&.text {

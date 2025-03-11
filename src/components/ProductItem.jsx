@@ -27,7 +27,25 @@ export default function ProductItem({ type = "def" }) {
   return (
     <div>
       <Show when={loading()}>
-        <div class="skeleton"></div>
+      <div class="product-item">
+        <div class="skeleton slider">
+        
+        </div>
+        <div className="-right">
+          <div class="skeleton text title" />
+          <div class="skeleton button" />
+        </div>
+      </div>
+      <div class="product-item l">
+
+        <div class="-card" >
+          <div class="skeleton text title" />
+        </div>
+        <div class="-card" >
+          <div class="skeleton text title" />
+        </div>
+      </div>
+
       </Show>
       <Show when={!loading()}>
         <div class="product-item">
@@ -66,19 +84,9 @@ export default function ProductItem({ type = "def" }) {
               </swiper-container>
             </Show>
             </div>
-                <div className="-right">
+              <div className="-right">
                 <div class="-title">{item().name}</div>
-                {/* <div className="-text">
-                <b>Gulēšanas funkcija</b> - nav <br/>
-                <b>Veļas kaste</b> - nav <br/>
-                <b>Korpuss -</b> Dabīgskoks,  <br/>
-                <b>Sēde/sēdes pilveni</b> - Porolons,  <br/>
-                <b>Muguras spilveni -  </b>Sintepona vate + spalvas <br/>
-                </div> */}
-                  {/* <div class="-text" innerHTML={item().description}></div> */}
-
                 <button class="-button xl">Send email</button>
-
             </div>
         </div>
         <div class="product-item l">

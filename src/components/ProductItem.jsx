@@ -36,15 +36,32 @@ export default function ProductItem({ type = "def" }) {
           <div class="skeleton button" />
         </div>
       </div>
-      <div class="product-item l">
+      <Show when={type !== "mattress"}>
+        <div class="product-item l">
 
-        <div class="-card" >
-          <div class="skeleton text title" />
+          <div class="-card" >
+            <div class="skeleton text title" />
+            <div>
+              <div class="skeleton text l" />
+              <div class="skeleton text l" />
+              <div class="skeleton text l" />
+              <div class="skeleton text l" />
+            </div>
+      
+            <div class="skeleton text title" />
+
+          </div>
+          <div class="-card" >
+            <div className="-textile">
+                <div class="skeleton textile" />
+                <div class="skeleton textile" />
+                <div class="skeleton textile" />
+            </div>
+            <div class="skeleton text title" />
+          </div>
         </div>
-        <div class="-card" >
-          <div class="skeleton text title" />
-        </div>
-      </div>
+      </Show>
+
 
       </Show>
       <Show when={!loading()}>

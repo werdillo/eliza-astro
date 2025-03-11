@@ -15,3 +15,9 @@ export const getImage = (item, fileName) => {
 	const fileId = item.id;
 	return `${url}/api/files/${collectionId}/${fileId}/${fileName}`;
 };
+export const getShema = (item) => {
+	const collectionId = item.collectionId || 'pmlzc10hatw7ufi';
+	const fileId = item.id;
+	const fileName = item.schema;
+	return `${url}/api/files/${collectionId}/${fileId}/${fileName}`;
+};

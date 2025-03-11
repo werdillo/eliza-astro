@@ -1,5 +1,5 @@
 import { For, Show, createSignal, onMount } from "solid-js";
-import { client, getImage } from "../lib/pocketbase";
+import { client, getImage, getShema } from "../lib/pocketbase";
 import { register } from 'swiper/element/bundle';
 register();
 
@@ -109,11 +109,14 @@ export default function ProductItem({ type = "def", lang }) {
         <div class="product-item l">
               <div className="-card">
                   <Show when={item()?.description_ru}>
-                    {/* <div className="-text m bd">
+                    <div className="-text m bd">
                       Apraksts
-                    </div>  */}
+                    </div> 
                   
                     <div class="-text" innerHTML={item()['description_'+ lang]}></div>
+                    <a href={getShema(item())} target="_blank">
+                      <button class="-button">Dimensions</button>
+                    </a>
                   </Show>
             </div>
 
@@ -128,11 +131,12 @@ export default function ProductItem({ type = "def", lang }) {
                       <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/vesgkd1c8ioj1u9/fusion_AL1Ad4TRpU.jpeg?token=" alt="" className="-img" />
                       <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=" alt="" className="-img" />
                   </div>
-                  <a href="/lv/textile">
-                    <button class="-button">Cleaning</button>
-                  </a>
-                  <div>
-                    <button class="-button">Dimensions</button>
+                  <div style={{display: "flex", gap: "10px"}}>
+                    <a href="/lv/textile">
+                      <button class="-button">Cleaning</button>
+                    </a>
+
+             
                   </div>
               </div>
             </Show>

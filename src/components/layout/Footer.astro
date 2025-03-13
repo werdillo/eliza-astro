@@ -1,131 +1,144 @@
+---
+// Footer.astro
+---
+
 <footer class="footer">
-	<div class="-logo">
-		<!-- <img src="/logo.png" alt="" class="-img" /> -->
-		Стильный гардероб вашей мебели
-	</div>
-	<div class="-address">
-		<!-- <Image class="-img" src={location} alt="" /> -->
-		<div class="-text s">Москва</div>
-		<div class="-text m">Дмитровское шоссе 71Б</div>
-		<div class="-text m">Бизнес-центр 7ONE, ООО "Нортекс"</div>
-	</div>
-	<div class="-phone">
-		<!-- <Image src={phone} class="-img" alt="" /> -->
-		<div class="-contacts-container">
-			<a class="-text l link" href="tel:+7(495)2213316">
-				+7 (495) 221 - 33 - 16
-			</a>
-			<a class="-text l link" href="tel:+7(903)2213316">
-				+7 (903) 221 - 33 - 16
-			</a>
+	<div class="container">
+	  <div class="footer-grid">
+		<!-- Furniture showroom ELIZA -->
+		<div class="footer-section">
+		  <h3 class="section-title">Furniture showroom ELIZA</h3>
+		  <p>Rīga, A. Deglava iela 50, LV-1035</p>
+		  <p>
+			<a href="mailto:teika@eliza-k.lv">teika@eliza-k.lv</a>
+		  </p>
+		  <p>29112499</p>
+		  
+		  <div class="working-hours">
+			<p>Tu-Fri 11:00 - 18:00</p>
+			<p>Sat 11:00 - 15:00</p>
+			<p>Sun-Mon - closed</p>
+		  </div>
 		</div>
-	</div>
-	<div class="-email">
-		<!-- <Image src={mail} class="-img" alt="" /> -->
-		<div class="-contacts-container">
-			<a class="-text l link" href="mailto:firma.nortex@gmail.com"
-				>firma.nortex@gmail.com</a
-			>
-			<a class="-text l link" href="mailto:info@tkani-nortex.ru"
-				>info@tkani-nortex.ru</a
-			>
+		
+		<!-- Foam details manufacture -->
+		<div class="footer-section">
+		  <h3 class="section-title">Foam details manufacture</h3>
+		  <p>Rīga, A. Deglava iela 52A, LV-1035</p>
+		  <p>
+			<a href="mailto:order@eliza-k.lv">order@eliza-k.lv</a>
+		  </p>
+		  <p>27862121, 26653510</p>
+		  
+		  <div class="working-hours">
+			<p>Mon-Fri 8:30 - 16:00</p>
+			<p>Break 12:00 - 13:00</p>
+			<p>Sat, Sun - closed</p>
+		  </div>
 		</div>
+		
+		<!-- Textile warehouse -->
+		<div class="footer-section">
+		  <h3 class="section-title">Textile warehouse</h3>
+		  <p>Rīga, A. Deglava 50 iela K-1</p>
+		  <p>
+			<a href="mailto:audumi@eliza-k.lv">audumi@eliza-k.lv</a>
+		  </p>
+		  <p>26599422</p>
+		  
+		  <div class="working-hours">
+			<p>Mon-Fri 9:00 - 16:30</p>
+			<p>Break 12:30 - 13:00</p>
+			<p>Sat, Sun - closed</p>
+		  </div>
+		</div>
+	  </div>
+	  
+	  <div class="copyright">
+		<p>&copy; {new Date().getFullYear()} ELIZA. All rights reserved.</p>
+	  </div>
 	</div>
-</footer>
-
-<style>
-.footer {
-	background: var(--layout);
-	min-height: 120px;
-	width: 1fr;
-	padding: 20px 100px;
-	border: 0;
-	color: #fff;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 20px;
-	flex-wrap: wrap;
-	@media (max-width: 700px) {
-		padding: 20px 20px 80px 20px;
-		flex-direction: column;
-		align-items: flex-start;
+  </footer>
+  
+  <style>
+	.footer {
+		text-align: left;
+	  background-color: #303030;
+	  padding: 3rem 0;
+	  font-family: Arial, sans-serif;
+	  color: #ffffff;
+	}
+  
+	.container {
+	  width: 90%;
+	  max-width: 1200px;
+	  margin: 0 auto;
+	}
+  
+	.footer-grid {
+	  display: grid;
+	  grid-template-columns: 1fr;
+	  gap: 2rem;
 	}
 
-	.-text {
-		color: #fff;
-		font-size: 16px;
-		&.s {
-			font-size: 14px;
-			@media (max-width: 768px) {
-				font-size: 12px;
-			}
-		}
-		&.m {
-			font-size: 18px;
-			@media (max-width: 768px) {
-				font-size: 15px;
-			}
-		}
-		&.l {
-			font-size: 20px;
-			@media (max-width: 768px) {
-				font-size: 17px;
-			}
-		}
-		&.link {
-			&:hover {
-				color: aquamarine;
-			}
-		}
+	.section-title {
+	  font-size: 1.25rem;
+	  font-weight: 700;
+	  margin-bottom: 1rem;
 	}
-	.-logo {
-		width: 160px;
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		.-img {
-			width: 100%;
-			height: auto;
-		}
+  
+	.footer-section p {
+	  margin: 0.5rem 0;
+	  line-height: 1.5;
 	}
-	.-email {
-		display: flex;
-		gap: 16px;
-		align-items: center;
-		.-img {
-			height: 22px;
-			width: auto;
-		}
+  
+	.footer-section a {
+	  color: #ffffff;
+	  text-decoration: none;
 	}
-	.-contacts-container {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
+  
+	.footer-section a:hover {
+	  color: #0066cc;
+	  text-decoration: underline;
 	}
-	.-phone {
-		display: flex;
-		gap: 16px;
-		align-items: center;
-		.-img {
-			width: 18px;
-			height: auto;
-		}
+  
+	.working-hours {
+	  margin-top: 1.5rem;
 	}
-	.-address {
-		position: relative;
-		display: flex;
-		gap: 6px;
-		flex-direction: column;
-		margin-left: 26px;
-		@media (max-width: 768px) {
-			margin-top: 12px;
-		}
-		.-img {
-			position: absolute;
-			top: -20px;
-			left: -24px;
-		}
+  
+	.hours-title {
+	  font-weight: 600;
+	  margin-bottom: 0.5rem;
 	}
-}
-</style>
+  
+	.copyright {
+	  margin-top: 2rem;
+	  padding-top: 1.5rem;
+	  border-top: 1px solid #ddd;
+	  text-align: center;
+	  font-size: 0.9rem;
+	}
+  
+	/* Media query for tablets and larger screens */
+	@media (min-width: 768px) {
+	  .footer-grid {
+		grid-template-columns: repeat(3, 1fr);
+	  }
+	}
+  
+	/* Media query for smaller screens */
+	@media (max-width: 767px) {
+	  .section-title {
+		font-size: 1.1rem;
+	  }
+	  
+	  .footer {
+		padding: 2rem 0;
+	  }
+	  
+	  .copyright {
+		margin-top: 1.5rem;
+		padding-top: 1rem;
+	  }
+	}
+  </style>

@@ -2,33 +2,7 @@
 import { createSignal, createEffect } from 'solid-js';
 import '../../assets/css/BurgerMenu.css';
 
-// Многоязычные навигационные ссылки
-export const secondaryLinks = [
-  {
-    href: "/gallery",
-    label_en: "Gallery",
-    label_lv: "Galerija",
-    label_ru: "Галерея"
-  },
-  {
-    href: "/catalogs",
-    label_en: "Catalogs",
-    label_lv: "Katalogi",
-    label_ru: "Каталоги"
-  },
-  {
-    href: "/about-us",
-    label_en: "About us",
-    label_lv: "Par mums",
-    label_ru: "О нас"
-  },
-  {
-    href: "/contact",
-    label_en: "Contact",
-    label_lv: "Kontakti",
-    label_ru: "Контакты"
-  }
-];
+import { secondaryLinks} from "./Links"
 
 const BurgerMenu = (props) => {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -53,7 +27,7 @@ const BurgerMenu = (props) => {
   };
 
   return (
-    <div class="burger-menu">
+    <div class="burger-menu" >
       {/* Кнопка бургер-меню */}
       <button 
         class={`burger-button ${isOpen() ? 'open' : ''}`} 
@@ -70,7 +44,7 @@ const BurgerMenu = (props) => {
       <nav class={`menu-panel ${isOpen() ? 'open' : ''}`}>
         <div class="menu-links">
           {secondaryLinks.map((link) => (
-            <a href={link.href} class="menu-link" onClick={() => setIsOpen(false)}>
+            <a href={`/${props.lang}${link.href}`} class="menu-link" onClick={() => setIsOpen(false)}>
               {link[`label_${currentLang()}`]}
             </a>
           ))}

@@ -85,7 +85,7 @@
   .menu-link {
     color: var(--text-color);
     text-decoration: none;
-    font-size: 42px;
+    font-size: 32px;
     margin: 15px 0;
     transition: opacity 0.2s;
   }

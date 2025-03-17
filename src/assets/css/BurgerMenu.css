@@ -44,7 +44,7 @@
   
   /* Анимация для превращения в X */
   .burger-button.open .burger-line:nth-child(1) {
-    transform: translateY(10px) rotate(45deg);
+    transform: translateY(8px) rotate(45deg);
   }
   
   .burger-button.open .burger-line:nth-child(2) {

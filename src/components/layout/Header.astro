@@ -6,6 +6,7 @@ import LanguageDropdown from "./LanguageDropdown";
 const { lang = 'lv' } = Astro.params;
 const currentPath = Astro.url.pathname;
 import {mainLinks, secondaryLinks} from "./Links"
+import BurgerMenu from "./BurgerMenu";
 
 const isActive = (path: string) => currentPath.includes(path) ? "-link active" : "-link";
 ---
@@ -37,6 +38,7 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
           </a>
         ))}
         <LanguageDropdown client:load currentLang={lang} currentPath={currentPath} />
+        <BurgerMenu lang={lang} client:load/>
       </div>
     </div>
   </div>
@@ -50,7 +52,7 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
   --wrapper-padding: 20px;
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   width: 100%;
   height: var(--header-height);
   background: var(--layout);
@@ -64,6 +66,7 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
   height: 100%;
   padding: 0 var(--wrapper-padding);
   display: flex;
+  z-index: 100;
   align-items: center;
   @media (max-width: 1600px) {
     --wrapper-padding: 10px;
@@ -96,6 +99,12 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
   gap: var(--link-gap);
   flex-wrap: wrap;
   align-items: center;
+  @media (max-width: 1400px) {
+    gap: 20px;
+  }
+  @media (max-width: 600px) {
+    gap: 12px;
+  }
   &.right {
     justify-self: end;
   }
@@ -107,11 +116,15 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
   font-size: 16px;
   text-decoration: none;
   transition: color 0.2s ease;
+  @media (max-width: 1400px) {
+    font-size: 14px;
+
+  }
   &:hover,
   &.active {
     color: aqua;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     display: none;
   }
 }

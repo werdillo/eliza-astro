@@ -129,7 +129,8 @@ swiper-container {
         &.m {
             font-size: 32px;
             @media screen and (max-width: 600px) {
-                display: none;
+                font-size: 22px;
+
             }
         }
         &.xl {

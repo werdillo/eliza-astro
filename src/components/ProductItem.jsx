@@ -133,12 +133,14 @@ export default function ProductItem({ type = "def", lang }) {
                     <button class="-button">{translate[lang].dimensions}</button>
                   </a>
                 </Show>
-                <button class="-button xl">{translate[lang].sendEmail}</button>
+      					<a class="-text link" href="mailto:teika@eliza-k.lv">
+                  <button class="-button xl">{translate[lang].sendEmail}</button>
+                </a>
             </div>
         </div>
         <div class="product-item l">
               <div className="-card">
-                  <Show when={item()?.description_ru}>
+                  <Show when={item()?.["description_" + lang]}>
                     <div className="-text m bd">
                       {translate[lang].description}
                     </div> 
@@ -151,7 +153,7 @@ export default function ProductItem({ type = "def", lang }) {
             </div>
 
 
-            <Show when={type !== "mattress" && item()?.description_ru}>
+            <Show when={type !== "mattress" && item()?.["description_" + lang]}>
               <div className="-card">
                   <div className="-text m bd">
                   {translate[lang].fabrics}

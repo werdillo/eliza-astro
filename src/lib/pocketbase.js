@@ -21,3 +21,9 @@ export const getShema = (item) => {
 	const fileName = item.schema;
 	return `${url}/api/files/${collectionId}/${fileId}/${fileName}`;
 };
+export const getMatressFile = (item, lang) => {
+	const collectionId = item.collectionId || 'pmlzc10hatw7ufi';
+	const fileId = item.id;
+	const fileName = item["file_" + lang];
+	return `${url}/api/files/${collectionId}/${fileId}/${fileName}`;
+};

@@ -1,5 +1,5 @@
 import { For, Show, createSignal, onMount } from "solid-js";
-import { client, getImage, getShema } from "../lib/pocketbase";
+import { client, getImage, getShema, getMatressFile } from "../lib/pocketbase";
 import { register } from 'swiper/element/bundle';
 register();
 
@@ -128,6 +128,11 @@ export default function ProductItem({ type = "def", lang }) {
             </div>
               <div className="-right">
                 <div class="-title">{item().name}</div>
+                <Show when={type === "mattress" && item()?.['file_'+lang]}>
+                  <a href={getMatressFile(item(), lang)} target="_blank">
+                    <button class="-button">{translate[lang].dimensions}</button>
+                  </a>
+                </Show>
                 <button class="-button xl">{translate[lang].sendEmail}</button>
             </div>
         </div>
@@ -136,7 +141,6 @@ export default function ProductItem({ type = "def", lang }) {
                   <Show when={item()?.description_ru}>
                     <div className="-text m bd">
                       {translate[lang].description}
-
                     </div> 
                   
                     <div class="-text" innerHTML={item()['description_'+ lang]}></div>

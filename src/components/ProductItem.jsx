@@ -128,10 +128,15 @@ export default function ProductItem({ type = "def", lang }) {
             </div>
               <div className="-right">
                 <div class="-title">{item().name}</div>
-                <Show when={type === "mattress" && item()?.['file_'+lang]}>
+                <Show when={type === "mattress" && item()?.['file_'+lang]} >
+                  <div style={{display: "flex", gap: "12px"}}>
                   <a href={getMatressFile(item(), lang)} target="_blank">
                     <button class="-button">{translate[lang].dimensions}</button>
                   </a>
+                  <a href={"/files/cleaning-mattresses-" + lang + ".pdf"} target="_blank">
+                    <button class="-button">{translate[lang].cleaning}</button>
+                  </a>
+                  </div>
                 </Show>
       					<a class="-text link" href="mailto:teika@eliza-k.lv">
                   <button class="-button xl">{translate[lang].sendEmail}</button>

@@ -16,6 +16,13 @@ swiper-container {
     max-height: 60vh;
 }
 
+.home-slider {
+    height: 600px;
+    @media screen and (max-width: 600px) {
+        height: 40vh;
+        object-fit: contain ;
+    }
+}
 .product-item-swiper {
     max-width: 65vw;
     @media screen and (max-width: 1200px) {

@@ -104,6 +104,11 @@
     z-index: 99;
   }
   
+  @media (min-width: 1200px) {
+    .burger-menu {
+        display: none;
+    }
+}
   /* Медиа-запрос для планшетов и десктопов */
   @media (min-width: 768px) {
     .menu-panel {

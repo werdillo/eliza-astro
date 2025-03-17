@@ -21,7 +21,7 @@ export default function Slider() {
     <swiper-container
         slides-per-view="1"
         navigation="true"
-        pagination="true"
+        pagination="false"
         speed="500"
         loop="true"
         autoplay-delay="5000"
@@ -30,12 +30,13 @@ export default function Slider() {
         {(image) => (
         <swiper-slide>
             <div
+              class="home-slider"
+
             style={{
                 "background-image": `url(${image})`,
                 "background-size": "cover",
                 "background-position": "center",
                 width: "100%",
-                height: "600px",
             }}
             ></div>
         </swiper-slide>

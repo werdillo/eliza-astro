@@ -36,7 +36,7 @@ export default function Collections({ brand, lang }) {
 		},
 		"lv": {
 			"sofa": "Dīvāni",
-			"bed": "gultas"
+			"bed": "Gultas"
 		}
 	}
 

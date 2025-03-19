@@ -3,7 +3,7 @@ import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import MobileMenu from "../components/layout/MobileMenu.astro";
 import "../../main.css";
-const { lang } = Astro.params;
+const { lang="lv" } = Astro.params;
 const { offset=true } = Astro.props;
 ---
 
@@ -24,7 +24,7 @@ const { offset=true } = Astro.props;
 			<slot />
 		</article>
 		<MobileMenu />
-		<Footer />
+		<Footer lang={lang}/>
 	</div>
 </body>
 

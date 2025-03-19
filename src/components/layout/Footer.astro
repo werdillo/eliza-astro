@@ -1,46 +1,70 @@
 ---
-// Footer.astro
+const { lang = "lv" } = Astro.params;
+
+const translations = {
+  lv: {
+    showroom: "Mēbeļu salons ELIZA",
+    foam: "Izstrādājumu ražošana no porolona",
+    textile: "Audumu noliktava"
+  },
+  en: {
+    showroom: "Furniture showroom ELIZA",
+    foam: "Foam details manufacture",
+    textile: "Textile warehouse"
+  },
+  ru: {
+    showroom: "Мебельный салон ELIZA",
+    foam: "Производство деталей из поролона",
+    textile: "Склад тканей"
+  }
+};
+
+// Фолбек на латышский, если язык не найден
+const t = translations[lang] || translations.lv;
 ---
 
 <footer class="footer">
-	<div class="container">
-	  <div class="footer-grid">
-		<!-- Furniture showroom ELIZA -->
-		<div class="footer-section">
-		  <h3 class="section-title">Furniture showroom ELIZA</h3>
-		  <p>Rīga, A. Deglava iela 50, LV-1035</p>
-		  <p>
-			<a href="mailto:teika@eliza-k.lv">teika@eliza-k.lv</a>
-		  </p>
-		  <p>29112499</p>
-		</div>
-		
-		<!-- Foam details manufacture -->
-		<div class="footer-section">
-		  <h3 class="section-title">Foam details manufacture</h3>
-		  <p>Rīga, A. Deglava iela 52A, LV-1035</p>
-		  <p>
-			<a href="mailto:order@eliza-k.lv">order@eliza-k.lv</a>
-		  </p>
-		  <p>27862121, 26653510</p>
-		</div>
-		
-		<!-- Textile warehouse -->
-		<div class="footer-section">
-		  <h3 class="section-title">Textile warehouse</h3>
-		  <p>Rīga, A. Deglava 50 iela K-1</p>
-		  <p>
-			<a href="mailto:audumi@eliza-k.lv">audumi@eliza-k.lv</a>
-		  </p>
-		  <p>26599422</p>
-		</div>
-	  </div>
-	  
-	  <div class="copyright">
-		<p>&copy; {new Date().getFullYear()} ELIZA. All rights reserved.</p>
-	  </div>
-	</div>
-  </footer>
+  <div class="container">
+    <div class="footer-grid">
+
+      <!-- Furniture showroom ELIZA -->
+      <div class="footer-section">
+        <h3 class="section-title">{t.showroom}</h3>
+        <p>Rīga, A. Deglava iela 50, LV-1035</p>
+        <p>
+          <a href="mailto:teika@eliza-k.lv">teika@eliza-k.lv</a>
+        </p>
+        <p>29112499</p>
+      </div>
+      
+      <!-- Foam details manufacture -->
+      <div class="footer-section">
+        <h3 class="section-title">{t.foam}</h3>
+        <p>Rīga, A. Deglava iela 52A, LV-1035</p>
+        <p>
+          <a href="mailto:order@eliza-k.lv">order@eliza-k.lv</a>
+        </p>
+        <p>27862121, 26653510</p>
+      </div>
+      
+      <!-- Textile warehouse -->
+      <div class="footer-section">
+        <h3 class="section-title">{t.textile}</h3>
+        <p>Rīga, A. Deglava 50 iela K-1</p>
+        <p>
+          <a href="mailto:audumi@eliza-k.lv">audumi@eliza-k.lv</a>
+        </p>
+        <p>26599422</p>
+      </div>
+
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; {new Date().getFullYear()} ELIZA. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
   
   <style>
 	.footer {

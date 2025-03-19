@@ -25,6 +25,20 @@ export default function Collections({ brand, lang }) {
 			console.error('Error fetching items:', err);
 		}
 	});
+	const translate = {
+		"en": {
+			"sofa": "Sofas",
+			"bed": "Beds"
+		},
+		"ru": {
+			"sofa": "Диваны",
+			"bed": "Кровати"
+		},
+		"lv": {
+			"sofa": "Dīvāni",
+			"bed": "gultas"
+		}
+	}
 
 	return <>
 		<Show when={loading()}>
@@ -46,7 +60,7 @@ export default function Collections({ brand, lang }) {
 			<For each={Object.keys(groupedItems())}>
 				{(type) => <>
 					<div class="container">
-						<div class="title">{type.toUpperCase()}</div>
+						<div class="title">{translate[lang][type.toLowerCase()]}</div>
 					</div>
 					<div class="product-list">
 						<For each={groupedItems()[type]}>

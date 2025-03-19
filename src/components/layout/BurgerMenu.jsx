@@ -43,6 +43,7 @@ const BurgerMenu = (props) => {
       {/* Меню */}
       <nav class={`menu-panel ${isOpen() ? 'open' : ''}`}>
         <div class="menu-links">
+         <a href="https://porolons.lv/" class="menu-link" onClick={() => setIsOpen(false)}>Porolons</a>
           {secondaryLinks.map((link) => (
             <a href={`/${props.lang}${link.href}`} class="menu-link" onClick={() => setIsOpen(false)}>
               {link[`label_${currentLang()}`]}

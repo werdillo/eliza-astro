@@ -1,7 +1,7 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
 import BlogList from "../../../components/BlogList";
-
+import ComingSoon from "../../../components/ComingSoon.astro";
 export function getStaticPaths() {
 	return [
 		{ params: { lang: "en" } },
@@ -12,6 +12,7 @@ export function getStaticPaths() {
 const { lang } = Astro.params;
     
 ---
-<Layout>
-    <BlogList lang={lang} type="hotels" client:only/>
+<Layout  offset={false}>	
+	<ComingSoon lang={lang} />
+    <!-- <BlogList lang={lang} type="hotels" client:only/> -->
 </Layout>

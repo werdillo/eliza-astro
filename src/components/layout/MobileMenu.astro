@@ -44,10 +44,13 @@ import {mainLinks, secondaryLinks} from "./Links"
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
     gap: 10px;
     color: var(--link-color);
     font-weight: 500;
+    @media (max-width: 400px) {
+      padding: 0 10px
+    }
+
   }
 
   .-link {

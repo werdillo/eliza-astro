@@ -6,14 +6,10 @@ export default function Slider() {
   const [items, setItems] = createSignal([
     {
       images: [
-        "/slider/Pic1.jpg",
-        "/slider/Pic2.jpg",
-        "/slider/Pic3.jpg",
-        "/slider/Pic4.jpg",
-        "/slider/Pic5.jpg",
         "/slider/Pic6.jpg",
+        "/slider/Pic1.jpg",
         "/slider/Pic7.jpg",
-        "/slider/Pic8.jpg",
+        "/slider/Pic3.jpg",
       ],
     },
   ]);
@@ -22,9 +18,9 @@ export default function Slider() {
         slides-per-view="1"
         navigation="true"
         pagination="false"
-        speed="500"
+        speed="750"
         loop="true"
-        autoplay-delay="5000"
+        autoplay-delay="10000"
     >
     <For each={items()[0].images}>
         {(image) => (

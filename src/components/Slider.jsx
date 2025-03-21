@@ -18,7 +18,7 @@ export default function Slider() {
         slides-per-view="1"
         navigation="true"
         pagination="false"
-        speed="750"
+        speed="500"
         loop="true"
         autoplay-delay="10000"
     >

@@ -3,25 +3,36 @@
       href: "/collections", 
       label_en: "Collections",
       label_lv: "Kolekcijas",
-      label_ru: "Коллекции"
-    },
-    { 
-      href: "/horeca", 
-      label_en: "HoReCa",
-      label_lv: "HoReCa",
-      label_ru: "HoReCa"
+      label_ru: "Коллекции",
+      external: false
     },
     { 
       href: "/matressess", 
       label_en: "Mattreses",
       label_lv: "Matrači",
-      label_ru: "Матрасы"
+      label_ru: "Матрасы",
+      external: false
+    },
+    { 
+      href: "https://porolons.lv/", 
+      label_en: "Porolon",
+      label_lv: "Porolons",
+      label_ru: "Поролон",
+      external: true
     },
     { 
       href: "/components", 
       label_en: "Components",
       label_lv: "Komponenti",
-      label_ru: "Компоненты"
+      label_ru: "Компоненты",
+      external: false
+    },
+    { 
+      href: "/horeca", 
+      label_en: "HoReCa",
+      label_lv: "HoReCa",
+      label_ru: "HoReCa",
+      external: false
     }
   ];
   

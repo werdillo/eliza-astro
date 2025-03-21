@@ -7,12 +7,12 @@ import {mainLinks, secondaryLinks} from "./Links"
 
 <nav class="mobile-menu">
   <div class="-wrapper">
-    {mainLinks.map(item => (
+    {mainLinks.map(link => (
       <a
-        href={`/${lang}${item.href}`}
+        href={ link.href.startsWith('http') ? link.href : `/${lang}${link.href}`}
         class:list={"-link"}
       >
-        {item["label_" + lang]}
+        {link["label_" + lang]}
       </a>
     ))}
   </div>

@@ -18,10 +18,9 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
         <Image src={Logo} alt="Logo" class="-logo"/>
       </a>
       <div class="-links">
-        <a href="https://porolons.lv/" class="-link external">Porolons</a>
         {mainLinks.map(link => (
           <a
-            href={`/${lang}${link.href}`}
+            href={ link.href.startsWith('http') ? link.href : `/${lang}${link.href}`}
             class={isActive(link.href)}
           >
             {link[`label_${lang}`]}
@@ -113,11 +112,11 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
 
 .-link {
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   text-decoration: none;
   transition: color 0.2s ease;
   @media (max-width: 1400px) {
-    font-size: 14px;
+    font-size: 12px;
 
   }
   &:hover,

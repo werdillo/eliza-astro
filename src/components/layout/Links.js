@@ -10,7 +10,7 @@
       href: "/matressess", 
       label_en: "Mattreses",
       label_lv: "Matrači",
-      label_ru: "Матрасы",
+      label_ru: "Матрацы",
       external: false
     },
     { 

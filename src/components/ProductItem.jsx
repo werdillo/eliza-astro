@@ -77,6 +77,7 @@ export default function ProductItem({ type = "def", lang }) {
 
           </div>
           <div class="-card" >
+              <div class="skeleton text title" />
             <div className="-textile">
                 <div class="skeleton textile" />
                 <div class="skeleton textile" />

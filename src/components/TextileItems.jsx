@@ -2,7 +2,7 @@ import { For, createSignal, onMount } from "solid-js";
 import { client, getImage } from '../lib/pocketbase';
 
 
-export default function TextileItems() {
+export default function TextileItems({lang}) {
 	const [items, setItems] = createSignal([]);
 	const [loading, setLoading] = createSignal(true);
 	onMount(async () => {
@@ -46,7 +46,7 @@ export default function TextileItems() {
 					<>
 						<div class="container">
 							<div class="textile-title">
-								{item.title}
+								{item["title_" + lang]}
 							</div>
 						</div>
 						<div class="textile">

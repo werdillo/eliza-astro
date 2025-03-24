@@ -14,6 +14,6 @@ const { lang } = Astro.params;
 ---
 
 <Layout offset={false}>
-	<ProductItem client:only lang={lang}/>
+	<ProductItem client:load lang={lang}/>
 </Layout>
 

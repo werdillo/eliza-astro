@@ -1,5 +1,5 @@
 // BurgerMenu.jsx
-import { createSignal, createEffect } from 'solid-js';
+import { createSignal } from 'solid-js';
 import '../../assets/css/BurgerMenu.css';
 
 import { secondaryLinks} from "./Links"

@@ -1,23 +1,6 @@
 ---
 const { lang = "lv" } = Astro.params;
-
-const translations = {
-  lv: {
-    showroom: "Mēbeļu salons ELIZA",
-    foam: "Porolona detaļas ražošana",
-    textile: "Audumu noliktava"
-  },
-  en: {
-    showroom: "Furniture showroom ELIZA",
-    foam: "Foam details manufacture",
-    textile: "Textile warehouse"
-  },
-  ru: {
-    showroom: "Мебельный салон ELIZA",
-    foam: "Производство деталей из поролона",
-    textile: "Склад тканей"
-  }
-};
+import {contacts, translations} from "../../contacts.js"; // или "./contacts.json" если в корне проекта
 
 // Фолбек на латышский, если язык не найден
 const t = translations[lang] || translations.lv;
@@ -26,54 +9,24 @@ const t = translations[lang] || translations.lv;
 	<div class="container">
 	  <div class="footer-grid">
   
-		<!-- Furniture showroom ELIZA -->
-		<div class="footer-section">
-		  <h3 class="section-title">{t.showroom}</h3>
-		  <p>
-			<a href={`https://maps.google.com/?q=${'Rīga, A. Deglava iela 50, LV-1035'}`} target="_blank" class="contact-link">
-				Rīga, A. Deglava iela 50, LV-1035
-			</a>
-		  </p>
-		  <p>
-			<a href="mailto:teika@eliza-k.lv">teika@eliza-k.lv</a>
-		  </p>
-		  <p>
-			<a href="tel:+37129112499">29112499</a>
-		  </p>
-		</div>
-		
-		<!-- Foam details manufacture -->
-		<div class="footer-section">
-		  <h3 class="section-title">{t.foam}</h3>
-		  <p>
-			<a href={`https://maps.google.com/?q=${'Rīga, A. Deglava iela 52A, LV-1035'}`} target="_blank" class="contact-link">
-				Rīga, A. Deglava iela 52A, LV-1035
-			</a>
-		  </p>
-		  <p>
-			<a href="mailto:order@eliza-k.lv">order@eliza-k.lv</a>
-		  </p>
-		  <p>
-			<a href="tel:+37127862121">27862121</a>, 
-			<a href="tel:+37126653510">26653510</a>
-		  </p>
-		</div>
-		
-		<!-- Textile warehouse -->
-		<div class="footer-section">
-		  <h3 class="section-title">{t.textile}</h3>
-		  <p>
-			<a href={`https://maps.google.com/?q=${'Rīga, A. Deglava 50 iela K-1'}`} target="_blank" class="contact-link">
-				Rīga, A. Deglava 50 iela K-1
-			</a>
-		  </p>
-		  <p>
-			<a href="mailto:audumi@eliza-k.lv">audumi@eliza-k.lv</a>
-		  </p>
-		  <p>
-			<a href="tel:+37126599422">26599422</a>
-		  </p>
-		</div>
+		{contacts.map(contact => (
+		  <div class="footer-section">
+			<h3 class="section-title">{t[contact.key]}</h3>
+			<p>
+			  <a href={`https://maps.google.com/?q=${contact.address}`} target="_blank" class="contact-link">
+				{contact.address}
+			  </a>
+			</p>
+			<p>
+			  <a href={`mailto:${contact.mail}`}>{contact.mail}</a>
+			</p>
+			<p>
+			  {contact.phone.map(phone => (
+				<a href={`tel:+371${phone}`}>{phone}</a>
+			  )).reduce((prev, curr) => prev === null ? [curr] : [prev, ', ', curr], null)}
+			</p>
+		  </div>
+		))}
   
 	  </div>
 	  
@@ -81,7 +34,7 @@ const t = translations[lang] || translations.lv;
 		<p>&copy; {new Date().getFullYear()} ELIZA</p>
 	  </div>
 	</div>
-  </footer>
+</footer>
   
   <style>
 	.footer {

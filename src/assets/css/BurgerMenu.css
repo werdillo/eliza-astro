@@ -89,6 +89,10 @@
     margin: 15px 0;
     transition: opacity 0.2s;
   }
+
+  .menu-link.active {
+    color: aqua; /* or whatever accent color you're using */
+  }
   
   .menu-link:hover {
     opacity: 0.8;

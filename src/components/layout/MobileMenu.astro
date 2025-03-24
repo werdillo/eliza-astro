@@ -1,20 +1,25 @@
 ---
 const { lang="lv" } = Astro.params;
 const currentPath = Astro.url.pathname;
-import {mainLinks, secondaryLinks} from "./Links"
+import {mainLinks} from "./Links"
 
 ---
 
 <nav class="mobile-menu">
   <div class="-wrapper">
-    {mainLinks.map(link => (
-      <a
-        href={ link.href.startsWith('http') ? link.href : `/${lang}${link.href}`}
-        class:list={"-link"}
-      >
-        {link["label_" + lang]}
-      </a>
-    ))}
+    {mainLinks.map(link => {
+      const fullHref = link.href.startsWith('http') ? link.href : `/${lang}${link.href}`;
+      const isActive = currentPath === fullHref || 
+        (link.href !== '/' && currentPath.startsWith(fullHref));
+      return (
+        <a
+          href={fullHref}
+          class:list={["-link", { "active": isActive }]}
+        >
+          {link["label_" + lang]}
+        </a>
+      );
+    })}
   </div>
 </nav>
 

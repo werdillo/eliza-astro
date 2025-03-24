@@ -4,27 +4,9 @@ import '../../assets/css/BurgerMenu.css';
 
 import { secondaryLinks} from "./Links"
 
-const BurgerMenu = (props) => {
+const BurgerMenu = ({lang, currentPath}) => {
   const [isOpen, setIsOpen] = createSignal(false);
-  const [currentLang, setCurrentLang] = createSignal(props.lang || 'lv');
-  
-  // Обновление языка при изменении props
-  createEffect(() => {
-    if (props.lang) {
-      setCurrentLang(props.lang);
-    }
-  });
-  
-  const toggleMenu = () => {
-    setIsOpen(!isOpen());
-  };
-
-  const changeLang = (lang) => {
-    setCurrentLang(lang);
-    if (props.onLanguageChange) {
-      props.onLanguageChange(lang);
-    }
-  };
+  const toggleMenu = () => setIsOpen(!isOpen());
 
   return (
     <div class="burger-menu" >
@@ -43,13 +25,24 @@ const BurgerMenu = (props) => {
       {/* Меню */}
       <nav class={`menu-panel ${isOpen() ? 'open' : ''}`}>
         <div class="menu-links">
-          {secondaryLinks.map((link) => (
-            <a             
-              href={ link.href.startsWith('http') ? link.href : `/${props.lang}${link.href}`}
-             class="menu-link" onClick={() => setIsOpen(false)}>
-              {link[`label_${currentLang()}`]}
-            </a>
-          ))}
+          {secondaryLinks.map((link) => {
+            // Create the full href with language prefix if needed
+            const fullHref = link.href.startsWith('http') ? link.href : `/${lang}${link.href}`;
+            
+            // Check if current path matches this link's path
+            const isActive = currentPath === fullHref || 
+                           (link.href !== '/' && currentPath.startsWith(fullHref));
+            
+            return (
+              <a             
+                href={fullHref}
+                class={`menu-link ${isActive ? 'active' : ''}`} 
+                onClick={() => setIsOpen(false)}
+              >
+                {link[`label_${lang}`]}
+              </a>
+            );
+          })}
         </div>
       </nav>
       

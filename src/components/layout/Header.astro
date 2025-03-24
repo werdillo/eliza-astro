@@ -37,7 +37,7 @@ const isActive = (path: string) => currentPath.includes(path) ? "-link active" :
           </a>
         ))}
         <LanguageDropdown client:load currentLang={lang} currentPath={currentPath} />
-        <BurgerMenu lang={lang} client:load/>
+        <BurgerMenu currentPath={currentPath} lang={lang} client:load/>
       </div>
     </div>
   </div>

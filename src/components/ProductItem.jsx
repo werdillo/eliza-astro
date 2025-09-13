@@ -48,9 +48,9 @@ export default function ProductItem({ type = "def", lang }) {
   });
 
   const fabricImages = [
-    "/src/assets/images/textile/matrix.jpeg",
-    "/src/assets/images/textile/falcone.jpeg",
-    "/src/assets/images/textile/salvador.jpeg",
+    "/textile/matrix.jpeg",
+    "/textile/falcone.jpeg",
+    "/textile/salvador.jpeg",
   ];
 
   const renderSkeleton = (className, count = 1) => (

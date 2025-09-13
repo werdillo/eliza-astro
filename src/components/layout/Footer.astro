@@ -1,128 +1,139 @@
 ---
 const { lang = "lv" } = Astro.params;
-import {contacts, translations} from "../../contacts.js"; // или "./contacts.json" если в корне проекта
+import { contacts, translations } from "../../contacts.js"; // или "./contacts.json" если в корне проекта
 
 // Фолбек на латышский, если язык не найден
 const t = translations[lang] || translations.lv;
 ---
+
 <footer class="footer">
-	<div class="container">
-	  <div class="footer-grid">
-  
-		{contacts.map(contact => (
-		  <div class="footer-section">
-			<h3 class="section-title">{t[contact.key]}</h3>
-			<p>
-			  <a href={`https://maps.google.com/?q=${contact.address}`} target="_blank" class="contact-link">
-				{contact.address}
-			  </a>
-			</p>
-			<p>
-			  <a href={`mailto:${contact.mail}`}>{contact.mail}</a>
-			</p>
-			<p>
-			  {contact.phone.map(phone => (
-				<a href={`tel:+371${phone}`}>{phone}</a>
-			  )).reduce((prev, curr) => prev === null ? [curr] : [prev, ', ', curr], null)}
-			</p>
-		  </div>
-		))}
-  
-	  </div>
-	  
-	  <div class="copyright">
-		<p>&copy; {new Date().getFullYear()} ELIZA</p>
-	  </div>
-	</div>
+    <div class="container">
+        <div class="footer-grid">
+            {
+                contacts.map((contact) => (
+                    <div class="footer-section">
+                        <h3 class="section-title">{t[contact.key]}</h3>
+                        <p>
+                            <a
+                                href={`https://maps.google.com/?q=${contact.address}`}
+                                target="_blank"
+                                class="contact-link"
+                            >
+                                {contact.address}
+                            </a>
+                        </p>
+                        <p>
+                            <a href={`mailto:${contact.mail}`}>
+                                {contact.mail}
+                            </a>
+                        </p>
+                        <p>
+                            {contact.phone
+                                .map((phone) => (
+                                    <a href={`tel:+371${phone}`}>{phone}</a>
+                                ))
+                                .reduce(
+                                    (prev, curr) =>
+                                        prev === null
+                                            ? [curr]
+                                            : [prev, ", ", curr],
+                                    null,
+                                )}
+                        </p>
+                    </div>
+                ))
+            }
+        </div>
+
+        <div class="copyright">
+            <p>&copy; {new Date().getFullYear()} ELIZA</p>
+        </div>
+    </div>
 </footer>
-  
-  <style>
-	.footer {
-	  text-align: left;
-	  background-color: #303030;
-	  padding: 3rem 0;
-	  font-family: Arial, sans-serif;
-	  color: #ffffff;
-	}
-  
-	.container {
-	  width: 90%;
-	  max-width: 1200px;
-	  margin: 0 auto;
-	}
-  
-	.footer-grid {
-	  display: grid;
-	  grid-template-columns: 1fr;
-	  gap: 2rem;
-	}
-  
-	.section-title {
-	  font-size: 1.25rem;
-	  font-weight: 700;
-	  margin-bottom: 1rem;
-	}
-  
-	.footer-section p {
-	  margin: 0.5rem 0;
-	  line-height: 1.5;
-	}
-  
-	.footer-section a {
-	  color: #ffffff;
-	  text-decoration: none;
-	  font-weight: 500;
-	  transition: color 0.2s ease;
-	}
-  
-	.footer-section a:hover {
-	  color: aqua; /* Желтый цвет при наведении */
-	  text-decoration: none;
-	}
 
-  
-	.footer-section a[href^="tel:"]:hover {
-	  color: aqua;
-	  text-decoration: none;
+<style>
+    .footer {
+        text-align: left;
+        background-color: #303030;
+        padding: 3rem 0;
+        font-family: Arial, sans-serif;
+        color: #ffffff;
+    }
 
-	}
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-	.footer-section a[href^="mailto:"]:hover {
-	  color: aqua;
-	  text-decoration: none;
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
 
-	}
-  
-	.copyright {
-	  margin-top: 2rem;
-	  padding-top: 1.5rem;
-	  border-top: 1px solid #ddd;
-	  text-align: center;
-	  font-size: 0.9rem;
-	}
-  
-	/* Media query for tablets and larger screens */
-	@media (min-width: 768px) {
-	  .footer-grid {
-		grid-template-columns: repeat(3, 1fr);
-	  }
-	}
-  
-	/* Media query for smaller screens */
-	@media (max-width: 767px) {
-	  .section-title {
-		font-size: 1.1rem;
-	  }
-	  
-	  .footer {
-		padding: 2rem 0;
-		padding-bottom: 50px;
-	  }
-	  
-	  .copyright {
-		margin-top: 1.5rem;
-		padding-top: 1rem;
-	  }
-	}
-  </style>
-  
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .footer-section p {
+        margin: 0.5rem 0;
+        line-height: 1.5;
+    }
+
+    .footer-section a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+    .footer-section a:hover {
+        color: aqua; /* Желтый цвет при наведении */
+        text-decoration: none;
+    }
+
+    .footer-section a[href^="tel:"]:hover {
+        color: aqua;
+        text-decoration: none;
+    }
+
+    .footer-section a[href^="mailto:"]:hover {
+        color: aqua;
+        text-decoration: none;
+    }
+
+    .copyright {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #ddd;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    /* Media query for tablets and larger screens */
+    @media (min-width: 768px) {
+        .footer-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* Media query for smaller screens */
+    @media (max-width: 767px) {
+        .section-title {
+            font-size: 1.1rem;
+        }
+
+        .footer {
+            padding: 2rem 0;
+            padding-bottom: 50px;
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+        }
+    }
+</style>

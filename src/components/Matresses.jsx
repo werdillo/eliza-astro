@@ -19,16 +19,12 @@ export default function Matresses({ lang }) {
     }
   });
 
-  const SkeletonLoader = () => (
-    <div class="product-list">
-      <For each={Array(8).fill()}>{() => <div class="skeleton" />}</For>
-    </div>
-  );
-
   return (
     <>
       <Show when={loading()}>
-        <SkeletonLoader />
+        <div class="product-list">
+          <For each={Array(8).fill()}>{() => <div class="skeleton" />}</For>
+        </div>
       </Show>
 
       <Show when={!loading()}>

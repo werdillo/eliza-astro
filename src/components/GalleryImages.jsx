@@ -28,14 +28,10 @@ export default function GalleryImages() {
     }
   });
 
-  const SkeletonLoader = () => (
-    <For each={Array(12).fill()}>{() => <div class="skeleton" />}</For>
-  );
-
   return (
     <div class="gallery">
       <Show when={loading()}>
-        <SkeletonLoader />
+        <For each={Array(12).fill()}>{() => <div class="skeleton" />}</For>
       </Show>
 
       <Show when={!loading()}>

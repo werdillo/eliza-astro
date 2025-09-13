@@ -3,16 +3,50 @@ import Layout from "../../layouts/Layout.astro";
 import BlogList from "../../components/BlogList";
 import ComingSoon from "../../components/ComingSoon.astro";
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
-    
+
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Par mums - Eliza-K | Premium mēbeļu ražotājs Latvijā",
+        description:
+            "Uzziniet vairāk par Eliza-K - vadošo premium mēbeļu ražotāju Latvijā. Mūsu vēsture, vērtības un nodošanās kvalitatīvu mēbeļu radīšanai jau daudzus gadus.",
+        keywords:
+            "par mums, Eliza-K, mēbeļu ražotājs Latvija, uzņēmuma vēsture, premium mēbeles, kvalitāte, dizains",
+    },
+    en: {
+        title: "About Us - Eliza-K | Premium Furniture Manufacturer in Latvia",
+        description:
+            "Learn more about Eliza-K - leading premium furniture manufacturer in Latvia. Our history, values and dedication to creating quality furniture for many years.",
+        keywords:
+            "about us, Eliza-K, furniture manufacturer Latvia, company history, premium furniture, quality, design",
+    },
+    ru: {
+        title: "О нас - Eliza-K | Производитель премиум мебели в Латвии",
+        description:
+            "Узнайте больше об Eliza-K - ведущем производителе премиум мебели в Латвии. Наша история, ценности и преданность созданию качественной мебели на протяжении многих лет.",
+        keywords:
+            "о нас, Eliza-K, производитель мебели Латвия, история компании, премиум мебель, качество, дизайн",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
-<Layout offset={false}>	
-	<ComingSoon lang={lang} />
+
+<Layout
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/about-us`}
+    image="/og-image-about.jpg"
+>
+    <ComingSoon lang={lang} />
     <!-- <BlogList lang={lang} type="about" client:only/> -->
 </Layout>

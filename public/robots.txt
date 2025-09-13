@@ -1,0 +1,52 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://eliza-k.lv/sitemap.xml
+
+# Allow all main pages
+Allow: /lv/
+Allow: /en/
+Allow: /ru/
+Allow: /collections
+Allow: /gallery
+Allow: /contact
+Allow: /about-us
+Allow: /catalogs
+Allow: /matressess
+Allow: /components
+Allow: /textile
+
+# Allow catalog downloads
+Allow: /catalog_2018.pdf
+Allow: /catalog_2019.pdf
+Allow: /catalog_2021.pdf
+
+# Allow images and static assets
+Allow: /images/
+Allow: /collection/
+Allow: /slider/
+Allow: /awards/
+Allow: /favicon.ico
+Allow: /favicon.png
+
+# Disallow admin and development files
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /_astro/
+Disallow: /dist/
+
+# Crawl delay (optional - can help with server load)
+Crawl-delay: 1
+
+# Additional directives for major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /

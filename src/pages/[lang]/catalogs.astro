@@ -2,154 +2,184 @@
 import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 
-
 import collection_2018 from "../../assets/images/catalog/collection_2018.jpg";
 import collection_2019 from "../../assets/images/catalog/collection_2019.jpg";
 import collection_2021 from "../../assets/images/catalog/collection_2021.jpg";
 const { lang } = Astro.params;
 
 function t(key) {
-	return translate[lang][key] || key;
+    return translate[lang][key] || key;
 }
-
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Katalogi - Eliza-K | Lejupielādējiet mūsu mēbeļu katalogus PDF",
+        description:
+            "Lejupielādējiet Eliza-K mēbeļu katalogus PDF formātā. Pilna informācija par mūsu premium mēbeļu kolekcijām 2018, 2019 un 2021. gadā. Katalogi ar cenām un specifikācijām.",
+        keywords:
+            "katalogi, PDF, mēbeļu katalogs, Eliza-K katalogs, lejupielāde, produktu katalogs, premium mēbeles, cenas, specifikācijas",
+    },
+    en: {
+        title: "Catalogs - Eliza-K | Download Our Furniture Catalogs PDF",
+        description:
+            "Download Eliza-K furniture catalogs in PDF format. Complete information about our premium furniture collections from 2018, 2019 and 2021. Catalogs with prices and specifications.",
+        keywords:
+            "catalogs, PDF, furniture catalog, Eliza-K catalog, download, product catalog, premium furniture, prices, specifications",
+    },
+    ru: {
+        title: "Каталоги - Eliza-K | Скачайте наши каталоги мебели PDF",
+        description:
+            "Скачайте каталоги мебели Eliza-K в формате PDF. Полная информация о наших коллекциях премиум мебели 2018, 2019 и 2021 года. Каталоги с ценами и спецификациями.",
+        keywords:
+            "каталоги, PDF, каталог мебели, каталог Eliza-K, скачать, каталог продукции, премиум мебель, цены, спецификации",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
+
 const translate = {
-	en: {
-		pageTitle: "Catalogue",
-		catalog: "Catalogue",
-	},
-	ru: {
-		pageTitle: "Каталоги",
-		catalog: "Каталог",
-	},
-	lv: {
-		pageTitle: "Katalogi",
-		catalog: "Katalogs",
-	},
+    en: {
+        pageTitle: "Catalogue",
+        catalog: "Catalogue",
+    },
+    ru: {
+        pageTitle: "Каталоги",
+        catalog: "Каталог",
+    },
+    lv: {
+        pageTitle: "Katalogi",
+        catalog: "Katalogs",
+    },
 };
 ---
 
-<Layout>
-	<div class="catalogs-text">{t("pageTitle")}</div>
+<Layout
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/catalogs`}
+    image="/og-image-catalogs.jpg"
+    type="website"
+>
+    <div class="catalogs-text">{t("pageTitle")}</div>
 
-<div class="catalogs">
-	<div class="catalog">
-		<a
-			href="/catalog_2018.pdf"
-			class="-link"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			<Image src={collection_2018} alt="" class="-img" />
-		</a>
-		<span class="-text">{t("catalog")} 2018</span>
-	</div>
+    <div class="catalogs">
+        <div class="catalog">
+            <a
+                href="/catalog_2018.pdf"
+                class="-link"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Image src={collection_2018} alt="" class="-img" />
+            </a>
+            <span class="-text">{t("catalog")} 2018</span>
+        </div>
 
-	<div class="catalog">
-		<a
-			href="/catalog_2019.pdf"
-			class="-link"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			<Image src={collection_2019} alt="" class="-img" />
-		</a>
-		<span class="-text">{t("catalog")} 2019</span>
-	</div>
-	<div class="catalog">
-		<a
-			href="/catalog_2021.pdf"
-			class="-link"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			<Image src={collection_2021} alt="" class="-img" />
-		</a>
-		<span class="-text">{t("catalog")} 2021</span>
-	</div>
-</div>
+        <div class="catalog">
+            <a
+                href="/catalog_2019.pdf"
+                class="-link"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Image src={collection_2019} alt="" class="-img" />
+            </a>
+            <span class="-text">{t("catalog")} 2019</span>
+        </div>
+        <div class="catalog">
+            <a
+                href="/catalog_2021.pdf"
+                class="-link"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Image src={collection_2021} alt="" class="-img" />
+            </a>
+            <span class="-text">{t("catalog")} 2021</span>
+        </div>
+    </div>
 </Layout>
 
-
 <style>
-	.catalogs {
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10vw;
-		margin-right: 30px;
-		place-content: center;
-		padding: 20px 0;
-		margin: 20px 0;
-	}
-	.catalogs-text {
-		font-size: 36px;
-		width: 30%;
-		margin-top: 40px;
-		text-align: center;
-		font-family: 'Avenir', sans-serif;
-		font-weight: 500;
-		@media screen and (max-width: 768px) {
-			font-size: 16px;
-			margin: 20px auto;
-			width: 90%;
-		}
-	}
+    .catalogs {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10vw;
+        margin-right: 30px;
+        place-content: center;
+        padding: 20px 0;
+        margin: 20px 0;
+    }
+    .catalogs-text {
+        font-size: 36px;
+        width: 30%;
+        margin-top: 40px;
+        text-align: center;
+        font-family: "Avenir", sans-serif;
+        font-weight: 500;
+        @media screen and (max-width: 768px) {
+            font-size: 16px;
+            margin: 20px auto;
+            width: 90%;
+        }
+    }
 
-	.catalog {
-		padding-bottom: 20px;
-		display: flex;
-		justify-content: center;
-		flex-direction: column;
+    .catalog {
+        padding-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
 
-		.-link {
-			display: flex;
-			justify-content: center;
+        .-link {
+            display: flex;
+            justify-content: center;
 
-			.-img {
-				filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.15));
-				min-height: 240px;
-				height: 360px;
-				display: flex;
-				width: auto;
-				margin-bottom: 10px;
-				transition: 250ms;
+            .-img {
+                filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.15));
+                min-height: 240px;
+                height: 360px;
+                display: flex;
+                width: auto;
+                margin-bottom: 10px;
+                transition: 250ms;
 
-				&:hover {
-					filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2));
-					transform: scale(1.02);
+                &:hover {
+                    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2));
+                    transform: scale(1.02);
+                }
+                &:active {
+                    transform: scale(1.1);
+                }
+                @media screen and (max-width: 1500px) {
+                    height: 260px;
+                    min-height: 260px;
+                }
 
-				}
-				&:active {
-					transform: scale(1.1);
-				}
-				@media screen and (max-width: 1500px) {
-					height: 260px;
-					min-height: 260px;
-				}
+                @media screen and (max-width: 1200px) {
+                    height: 220px;
+                    min-height: 220px;
+                }
+            }
+        }
 
-				@media screen and (max-width: 1200px) {
-					height: 220px;
-					min-height: 220px;
-				}
-			}
-		}
-
-		.-text {
-			display: block;
-			margin-left: auto;
-			margin-right: auto;
-			text-align: center;
-			font-family: "Avenir", sans-serif;
-			font-size: 16px;
-		}
-	}
+        .-text {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            font-family: "Avenir", sans-serif;
+            font-size: 16px;
+        }
+    }
 </style>

@@ -8,114 +8,148 @@ import Layout from "../../layouts/Layout.astro";
 const { lang } = Astro.params;
 
 export function getStaticPaths() {
-  return [
-    { params: { lang: "en" } },
-    { params: { lang: "lv" } },
-    { params: { lang: "ru" } },
-  ];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
+
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Mēbeļu kolekcijas - Eliza-K | Sophisticated Living, BBold, Basic",
+        description:
+            "Apskatiet Eliza-K ekskluzīvās mēbeļu kolekcijas: Sophisticated Living premium līniju, moderno BBold kolekciju un praktisko Basic sēriju. Unikāls dizains un augstākā kvalitāte.",
+        keywords:
+            "mēbeļu kolekcijas, Sophisticated Living, BBold, Basic, premium mēbeles, dizaina mēbeles, ekskluzīvas mēbeles, Eliza-K kolekcijas",
+    },
+    en: {
+        title: "Furniture Collections - Eliza-K | Sophisticated Living, BBold, Basic",
+        description:
+            "Explore Eliza-K exclusive furniture collections: Sophisticated Living premium line, modern BBold collection and practical Basic series. Unique design and highest quality.",
+        keywords:
+            "furniture collections, Sophisticated Living, BBold, Basic, premium furniture, designer furniture, exclusive furniture, Eliza-K collections",
+    },
+    ru: {
+        title: "Коллекции мебели - Eliza-K | Sophisticated Living, BBold, Basic",
+        description:
+            "Изучите эксклюзивные коллекции мебели Eliza-K: премиум линию Sophisticated Living, современную коллекцию BBold и практичную серию Basic. Уникальный дизайн и высочайшее качество.",
+        keywords:
+            "коллекции мебели, Sophisticated Living, BBold, Basic, премиум мебель, дизайнерская мебель, эксклюзивная мебель, коллекции Eliza-K",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout offset={false}>
-  <div class="collections">
-    <a
-      href="https://www.sophisticated-living.com/"
-      rel="noopener noreferrer"
-      target="_blank"
-      class="collection-link"
-    >
-      <div class="-item">
-        <Image class="-img" alt="" src={pic2} />
-        <span class="-text">Sophisticated Living</span>
-      </div>
-    </a>
-    <a href={"/" + lang + "/collection/bbold"} class="collection-link">
-      <div class="-item">
-        <Image class="-img" alt="" src={pic3} />
-        <span class="-text">BBold</span>
-      </div>
-    </a>
-    <a href={"/" + lang + "/collection/basic"} class="collection-link">
-      <div class="-item">
-        <Image class="-img" alt="" src={pic1} />
-        <span class="-text">Basic</span>
-      </div>
-    </a>
-  </div>
+<Layout
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/collections`}
+    image="/og-image-collections.jpg"
+>
+    <div class="collections">
+        <a
+            href="https://www.sophisticated-living.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+            class="collection-link"
+        >
+            <div class="-item">
+                <Image class="-img" alt="" src={pic2} />
+                <span class="-text">Sophisticated Living</span>
+            </div>
+        </a>
+        <a href={"/" + lang + "/collection/bbold"} class="collection-link">
+            <div class="-item">
+                <Image class="-img" alt="" src={pic3} />
+                <span class="-text">BBold</span>
+            </div>
+        </a>
+        <a href={"/" + lang + "/collection/basic"} class="collection-link">
+            <div class="-item">
+                <Image class="-img" alt="" src={pic1} />
+                <span class="-text">Basic</span>
+            </div>
+        </a>
+    </div>
 </Layout>
 
 <style>
-.collections {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 100%;
-  gap: 0;
-  padding: 0;
-  margin: 0 auto;
+    .collections {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
+        gap: 0;
+        padding: 0;
+        margin: 0 auto;
 
-  @media screen and (max-width: 1024px) {
-    grid-template-columns: 1fr;
-  }
-}
+        @media screen and (max-width: 1024px) {
+            grid-template-columns: 1fr;
+        }
+    }
 
-.collection-link {
-  display: block;
-  text-decoration: none;
-}
+    .collection-link {
+        display: block;
+        text-decoration: none;
+    }
 
-.-item {
-  position: relative;
-  width: 100%;
-  height: 82vh;
-  min-height: 500px;
-  overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.9);
+    .-item {
+        position: relative;
+        width: 100%;
+        height: 82vh;
+        min-height: 500px;
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.9);
 
-  @media screen and (max-width: 1024px) {
-    height: auto;
-    min-height: 250px;
-  }
+        @media screen and (max-width: 1024px) {
+            height: auto;
+            min-height: 250px;
+        }
 
-  &:hover .-img {
-    opacity: 0.5;
-    transform: scale(1.01);
-    filter: grayscale(0.5);
-  }
-}
+        &:hover .-img {
+            opacity: 0.5;
+            transform: scale(1.01);
+            filter: grayscale(0.5);
+        }
+    }
 
-.-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.85;
-  filter: grayscale(0.3);
-  transition: 
-    opacity 250ms linear,
-    transform 250ms linear;
+    .-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.85;
+        filter: grayscale(0.3);
+        transition:
+            opacity 250ms linear,
+            transform 250ms linear;
 
-  @media screen and (max-width: 1024px) {
-    height: 250px;
-  }
-}
+        @media screen and (max-width: 1024px) {
+            height: 250px;
+        }
+    }
 
-.-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 75%;
-  color: #ffffff;
-  font-family: "Avenir", sans-serif;
-  font-size: 48px;
-  text-align: center;
-  z-index: 1;
+    .-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 75%;
+        color: #ffffff;
+        font-family: "Avenir", sans-serif;
+        font-size: 48px;
+        text-align: center;
+        z-index: 1;
 
-  @media screen and (max-width: 1024px) {
-    font-size: 32px;
-  }
-}
+        @media screen and (max-width: 1024px) {
+            font-size: 32px;
+        }
+    }
 </style>

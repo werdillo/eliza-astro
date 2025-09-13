@@ -3,17 +3,49 @@ import Layout from "../../layouts/Layout.astro";
 import Matresses from "../../components/Matresses";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Matracis - Eliza-K | Premium kvalitatīvi matrači Latvijā",
+        description:
+            "Kvalitatīvi premium matrači no Eliza-K. Dažādi cietības līmeņi, izmēri un materiāli jūsu ideālam miegam un komfortam. Ortopēdiski matrači augstākajā kvalitātē.",
+        keywords:
+            "matrači, premium matrači, ortopēdiski matrači, kvalitatīvi matrači, miegs, komforts, dažādi izmēri, Eliza-K matrači, Latvija",
+    },
+    en: {
+        title: "Mattresses - Eliza-K | Premium Quality Mattresses in Latvia",
+        description:
+            "Premium quality mattresses from Eliza-K. Different firmness levels, sizes and materials for your ideal sleep and comfort. Orthopedic mattresses in the highest quality.",
+        keywords:
+            "mattresses, premium mattresses, orthopedic mattresses, quality mattresses, sleep, comfort, different sizes, Eliza-K mattresses, Latvia",
+    },
+    ru: {
+        title: "Матрасы - Eliza-K | Премиум качественные матрасы в Латвии",
+        description:
+            "Качественные премиум матрасы от Eliza-K. Различные уровни жесткости, размеры и материалы для вашего идеального сна и комфорта. Ортопедические матрасы высшего качества.",
+        keywords:
+            "матрасы, премиум матрасы, ортопедические матрасы, качественные матрасы, сон, комфорт, разные размеры, матрасы Eliza-K, Латвия",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout>
-	<Matresses lang={lang} client:visible />
+<Layout
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/matressess`}
+    image="/og-image-mattresses.jpg"
+    type="website"
+>
+    <Matresses lang={lang} client:visible />
 </Layout>
-

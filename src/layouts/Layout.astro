@@ -3,65 +3,225 @@ import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import MobileMenu from "../components/layout/MobileMenu.astro";
 import "../../main.css";
-const { lang="lv" } = Astro.params;
-const { offset=true } = Astro.props;
+
+export interface Props {
+    offset?: boolean;
+    title?: string;
+    description?: string;
+    keywords?: string;
+    image?: string;
+    url?: string;
+    type?: string;
+}
+
+const { lang = "lv" } = Astro.params;
+const {
+    offset = true,
+    title,
+    description,
+    keywords,
+    image,
+    url,
+    type = "website",
+} = Astro.props as Props;
+
+// Default SEO values for Eliza-K
+const defaultTitle = "Eliza-K - Эксклюзивная премиум мебель в Латвии | Рига";
+const defaultDescription =
+    "Eliza-K - производитель эксклюзивной премиум мебели в Латвии и Риге. Коллекции Sophisticated Living, BBold, Basic. Качественная мебель, индивидуальный дизайн, матрасы, текстиль.";
+const defaultKeywords =
+    "премиум мебель, эксклюзивная мебель, мебель Латвия, мебель Рига, Eliza-K, качественная мебель, дизайнерская мебель, матрасы, текстиль";
+const defaultImage = "/og-image.jpg";
+const siteUrl = "https://eliza-k.lv";
+
+const seoTitle = title || defaultTitle;
+const seoDescription = description || defaultDescription;
+const seoKeywords = keywords || defaultKeywords;
+const seoImage = image || defaultImage;
+const seoUrl = url ? `${siteUrl}${url}` : siteUrl;
+const fullImageUrl = seoImage.startsWith("http")
+    ? seoImage
+    : `${siteUrl}${seoImage}`;
+
+// Structured data for furniture company
+const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "@id": `${siteUrl}/#organization`,
+            name: "Eliza-K",
+            url: siteUrl,
+            logo: {
+                "@type": "ImageObject",
+                url: `${siteUrl}/logo.png`,
+            },
+            description: "Производитель эксклюзивной премиум мебели в Латвии",
+            address: {
+                "@type": "PostalAddress",
+                addressCountry: "LV",
+                addressLocality: "Рига",
+            },
+            sameAs: [],
+        },
+        {
+            "@type": "WebSite",
+            "@id": `${siteUrl}/#website`,
+            url: siteUrl,
+            name: "Eliza-K",
+            inLanguage: [
+                {
+                    "@type": "Language",
+                    name: "Latvian",
+                    alternateName: "lv",
+                },
+                {
+                    "@type": "Language",
+                    name: "English",
+                    alternateName: "en",
+                },
+                {
+                    "@type": "Language",
+                    name: "Russian",
+                    alternateName: "ru",
+                },
+            ],
+            publisher: {
+                "@id": `${siteUrl}/#organization`,
+            },
+        },
+        {
+            "@type": "WebPage",
+            "@id": `${seoUrl}/#webpage`,
+            url: seoUrl,
+            name: seoTitle,
+            description: seoDescription,
+            inLanguage: lang,
+            isPartOf: {
+                "@id": `${siteUrl}/#website`,
+            },
+        },
+    ],
+};
 ---
 
 <html lang={lang}>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" href="/favicon.png" sizes="any" />
-		<title>Eliza-k</title>
-	</head>
-</html>
-<body>
-	<div id="main">
-		<Header />
-		<article class={offset ? "content offset" : "content"}>
-			<slot />
-		</article>
-		<MobileMenu />
-		<Footer lang={lang}/>
-	</div>
-</body>
+    <head>
+        <!-- Basic Meta Tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Eliza-K" />
+        <link rel="icon" href="/favicon.png" sizes="any" />
+        <link rel="canonical" href={seoUrl} />
 
-<style scoped>
-	/* @style {
+        <!-- Primary Meta Tags -->
+        <title>{seoTitle}</title>
+        <meta name="title" content={seoTitle} />
+        <meta name="description" content={seoDescription} />
+        <meta name="keywords" content={seoKeywords} />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content={type} />
+        <meta property="og:url" content={seoUrl} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
+        <meta property="og:image" content={fullImageUrl} />
+        <meta property="og:site_name" content="Eliza-K" />
+        <meta
+            property="og:locale"
+            content={lang === "lv"
+                ? "lv_LV"
+                : lang === "ru"
+                  ? "ru_RU"
+                  : "en_US"}
+        />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={seoUrl} />
+        <meta property="twitter:title" content={seoTitle} />
+        <meta property="twitter:description" content={seoDescription} />
+        <meta property="twitter:image" content={fullImageUrl} />
+
+        <!-- Hreflang Links -->
+        <link
+            rel="alternate"
+            hreflang="lv"
+            href={`${siteUrl}/lv${url || "/"}`}
+        />
+        <link
+            rel="alternate"
+            hreflang="en"
+            href={`${siteUrl}/en${url || "/"}`}
+        />
+        <link
+            rel="alternate"
+            hreflang="ru"
+            href={`${siteUrl}/ru${url || "/"}`}
+        />
+        <link
+            rel="alternate"
+            hreflang="x-default"
+            href={`${siteUrl}/lv${url || "/"}`}
+        />
+
+        <!-- Structured Data -->
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify(structuredData)}
+        />
+
+        <!-- Additional SEO Tags -->
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" content="#ffffff" />
+    </head>
+    <body>
+        <div id="main">
+            <Header />
+            <article class={offset ? "content offset" : "content"}>
+                <slot />
+            </article>
+            <MobileMenu />
+            <Footer lang={lang} />
+        </div>
+    </body>
+
+    <style scoped>
+        /* @style {
 	@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 } */
 
-	body {
-		padding: 0;
-		margin: 0;
-		font-family: Arial, sans-serif;
-		/* font-family: "Open Sans", sans-serif; */
-		a:hover,
-		a:visited,
-		a:link,
-		a:active {
-			text-decoration: none;
-			color: inherit;
-		}
-	}
-	#main {
-		display: flex;
-		min-height: 100vh;
-		flex-direction: column;
-	}
-	.content {
-		margin-top: var(--header);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		flex: 1;
-		&.offset {
-			padding: 0 12px;
-		}
-		@media (max-width: 768px) {
-			margin-top: 70px;
-		}
-	}
-</style>
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            /* font-family: "Open Sans", sans-serif; */
+            a:hover,
+            a:visited,
+            a:link,
+            a:active {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+        #main {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .content {
+            margin-top: var(--header);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            &.offset {
+                padding: 0 12px;
+            }
+            @media (max-width: 768px) {
+                margin-top: 70px;
+            }
+        }
+    </style>
+</html>

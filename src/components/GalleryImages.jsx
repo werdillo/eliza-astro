@@ -1,48 +1,55 @@
-import { For, createSignal, onMount } from "solid-js";
-import { client } from '../lib/pocketbase';
+import { For, createSignal, onMount, Show } from "solid-js";
+import { client } from "../lib/pocketbase";
 
 export default function GalleryImages() {
-	const [items, setItems] = createSignal([]);
-	const [loading, setLoading] = createSignal(true);
-	const [collectionId, setCollectionId] = createSignal();
-	const [fileId, setFileId] = createSignal();
-	const url = 'https://eliza.pockethost.io/';
-	const getImage = (img) => {
-		return `${url}/api/files/${collectionId()}/${fileId()}/${img}`;
-	};
-	onMount(async () => {
-		try {
-			const res = await client.collection('gallery').getList(1, 50);
-			setCollectionId(res.items[0].collectionId)
-			setFileId(res.items[0].id)
-			setItems(res.items[0].image);
-			console.log(res.items[0].image)
-			setLoading(false);
-		} catch (err) {
-			console.error('Error fetching items:', err);
-		}
-	});
-	return <>
-		<div class="gallery">
-			<Show when={loading()}>
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-				<div class="skeleton" />
-			</Show>
-			<Show when={!loading()}>
-				<For each={items()}>
-					{(item) => <img class="-img" src={getImage(item)} />}
-				</For>
-			</Show>
-		</div>
-	</>
+  const [items, setItems] = createSignal([]);
+  const [loading, setLoading] = createSignal(true);
+  const [galleryData, setGalleryData] = createSignal({});
+
+  const getImage = (img) => {
+    const { collectionId, id } = galleryData();
+    return `https://eliza.pockethost.io/api/files/${collectionId}/${id}/${img}`;
+  };
+
+  onMount(async () => {
+    try {
+      const res = await client.collection("gallery").getList(1, 50);
+      const firstItem = res.items[0];
+
+      setGalleryData({
+        collectionId: firstItem.collectionId,
+        id: firstItem.id,
+      });
+      setItems(firstItem.image || []);
+    } catch (err) {
+      console.error("Error fetching gallery items:", err);
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  const SkeletonLoader = () => (
+    <For each={Array(12).fill()}>{() => <div class="skeleton" />}</For>
+  );
+
+  return (
+    <div class="gallery">
+      <Show when={loading()}>
+        <SkeletonLoader />
+      </Show>
+
+      <Show when={!loading()}>
+        <For each={items()}>
+          {(item) => (
+            <img
+              class="-img"
+              src={getImage(item)}
+              alt="Gallery image"
+              loading="lazy"
+            />
+          )}
+        </For>
+      </Show>
+    </div>
+  );
 }

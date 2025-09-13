@@ -3,17 +3,49 @@ import Layout from "../../layouts/Layout.astro";
 import Contacts from "../../components/Contacts";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Kontakti - Eliza-K | Sazinieties ar mums Rīgā, Latvijā",
+        description:
+            "Sazinieties ar Eliza-K komandu Rīgā, Latvijā. Mūsu kontaktinformācija, adrese, darba laiks un kartē. Esam gatavi atbildēt uz visiem jautājumiem par mūsu premium mēbelēm.",
+        keywords:
+            "kontakti, Eliza-K, adrese Rīga, telefons, e-pasts, darba laiks, premium mēbeles Latvija, sazinieties",
+    },
+    en: {
+        title: "Contact - Eliza-K | Get in Touch with Us in Riga, Latvia",
+        description:
+            "Contact Eliza-K team in Riga, Latvia. Our contact information, address, working hours and map location. We are ready to answer all your questions about our premium furniture.",
+        keywords:
+            "contact, Eliza-K, address Riga, phone, email, working hours, premium furniture Latvia, get in touch",
+    },
+    ru: {
+        title: "Контакты - Eliza-K | Свяжитесь с нами в Риге, Латвия",
+        description:
+            "Свяжитесь с командой Eliza-K в Риге, Латвия. Наша контактная информация, адрес, рабочие часы и расположение на карте. Мы готовы ответить на все ваши вопросы о нашей премиум мебели.",
+        keywords:
+            "контакты, Eliza-K, адрес Рига, телефон, email, рабочие часы, премиум мебель Латвия, связаться",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout>
-	<Contacts lang={lang} client:load />
+<Layout
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/contact`}
+    image="/og-image-contact.jpg"
+    type="website"
+>
+    <Contacts lang={lang} client:load />
 </Layout>
-

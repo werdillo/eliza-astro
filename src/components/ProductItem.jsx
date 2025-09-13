@@ -1,6 +1,6 @@
 import { For, Show, createSignal, onMount } from "solid-js";
 import { client, getImage, getShema, getMatressFile } from "../lib/pocketbase";
-import { register } from 'swiper/element/bundle';
+import { register } from "swiper/element/bundle";
 register();
 
 export default function ProductItem({ type = "def", lang }) {
@@ -9,87 +9,88 @@ export default function ProductItem({ type = "def", lang }) {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
 
-  onMount(async () => {
-    const param = params.name;
-    const collectionName = type === "def" ? "products" : "mattresses";
+  const translate = {
+    en: {
+      sendEmail: "Send email",
+      dimensions: "Dimensions",
+      cleaning: "Cleaning",
+      description: "Description",
+      fabrics: "Fabrics",
+    },
+    ru: {
+      sendEmail: "Отправить email",
+      dimensions: "Размеры",
+      cleaning: "Уход",
+      description: "Описание",
+      fabrics: "Ткани",
+    },
+    lv: {
+      sendEmail: "Sūtīt e-pastu",
+      dimensions: "Izmēri",
+      cleaning: "Tīrīšana",
+      description: "Apraksts",
+      fabrics: "Audumi",
+    },
+  };
 
+  onMount(async () => {
     try {
+      const collectionName = type === "def" ? "products" : "mattresses";
       const res = await client.collection(collectionName).getList(1, 50, {
-        filter: `path="${param}"`,
+        filter: `path="${params.name}"`,
       });
       setItem(res.items[0]);
-      setLoading(false);
     } catch (err) {
       console.error("Error fetching items:", err);
+    } finally {
+      setLoading(false);
     }
   });
 
-  const translate = {
-    "en": {
-      "sendEmail": "Send email",
-      "dimensions": "Dimensions",
-      "cleaning": "Cleaning",
-      "description": "Description",
-      "fabrics": "Fabrics"
-    },
-    "ru": {
-      "sendEmail": "Отправить email",
-      "dimensions": "Размеры",
-      "cleaning": "Уход",
-      "description": "Описание",
-      "fabrics": "Ткани"
-    },
-    "lv": {
-      "sendEmail": "Sūtīt e-pastu",
-      "dimensions": "Izmēri",
-      "cleaning": "Tīrīšana",
-      "description": "Apraksts",
-      "fabrics": "Audumi"
-    }
-  }
-  ;
+  const fabricImages = [
+    "https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=",
+    "https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/vesgkd1c8ioj1u9/fusion_AL1Ad4TRpU.jpeg?token=",
+    "https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=",
+  ];
 
-  return (
-    <div>
-      <Show when={loading()}>
+  const renderSkeleton = (className, count = 1) => (
+    <For each={Array(count).fill()}>
+      {() => <div class={`skeleton ${className}`} />}
+    </For>
+  );
+
+  const SkeletonLoader = () => (
+    <>
       <div class="product-item">
-        <div class="skeleton slider">
-        
-        </div>
+        <div class="skeleton slider" />
         <div className="-right">
-          <div class="skeleton text title" />
-          <div class="skeleton button" />
+          {renderSkeleton("text title")}
+          {renderSkeleton("button")}
         </div>
       </div>
       <Show when={type !== "mattress"}>
         <div class="product-item l">
-
-          <div class="-card" >
-            <div class="skeleton text title" />
-            <div>
-              <div class="skeleton text l" />
-              <div class="skeleton text l" />
-              <div class="skeleton text l" />
-              <div class="skeleton text l" />
-            </div>
-      
-            <div class="skeleton text title" />
-
+          <div class="-card">
+            {renderSkeleton("text title")}
+            <div>{renderSkeleton("text l", 4)}</div>
+            {renderSkeleton("text title")}
           </div>
-          <div class="-card" >
-              <div class="skeleton text title" />
-            <div className="-textile">
-                <div class="skeleton textile" />
-                <div class="skeleton textile" />
-                <div class="skeleton textile" />
-            </div>
-            <div class="skeleton text title" />
+          <div class="-card">
+            {renderSkeleton("text title")}
+            <div className="-textile">{renderSkeleton("textile", 3)}</div>
+            {renderSkeleton("text title")}
           </div>
         </div>
       </Show>
+    </>
+  );
 
-
+  return (
+    <div>
+      <Show when={loading()}>
+        <SkeletonLoader />
       </Show>
+
       <Show when={!loading()}>
         <div class="product-item">
           <div>
@@ -112,72 +113,75 @@ export default function ProductItem({ type = "def", lang }) {
                 navigation="true"
                 pagination="true"
                 pagination-type="fraction"
-                speed="500" 
-                loop="true" 
+                speed="500"
+                loop="true"
                 autoplay-delay="5000"
                 class="product-item-swiper"
               >
                 <For each={item().images}>
                   {(image) => (
                     <swiper-slide>
-                        <img src={getImage(item(), image)} alt="" class="-slider"/>
+                      <img
+                        src={getImage(item(), image)}
+                        alt=""
+                        class="-slider"
+                      />
                     </swiper-slide>
-                    )}
+                  )}
                 </For>
               </swiper-container>
             </Show>
-            </div>
-              <div className="-right">
-                <div class="-title">{item().name}</div>
-                <Show when={type === "mattress" && item()?.['file_'+lang]} >
-                  <div style={{display: "flex", gap: "12px"}}>
-                  <a href={getMatressFile(item(), lang)} target="_blank">
-                    <button class="-button">{translate[lang].dimensions}</button>
-                  </a>
-                  <a href={"/files/cleaning-mattresses-" + lang + ".pdf"} target="_blank">
-                    <button class="-button">{translate[lang].cleaning}</button>
-                  </a>
-                  </div>
-                </Show>
-      					<a class="-text link" href="mailto:teika@eliza-k.lv">
-                  <button class="-button xl">{translate[lang].sendEmail}</button>
+          </div>
+          <div className="-right">
+            <div class="-title">{item().name}</div>
+            <Show when={type === "mattress" && item()?.[`file_${lang}`]}>
+              <div style={{ display: "flex", gap: "12px" }}>
+                <a href={getMatressFile(item(), lang)} target="_blank">
+                  <button class="-button">{translate[lang].dimensions}</button>
                 </a>
-            </div>
-        </div>
-        <div class="product-item l">
-              <div className="-card">
-                  <Show when={item()?.["description_" + lang]}>
-                    <div className="-text m bd">
-                      {translate[lang].description}
-                    </div> 
-                  
-                    <div class="-text" innerHTML={item()['description_'+ lang]}></div>
-                    <a href={getShema(item())} target="_blank">
-                      <button class="-button">{translate[lang].dimensions}</button>
-                    </a>
-                  </Show>
-            </div>
-
-
-            <Show when={type !== "mattress" && item()?.["description_" + lang]}>
-              <div className="-card">
-                  <div className="-text m bd">
-                  {translate[lang].fabrics}
-                  </div>
-                  <div className="-textile">
-                      <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=" alt="" className="-img" />
-                      <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/vesgkd1c8ioj1u9/fusion_AL1Ad4TRpU.jpeg?token=" alt="" className="-img" />
-                      <img src="https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=" alt="" className="-img" />
-                  </div>
-                  <div style={{display: "flex", gap: "10px"}}>
-                    <a href="/files/cleaning.pdf" target="_blank">
-                      <button class="-button">{translate[lang].cleaning}</button>
-                    </a>
-
-             
-                  </div>
+                <a
+                  href={`/files/cleaning-mattresses-${lang}.pdf`}
+                  target="_blank"
+                >
+                  <button class="-button">{translate[lang].cleaning}</button>
+                </a>
               </div>
             </Show>
+            <a class="-text link" href="mailto:teika@eliza-k.lv">
+              <button class="-button xl">{translate[lang].sendEmail}</button>
+            </a>
+          </div>
+        </div>
+
+        <div class="product-item l">
+          <Show when={item()?.[`description_${lang}`]}>
+            <div className="-card">
+              <div className="-text m bd">{translate[lang].description}</div>
+              <div
+                class="-text"
+                innerHTML={item()[`description_${lang}`]}
+              ></div>
+              <a href={getShema(item())} target="_blank">
+                <button class="-button">{translate[lang].dimensions}</button>
+              </a>
+            </div>
+          </Show>
+
+          <Show when={type !== "mattress" && item()?.[`description_${lang}`]}>
+            <div className="-card">
+              <div className="-text m bd">{translate[lang].fabrics}</div>
+              <div className="-textile">
+                <For each={fabricImages}>
+                  {(src) => <img src={src} alt="" className="-img" />}
+                </For>
+              </div>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <a href="/files/cleaning.pdf" target="_blank">
+                  <button class="-button">{translate[lang].cleaning}</button>
+                </a>
+              </div>
+            </div>
+          </Show>
         </div>
       </Show>
     </div>

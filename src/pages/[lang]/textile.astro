@@ -3,17 +3,49 @@ import Layout from "../../layouts/Layout.astro";
 import TextileItems from "../../components/TextileItems";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
-const { lang = 'lv' } = Astro.params;
+const { lang = "lv" } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Tekstilmateriāli - Eliza-K | Plašs audumu klāsts mīkstajām mēbelēm",
+        description:
+            "Eliza-K piedāvā plašu tekstilmateriālu klāstu mīkstajām mēbelēm. Kvalitatīvi audumi dažādos krāsu un faktūru variantos jūsu mēbeļu projektiem.",
+        keywords:
+            "tekstilmateriāli, audumi mēbelēm, mīksto mēbeļu audumi, kvalitatīvi audumi, mēbeļu tekstils, Eliza-K audumi, interjera audumi",
+    },
+    en: {
+        title: "Textile Materials - Eliza-K | Wide Range of Fabrics for Upholstered Furniture",
+        description:
+            "Eliza-K offers a wide range of textile materials for upholstered furniture. Quality fabrics in various color and texture options for your furniture projects.",
+        keywords:
+            "textile materials, furniture fabrics, upholstered furniture fabrics, quality fabrics, furniture textiles, Eliza-K fabrics, interior fabrics",
+    },
+    ru: {
+        title: "Текстильные материалы - Eliza-K | Широкий выбор тканей для мягкой мебели",
+        description:
+            "Eliza-K предлагает широкий выбор текстильных материалов для мягкой мебели. Качественные ткани в различных цветовых и фактурных вариантах для ваших мебельных проектов.",
+        keywords:
+            "текстильные материалы, ткани для мебели, ткани для мягкой мебели, качественные ткани, мебельный текстиль, ткани Eliza-K, интерьерные ткани",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout>
-	<TextileItems lang={lang} client:load />
+<Layout
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/textile`}
+    image="/og-image-textile.jpg"
+    type="website"
+>
+    <TextileItems lang={lang} client:load />
 </Layout>
-

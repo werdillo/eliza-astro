@@ -3,17 +3,50 @@ import Layout from "../../layouts/Layout.astro";
 import ProductItem from "../../components/ProductItem";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Produkts - Eliza-K | Premium mēbeļu detaļas un specifikācijas",
+        description:
+            "Apskatiet detalizētu informāciju par Eliza-K premium mēbeļu produktiem. Specifikācijas, izmēri, materiāli un cenas mūsu ekskluzīvajām mēbelēm.",
+        keywords:
+            "produkts, mēbeļu detaļas, specifikācijas, premium mēbeles, Eliza-K produkti, mēbeļu informācija, cenas, materiāli",
+    },
+    en: {
+        title: "Product - Eliza-K | Premium Furniture Details and Specifications",
+        description:
+            "View detailed information about Eliza-K premium furniture products. Specifications, dimensions, materials and prices for our exclusive furniture.",
+        keywords:
+            "product, furniture details, specifications, premium furniture, Eliza-K products, furniture information, prices, materials",
+    },
+    ru: {
+        title: "Продукт - Eliza-K | Детали и спецификации премиум мебели",
+        description:
+            "Посмотрите подробную информацию о продукции премиум мебели Eliza-K. Спецификации, размеры, материалы и цены на нашу эксклюзивную мебель.",
+        keywords:
+            "продукт, детали мебели, спецификации, премиум мебель, продукция Eliza-K, информация о мебели, цены, материалы",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout offset={false}>
-	<ProductItem client:only lang={lang}/>
+<Layout
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/product`}
+    image="/og-image-product.jpg"
+    type="website"
+>
+    <ProductItem client:only lang={lang} />
 </Layout>
-

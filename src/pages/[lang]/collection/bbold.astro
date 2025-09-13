@@ -3,17 +3,49 @@ import Layout from "../../../layouts/Layout.astro";
 import Collection from "../../../components/Collection";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "BBold kolekcija - Eliza-K | Moderna un drosmīga mēbeļu līnija",
+        description:
+            "Atklājiet Eliza-K BBold kolekciju - moderna un drosmīga mēbeļu līnija ar izsmalcinātiem dizaina risinājumiem. Unikālas formas, kvalitatīvi materiāli un inovatīvs dizains.",
+        keywords:
+            "BBold kolekcija, moderna mēbeles, drosmīgs dizains, inovatīvs dizains, Eliza-K BBold, dizaina mēbeles, unikālas mēbeles, mūsdienīgas mēbeles",
+    },
+    en: {
+        title: "BBold Collection - Eliza-K | Modern and Bold Furniture Line",
+        description:
+            "Discover Eliza-K BBold collection - modern and bold furniture line with sophisticated design solutions. Unique shapes, quality materials and innovative design.",
+        keywords:
+            "BBold collection, modern furniture, bold design, innovative design, Eliza-K BBold, designer furniture, unique furniture, contemporary furniture",
+    },
+    ru: {
+        title: "Коллекция BBold - Eliza-K | Современная и смелая мебельная линия",
+        description:
+            "Откройте для себя коллекцию BBold от Eliza-K - современная и смелая мебельная линия с изысканными дизайнерскими решениями. Уникальные формы, качественные материалы и инновационный дизайн.",
+        keywords:
+            "коллекция BBold, современная мебель, смелый дизайн, инновационный дизайн, Eliza-K BBold, дизайнерская мебель, уникальная мебель, современная мебель",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout>
-	<Collection lang={lang} brand='bbold' client:visible />
+<Layout
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/collection/bbold`}
+    image="/og-image-bbold-collection.jpg"
+    type="website"
+>
+    <Collection lang={lang} brand="bbold" client:visible />
 </Layout>
-

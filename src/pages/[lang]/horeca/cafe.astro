@@ -4,16 +4,51 @@ import BlogList from "../../../components/BlogList";
 import ComingSoon from "../../../components/ComingSoon.astro";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Kafejnīcu mēbeles - Eliza-K | Stilīgas mēbeles kafejnīcām",
+        description:
+            "Eliza-K piedāvā stilīgas un praktiskas mēbeles kafejnīcām. Komfortabli krēsli, galdi un interjera risinājumi, kas rada patīkamu atmosfēru jūsu kafejnīcā.",
+        keywords:
+            "kafejnīcu mēbeles, kafejnīcu krēsli, kafejnīcu galdi, komerciālās mēbeles, Eliza-K kafejnīcas, HoReCa mēbeles",
+    },
+    en: {
+        title: "Cafe Furniture - Eliza-K | Stylish Furniture for Cafes",
+        description:
+            "Eliza-K offers stylish and practical furniture for cafes. Comfortable chairs, tables and interior solutions that create a pleasant atmosphere in your cafe.",
+        keywords:
+            "cafe furniture, cafe chairs, cafe tables, commercial furniture, Eliza-K cafes, HoReCa furniture",
+    },
+    ru: {
+        title: "Мебель для кафе - Eliza-K | Стильная мебель для кафе",
+        description:
+            "Eliza-K предлагает стильную и практичную мебель для кафе. Комфортные стулья, столы и интерьерные решения, создающие приятную атмосферу в вашем кафе.",
+        keywords:
+            "мебель для кафе, стулья для кафе, столы для кафе, коммерческая мебель, Eliza-K кафе, мебель HoReCa",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
-<Layout  offset={false}>
-	<ComingSoon lang={lang} />
+
+<Layout
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/horeca/cafe`}
+    image="/og-image-cafe.jpg"
+    type="website"
+>
+    <ComingSoon lang={lang} />
     <!-- <BlogList lang={lang} type="cafe" client:only/> -->
 </Layout>

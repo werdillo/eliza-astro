@@ -5,102 +5,145 @@ import porolon from "../../assets/images/components/porolon.png";
 import textile from "../../assets/images/components/textile.png";
 
 export function getStaticPaths() {
-  return [
-    { params: { lang: "en" } },
-    { params: { lang: "lv" } },
-    { params: { lang: "ru" } },
-  ];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 
 const { lang } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Komponenti - Eliza-K | Porolons un audumi mēbelēm",
+        description:
+            "Eliza-K piedāvā kvalitatīvus komponentus mēbeļu ražošanai - porolons un plašs audumu klāsts. Profesionāli materiāli mīkstajām mēbelēm un interjera risinājumiem.",
+        keywords:
+            "mēbeļu komponenti, porolons, audumi, mīkstās mēbeles, tekstilmateriāli, mēbeļu audumi, kvalitāte, Eliza-K komponenti",
+    },
+    en: {
+        title: "Components - Eliza-K | Foam and Fabrics for Furniture",
+        description:
+            "Eliza-K offers quality components for furniture manufacturing - foam and wide selection of fabrics. Professional materials for upholstered furniture and interior solutions.",
+        keywords:
+            "furniture components, foam, fabrics, upholstered furniture, textile materials, furniture fabrics, quality, Eliza-K components",
+    },
+    ru: {
+        title: "Компоненты - Eliza-K | Поролон и ткани для мебели",
+        description:
+            "Eliza-K предлагает качественные компоненты для производства мебели - поролон и широкий выбор тканей. Профессиональные материалы для мягкой мебели и интерьерных решений.",
+        keywords:
+            "компоненты мебели, поролон, ткани, мягкая мебель, текстильные материалы, мебельные ткани, качество, компоненты Eliza-K",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
+
 const translations = {
-  lv: {
-    components: {
-      "porolon-title": "Porolons",
-      "porolon-text": "Mēs ražojam izstrādājumus no porolona.",
-      "textile-title": "Audumi",
-      "textile-text": "Piedāvājam lielu audumu un materiālu izvēli mīkstajām mēbelēm."
-    }
-  },
-  ru: {
-    components: {
-      "porolon-title": "Поролон",
-      "porolon-text": "Изготавливаем из поролона изделия любой сложности.",
-      "textile-title": "Ткань",
-      "textile-text": "Предлагаем широкий выбор тканей из любого вида волокна для мягкой мебели."
-    }
-  },
-  en: {
-    components: {
-      "porolon-title": "Foam",
-      "porolon-text": "Our company creates goods from foam rubber of any complexity.",
-      "textile-title": "Textile",
-      "textile-text": "A wide selection of fabrics from any type of fiber for upholstered furniture is available."
-    }
-  }
+    lv: {
+        components: {
+            "porolon-title": "Porolons",
+            "porolon-text": "Mēs ražojam izstrādājumus no porolona.",
+            "textile-title": "Audumi",
+            "textile-text":
+                "Piedāvājam lielu audumu un materiālu izvēli mīkstajām mēbelēm.",
+        },
+    },
+    ru: {
+        components: {
+            "porolon-title": "Поролон",
+            "porolon-text":
+                "Изготавливаем из поролона изделия любой сложности.",
+            "textile-title": "Ткань",
+            "textile-text":
+                "Предлагаем широкий выбор тканей из любого вида волокна для мягкой мебели.",
+        },
+    },
+    en: {
+        components: {
+            "porolon-title": "Foam",
+            "porolon-text":
+                "Our company creates goods from foam rubber of any complexity.",
+            "textile-title": "Textile",
+            "textile-text":
+                "A wide selection of fabrics from any type of fiber for upholstered furniture is available.",
+        },
+    },
 };
 
 const t = translations[lang as keyof typeof translations].components;
 ---
 
-<Layout>
-  <div class="furniture-components">
-    <div>
-      <a href="http://porolons.lv/" target="_blank" rel="noopener noreferrer">
-        <Image class='-img' alt='' src={porolon} />
-      </a>
-      <div class='-text xl'>{t["porolon-title"]}</div>
-      <div class='-text'>{t["porolon-text"]}</div>
+<Layout
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/components`}
+    image="/og-image-components.jpg"
+    type="website"
+>
+    <div class="furniture-components">
+        <div>
+            <a
+                href="http://porolons.lv/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <Image class="-img" alt="" src={porolon} />
+            </a>
+            <div class="-text xl">{t["porolon-title"]}</div>
+            <div class="-text">{t["porolon-text"]}</div>
+        </div>
+        <div>
+            <a href={"/" + lang + "/textile"} rel="noopener noreferrer">
+                <Image class="-img" alt="" src={textile} />
+            </a>
+            <div class="-text xl">{t["textile-title"]}</div>
+            <div class="-text">{t["textile-text"]}</div>
+        </div>
     </div>
-    <div>
-      <a href={"/" + lang +"/textile"} rel="noopener noreferrer">
-        <Image class='-img' alt='' src={textile} />
-      </a>
-      <div class='-text xl'>{t["textile-title"]}</div>
-      <div class='-text'>{t["textile-text"]}</div>
-    </div>
-  </div>
 </Layout>
 
 <style>
-.furniture-components {
-  margin: 20px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  width: 100%;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
+    .furniture-components {
+        margin: 20px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        width: 100%;
 
-  .-text {
-    font-family: 'Avenir', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    margin-left: 5px;
-    
-    &.xl {
-      font-weight: 700;
-      font-size: 24px;
-      margin-bottom: 5px;
-      margin-top: 15px;
-    }
-  }
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+        }
 
-  .-img {
-    width: 100%;
-    height: auto;
-    min-height: 200px;
-    background-color: #f0f0f0;
-    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
-    transition: 350ms;
-    cursor: pointer;
-    
-    &:hover {
-      box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.50);
+        .-text {
+            font-family: "Avenir", sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            margin-left: 5px;
+
+            &.xl {
+                font-weight: 700;
+                font-size: 24px;
+                margin-bottom: 5px;
+                margin-top: 15px;
+            }
+        }
+
+        .-img {
+            width: 100%;
+            height: auto;
+            min-height: 200px;
+            background-color: #f0f0f0;
+            box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+            transition: 350ms;
+            cursor: pointer;
+
+            &:hover {
+                box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5);
+            }
+        }
     }
-  }
-}
 </style>

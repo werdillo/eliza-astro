@@ -4,16 +4,51 @@ import BlogList from "../../../components/BlogList";
 import ComingSoon from "../../../components/ComingSoon.astro";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
-    
+
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Restorānu mēbeles - Eliza-K | Profesionālas mēbeles restorāniem",
+        description:
+            "Eliza-K piedāvā kvalitatīvas un elegantes mēbeles restorāniem. Stilīgi krēsli, galdi un interjera risinājumi, kas rada ekskluzīvu atmosfēru jūsu restorānā.",
+        keywords:
+            "restorānu mēbeles, restorānu krēsli, restorānu galdi, komerciālās mēbeles, Eliza-K restorāni, HoReCa mēbeles",
+    },
+    en: {
+        title: "Restaurant Furniture - Eliza-K | Professional Furniture for Restaurants",
+        description:
+            "Eliza-K offers quality and elegant furniture for restaurants. Stylish chairs, tables and interior solutions that create an exclusive atmosphere in your restaurant.",
+        keywords:
+            "restaurant furniture, restaurant chairs, restaurant tables, commercial furniture, Eliza-K restaurants, HoReCa furniture",
+    },
+    ru: {
+        title: "Мебель для ресторанов - Eliza-K | Профессиональная мебель для ресторанов",
+        description:
+            "Eliza-K предлагает качественную и элегантную мебель для ресторанов. Стильные стулья, столы и интерьерные решения, создающие эксклюзивную атмосферу в вашем ресторане.",
+        keywords:
+            "мебель для ресторанов, стулья для ресторанов, столы для ресторанов, коммерческая мебель, Eliza-K рестораны, мебель HoReCa",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
-<Layout   offset={false}>
-	<ComingSoon lang={lang} />
+
+<Layout
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/horeca/projects`}
+    image="/og-image-restaurants.jpg"
+    type="website"
+>
+    <ComingSoon lang={lang} />
     <!-- <BlogList lang={lang} type="projects" client:only/> -->
 </Layout>

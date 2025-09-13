@@ -3,17 +3,49 @@ import Layout from "../../../layouts/Layout.astro";
 import Collection from "../../../components/Collection";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Basic kolekcija - Eliza-K | Praktiskas un funkcionālas mēbeles",
+        description:
+            "Apskatiet Eliza-K Basic kolekciju - praktiskas un funkcionālas mēbeles ikdienas lietošanai. Kvalitatīvas mēbeles par pieejamu cenu ar modernu minimālistisku dizainu.",
+        keywords:
+            "Basic kolekcija, praktiskas mēbeles, funkcionālas mēbeles, minimālistisks dizains, Eliza-K Basic, pieejamas mēbeles, ikdienas mēbeles",
+    },
+    en: {
+        title: "Basic Collection - Eliza-K | Practical and Functional Furniture",
+        description:
+            "Explore Eliza-K Basic collection - practical and functional furniture for everyday use. Quality furniture at affordable price with modern minimalist design.",
+        keywords:
+            "Basic collection, practical furniture, functional furniture, minimalist design, Eliza-K Basic, affordable furniture, everyday furniture",
+    },
+    ru: {
+        title: "Коллекция Basic - Eliza-K | Практичная и функциональная мебель",
+        description:
+            "Изучите коллекцию Basic от Eliza-K - практичная и функциональная мебель для повседневного использования. Качественная мебель по доступной цене с современным минималистичным дизайном.",
+        keywords:
+            "коллекция Basic, практичная мебель, функциональная мебель, минималистичный дизайн, Eliza-K Basic, доступная мебель, повседневная мебель",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout>
-	<Collection lang={lang} brand='basic' client:visible />
+<Layout
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/collection/basic`}
+    image="/og-image-basic-collection.jpg"
+    type="website"
+>
+    <Collection lang={lang} brand="basic" client:visible />
 </Layout>
-

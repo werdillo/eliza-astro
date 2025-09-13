@@ -1,67 +1,128 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Slider from "../components/Slider";
+import Awards from "../components/Awards";
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
+}
+const { lang } = Astro.params;
 
-// Default root page - redirects to Latvian version
-// This ensures SEO-friendly default language behavior
-
-const defaultSeo = {
-    title: "Eliza-K - Ekskluzīva premium mēbeles Latvijā | Rīga",
-    description:
-        "Eliza-K - ekskluzīvu premium mēbeļu ražotājs Latvijā un Rīgā. Kolekcijas Sophisticated Living, BBold, Basic. Kvalitatīvas mēbeles, individuāls dizains, matračus, tekstils.",
-    keywords:
-        "premium mēbeles, ekskluzīvas mēbeles, mēbeles Latvija, mēbeles Rīga, Eliza-K, kvalitatīvas mēbeles, dizaina mēbeles, matraču, tekstils",
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Eliza-K - Ekskluzīva premium mēbeles Latvijā | Rīga",
+        description:
+            "Eliza-K - ekskluzīvu premium mēbeļu ražotājs Latvijā un Rīgā. Kolekcijas Sophisticated Living, BBold, Basic. Kvalitatīvas mēbeles, individuāls dizains, matračus, tekstils.",
+        keywords:
+            "premium mēbeles, ekskluzīvas mēbeles, mēbeles Latvija, mēbeles Rīga, Eliza-K, kvalitatīvas mēbeles, dizaina mēbeles, matraču, tekstils",
+    },
+    en: {
+        title: "Eliza-K - Exclusive Premium Furniture in Latvia | Riga",
+        description:
+            "Eliza-K - manufacturer of exclusive premium furniture in Latvia and Riga. Collections Sophisticated Living, BBold, Basic. Quality furniture, individual design, mattresses, textiles.",
+        keywords:
+            "premium furniture, exclusive furniture, furniture Latvia, furniture Riga, Eliza-K, quality furniture, designer furniture, mattresses, textiles",
+    },
+    ru: {
+        title: "Eliza-K - Эксклюзивная премиум мебель в Латвии | Рига",
+        description:
+            "Eliza-K - производитель эксклюзивной премиум мебели в Латвии и Риге. Коллекции Sophisticated Living, BBold, Basic. Качественная мебель, индивидуальный дизайн, матрасы, текстиль.",
+        keywords:
+            "премиум мебель, эксклюзивная мебель, мебель Латвия, мебель Рига, Eliza-K, качественная мебель, дизайнерская мебель, матрасы, текстиль",
+    },
 };
 
-// Browser-side redirect to preserve SEO
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
 <Layout
-    title={defaultSeo.title}
-    description={defaultSeo.description}
-    keywords={defaultSeo.keywords}
-    url="/"
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}`}
     image="/og-image-home.jpg"
 >
-    <script>
-        // Client-side redirect to default language (Latvian)
-        if (typeof window !== "undefined") {
-            const userLang = navigator.language || navigator.languages[0];
-            let redirectLang = "lv"; // Default to Latvian
-
-            // Check if user prefers English or Russian
-            if (userLang.startsWith("en")) {
-                redirectLang = "en";
-            } else if (userLang.startsWith("ru")) {
-                redirectLang = "ru";
-            }
-
-            // Redirect to appropriate language version
-            window.location.replace(`/${redirectLang}/`);
-        }
-    </script>
-
-    <!-- Fallback content for users without JavaScript -->
-    <div style="text-align: center; padding: 2rem;">
-        <h1>Eliza-K</h1>
-        <p>Premium mēbeles | Premium Furniture | Премиум мебель</p>
-        <div
-            style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;"
+    <Slider client:load />
+    <div class="cards">
+        <a
+            href="https://www.sophisticated-living.com/"
+            rel="noopener noreferrer"
+            target="_blank"
         >
-            <a
-                href="/lv/"
-                style="padding: 0.5rem 1rem; background: #333; color: white; text-decoration: none;"
-                >Latviešu</a
-            >
-            <a
-                href="/en/"
-                style="padding: 0.5rem 1rem; background: #333; color: white; text-decoration: none;"
-                >English</a
-            >
-            <a
-                href="/ru/"
-                style="padding: 0.5rem 1rem; background: #333; color: white; text-decoration: none;"
-                >Русский</a
-            >
-        </div>
+            <div class="card">
+                <div class="bg-image"></div>
+                <span class="card-text">Sophisticated Living</span>
+            </div>
+        </a>
+        <a href={"/" + lang + "/collection/bbold"}>
+            <div class="card">
+                <div class="bg-image bbold"></div>
+                <span class="card-text">BBold</span>
+            </div>
+        </a>
+        <a href={"/" + lang + "/collection/basic"}>
+            <div class="card">
+                <div class="bg-image basic"></div>
+                <span class="card-text">Basic</span>
+            </div>
+        </a>
     </div>
+    <Awards client:only />
 </Layout>
+<style>
+    .cards {
+        margin-top: 1px;
+        margin-bottom: 25px;
+        display: grid;
+        gap: 1px;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-content: center;
+        width: 100%;
+        @media screen and (max-width: 1024px) {
+            grid-template-columns: 1fr;
+        }
+    }
+    .card {
+        position: relative;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .bg-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("/collection/Pic7.jpg") center/cover no-repeat;
+        filter: brightness(0.7); /* Darker image */
+        z-index: 1;
+        transition: 250ms;
+        &:hover {
+            filter: brightness(0.6); /* Darker image */
+        }
+        &.basic {
+            background: url("/collection/Pic6.jpg") center/cover no-repeat;
+        }
+        &.bbold {
+            background: url("/collection/bbold.png") center/cover no-repeat;
+        }
+    }
+    .card-text {
+        position: relative;
+        z-index: 2;
+        font-size: 20px;
+        color: #ffffff;
+        font-weight: bold;
+    }
+</style>

@@ -2,17 +2,53 @@
 import Layout from "../../../layouts/Layout.astro";
 import BlogList from "../../../components/BlogList";
 import ComingSoon from "../../../components/ComingSoon.astro";
+
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
-    
+
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Viesnīcu mēbeles - Eliza-K | Profesionālas mēbeles viesnīcām",
+        description:
+            "Eliza-K piedāvā kvalitatīvas un funkcionālas mēbeles viesnīcām. Komfortablas un izturīgas mēbeles viesnīcu istabām, vestibiliem un sabiedriskajām zonām.",
+        keywords:
+            "viesnīcu mēbeles, profesionālas mēbeles, viesnīcu iekārta, komerciālās mēbeles, Eliza-K viesnīcas, HoReCa mēbeles",
+    },
+    en: {
+        title: "Hotel Furniture - Eliza-K | Professional Furniture for Hotels",
+        description:
+            "Eliza-K offers quality and functional furniture for hotels. Comfortable and durable furniture for hotel rooms, lobbies and public areas.",
+        keywords:
+            "hotel furniture, professional furniture, hotel equipment, commercial furniture, Eliza-K hotels, HoReCa furniture",
+    },
+    ru: {
+        title: "Мебель для отелей - Eliza-K | Профессиональная мебель для гостиниц",
+        description:
+            "Eliza-K предлагает качественную и функциональную мебель для отелей. Комфортная и долговечная мебель для гостиничных номеров, лобби и общественных зон.",
+        keywords:
+            "мебель для отелей, профессиональная мебель, оборудование отелей, коммерческая мебель, Eliza-K отели, мебель HoReCa",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
-<Layout  offset={false}>	
-	<ComingSoon lang={lang} />
+
+<Layout
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/horeca/hotels`}
+    image="/og-image-hotels.jpg"
+    type="website"
+>
+    <ComingSoon lang={lang} />
     <!-- <BlogList lang={lang} type="hotels" client:only/> -->
 </Layout>

@@ -3,17 +3,50 @@ import Layout from "../../layouts/Layout.astro";
 import ProductItem from "../../components/ProductItem";
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: "en" } },
-		{ params: { lang: "lv" } },
-		{ params: { lang: "ru" } },
-	];
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
 }
 const { lang } = Astro.params;
 
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Matracis - Eliza-K | Premium kvalitatīvs matracis",
+        description:
+            "Apskatiet Eliza-K premium matracis ar detalizētu informāciju. Kvalitatīvs ortopēdisks matracis ar dažādiem cietības līmeņiem un izmēriem jūsu ideālam miegam.",
+        keywords:
+            "matracis, premium matracis, ortopēdisks matracis, kvalitatīvs matracis, matracis Latvija, Eliza-K matracis, miega komforts",
+    },
+    en: {
+        title: "Mattress - Eliza-K | Premium Quality Mattress",
+        description:
+            "View Eliza-K premium mattress with detailed information. Quality orthopedic mattress with different firmness levels and sizes for your ideal sleep.",
+        keywords:
+            "mattress, premium mattress, orthopedic mattress, quality mattress, mattress Latvia, Eliza-K mattress, sleep comfort",
+    },
+    ru: {
+        title: "Матрас - Eliza-K | Премиум качественный матрас",
+        description:
+            "Посмотрите премиум матрас Eliza-K с подробной информацией. Качественный ортопедический матрас с различными уровнями жесткости и размерами для вашего идеального сна.",
+        keywords:
+            "матрас, премиум матрас, ортопедический матрас, качественный матрас, матрас Латвия, матрас Eliza-K, комфорт сна",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout offset={false}>
-	<ProductItem client:only type="mattress" lang={lang} />
+<Layout
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/matress`}
+    image="/og-image-mattress-detail.jpg"
+    type="website"
+>
+    <ProductItem client:only type="mattress" lang={lang} />
 </Layout>
-

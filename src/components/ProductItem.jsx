@@ -48,9 +48,9 @@ export default function ProductItem({ type = "def", lang }) {
   });
 
   const fabricImages = [
-    "https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/matrix_28Pq5LpZ1J.jpeg?token=",
-    "https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/vesgkd1c8ioj1u9/fusion_AL1Ad4TRpU.jpeg?token=",
-    "https://eliza.pockethost.io/api/files/6mym3bbn87vzkzf/1n3lu4328dwqq97/trend_k3OnIQJG30.jpeg?token=",
+    "/src/assets/images/textile/matrix.jpeg",
+    "/src/assets/images/textile/falcone.jpeg",
+    "/src/assets/images/textile/salvador.jpeg",
   ];
 
   const renderSkeleton = (className, count = 1) => (

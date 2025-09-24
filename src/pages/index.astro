@@ -2,14 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Slider from "../components/Slider";
 import Awards from "../components/Awards";
-export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "lv" } },
-        { params: { lang: "ru" } },
-    ];
-}
-const { lang } = Astro.params;
+const lang = "lv";
 
 // SEO data by language
 const seoData = {

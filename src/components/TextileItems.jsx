@@ -7,7 +7,7 @@ export default function TextileItems({ lang }) {
 
   onMount(async () => {
     try {
-      const res = await client.collection("textile").getList(1, 50);
+      const res = await client.collection("textile_eliza").getList(1, 50);
       setItems(res.items.sort((a, b) => a.order - b.order));
     } catch (err) {
       console.error("Error fetching items:", err);

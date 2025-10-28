@@ -7,11 +7,11 @@ export default function Matresses({ lang }) {
 
   onMount(async () => {
     try {
-      const res = await client.collection("mattresses").getList(1, 50);
-      const sortedItems = res.items.sort((a, b) =>
-        a.type.localeCompare(b.type),
-      );
-      setItems(sortedItems);
+      const res = await client.collection("mattresses_eliza").getList(1, 50);
+      // const sortedItems = res.items.sort((a, b) =>
+      //   a.type.localeCompare(b.type),
+      // );
+      setItems(res.items);
     } catch (err) {
       console.error("Error fetching items:", err);
     } finally {

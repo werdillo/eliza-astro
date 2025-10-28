@@ -13,7 +13,7 @@ export default function Collections({ brand, lang }) {
 
   onMount(async () => {
     try {
-      const res = await client.collection("products").getList(1, 50, {
+      const res = await client.collection("products_eliza").getList(1, 50, {
         filter: `collection="${brand}"`,
         fields:
           "id, collectionId, collection, path, images, type, name:excerpt(200, true)",
@@ -23,7 +23,7 @@ export default function Collections({ brand, lang }) {
         (acc[item.type] ||= []).push(item);
         return acc;
       }, {});
-
+      console.log(grouped);
       setGroupedItems(grouped);
     } catch (err) {
       console.error("Error fetching items:", err);

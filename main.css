@@ -1,4 +1,4 @@
-@import '/src/assets/css/skeleton.css';
+@import "/src/assets/css/skeleton.css";
 :root {
     --layout: #303030;
     --header: 60px;
@@ -20,7 +20,7 @@ swiper-container {
     height: 600px;
     @media screen and (max-width: 600px) {
         height: 40vh;
-        object-fit: contain ;
+        object-fit: contain;
     }
 }
 .product-item-swiper {
@@ -100,7 +100,7 @@ swiper-container {
         }
         .-buttons {
             display: flex;
-            gap:15px;
+            gap: 15px;
         }
     }
     .-card {
@@ -138,7 +138,6 @@ swiper-container {
             font-size: 32px;
             @media screen and (max-width: 600px) {
                 font-size: 22px;
-
             }
         }
         &.xl {
@@ -211,11 +210,11 @@ swiper-container {
 }
 
 .product-list {
-	width:100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	gap: 30px 20px;
-	margin: 20px 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px 20px;
+    margin: 20px 0;
     @media only screen and (max-width: 768px) {
         grid-template-columns: 1fr;
         gap: 10px;
@@ -249,6 +248,7 @@ swiper-container {
         height: auto;
         aspect-ratio: 16/9;
         object-fit: cover;
+        object-position: top;
     }
 }
 
@@ -427,7 +427,6 @@ a:visited {
     }
 }
 
-
 .awards {
     /* padding: 0 10px; */
     /* display: grid; */
@@ -440,7 +439,7 @@ a:visited {
     margin: 30px 0;
     gap: 40px 20px;
     flex-wrap: wrap;
-    @media screen and (max-width:768px) {
+    @media screen and (max-width: 768px) {
         grid-template-columns: 1fr 1fr;
         padding: 0;
     }
@@ -452,10 +451,9 @@ a:visited {
         max-width: 160px;
         height: auto;
         width: 100%;
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 768px) {
             width: 100%;
             max-width: 110px;
-
-         }
+        }
     }
 }

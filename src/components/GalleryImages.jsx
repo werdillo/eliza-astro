@@ -1,5 +1,5 @@
 import { For, createSignal, onMount, Show } from "solid-js";
-import { client } from "../lib/pocketbase";
+import { client, url } from "../lib/pocketbase";
 
 export default function GalleryImages() {
   const [items, setItems] = createSignal([]);
@@ -8,12 +8,12 @@ export default function GalleryImages() {
 
   const getImage = (img) => {
     const { collectionId, id } = galleryData();
-    return `https://eliza.pockethost.io/api/files/${collectionId}/${id}/${img}`;
+    return `http://80.87.198.50:8090/api/files/${collectionId}/${id}/${img}`;
   };
 
   onMount(async () => {
     try {
-      const res = await client.collection("gallery").getList(1, 50);
+      const res = await client.collection("gallery_eliza").getList(1, 50);
       const firstItem = res.items[0];
 
       setGalleryData({

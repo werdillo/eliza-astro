@@ -35,7 +35,8 @@ export default function ProductItem({ type = "def", lang }) {
 
   onMount(async () => {
     try {
-      const collectionName = type === "def" ? "products" : "mattresses";
+      const collectionName =
+        type === "def" ? "products_eliza" : "mattresses_eliza";
       const res = await client.collection(collectionName).getList(1, 50, {
         filter: `path="${params.name}"`,
       });

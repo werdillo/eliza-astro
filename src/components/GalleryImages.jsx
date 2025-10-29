@@ -8,7 +8,7 @@ export default function GalleryImages() {
 
   const getImage = (img) => {
     const { collectionId, id } = galleryData();
-    return `http://80.87.198.50:8090/api/files/${collectionId}/${id}/${img}`;
+    return `https://norteks.dpdns.org/api/files/${collectionId}/${id}/${img}`;
   };
 
   onMount(async () => {

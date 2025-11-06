@@ -31,7 +31,7 @@ const secondaryIconMap = {
 };
 
 // Объединяем основные и вторичные ссылки для мобильного меню
-const allMenuItems = [...mainLinks.slice(0, 4), ...secondaryLinks.slice(0, 1)]; // берем первые 4 основные + 1 вторичную для мобильного меню
+const allMenuItems = [...mainLinks.slice(0, 5)]; // берем первые 4 основные + 1 вторичную для мобильного меню
 
 const menuItemsWithIcons = allMenuItems.map((link) => {
     const fullHref = link.href.startsWith("http")

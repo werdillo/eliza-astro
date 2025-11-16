@@ -1,5 +1,6 @@
 import { For, Show, createSignal, onMount } from "solid-js";
-import { client, getImage, getShema, getMatressFile } from "../lib/pocketbase";
+import { getImage, getShema, getMatressFile } from "../lib/pocketbase";
+import { getProductByPath, getMatressByPath } from "../lib/api";
 import { register } from "swiper/element/bundle";
 register();
 
@@ -35,12 +36,11 @@ export default function ProductItem({ type = "def", lang }) {
 
   onMount(async () => {
     try {
-      const collectionName =
-        type === "def" ? "products_eliza" : "mattresses_eliza";
-      const res = await client.collection(collectionName).getList(1, 50, {
-        filter: `path="${params.name}"`,
-      });
-      setItem(res.items[0]);
+      const product =
+        type === "def"
+          ? await getProductByPath(params.name)
+          : await getMatressByPath(params.name);
+      setItem(product);
     } catch (err) {
       console.error("Error fetching items:", err);
     } finally {

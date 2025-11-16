@@ -1,5 +1,6 @@
 import { For, Show, createSignal, onMount } from "solid-js";
-import { client, getImage } from "../lib/pocketbase";
+import { getImage } from "../lib/pocketbase";
+import { getProducts } from "../lib/api";
 
 export default function Collections({ brand, lang }) {
   const [groupedItems, setGroupedItems] = createSignal({});
@@ -13,13 +14,9 @@ export default function Collections({ brand, lang }) {
 
   onMount(async () => {
     try {
-      const res = await client.collection("products_eliza").getList(1, 50, {
-        filter: `collection="${brand}"`,
-        fields:
-          "id, collectionId, collection, path, images, type, name:excerpt(200, true)",
-      });
+      const items = await getProducts(brand);
 
-      const grouped = res.items.reduce((acc, item) => {
+      const grouped = items.reduce((acc, item) => {
         (acc[item.type] ||= []).push(item);
         return acc;
       }, {});

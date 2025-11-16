@@ -1,14 +1,9 @@
 import { createResource, Suspense, For } from "solid-js";
-import { client, getImageUrl } from "../lib/pocketbase";
+import { getImageUrl } from "../lib/pocketbase";
+import { getBlogPostByPath } from "../lib/api";
 
 const fetchPostItem = async (name) => {
-  const res = await client.collection("blog").getList(1, 50, {
-    filter: `path="${name}"`,
-  });
-  if (res.items.length === 0) {
-    throw new Error("Post not found");
-  }
-  return res.items[0];
+  return await getBlogPostByPath(name);
 };
 
 const SkeletonLoader = () => (

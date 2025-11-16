@@ -1,5 +1,6 @@
 import { For, createSignal, onMount, Show } from "solid-js";
-import { client, getImageUrl } from "../lib/pocketbase";
+import { getImageUrl } from "../lib/pocketbase";
+import { getMatresses } from "../lib/api";
 
 export default function Matresses({ lang }) {
   const [items, setItems] = createSignal([]);
@@ -7,11 +8,11 @@ export default function Matresses({ lang }) {
 
   onMount(async () => {
     try {
-      const res = await client.collection("mattresses_eliza").getList(1, 50);
-      // const sortedItems = res.items.sort((a, b) =>
+      const items = await getMatresses();
+      // const sortedItems = items.sort((a, b) =>
       //   a.type.localeCompare(b.type),
       // );
-      setItems(res.items);
+      setItems(items);
     } catch (err) {
       console.error("Error fetching items:", err);
     } finally {

@@ -1,21 +1,16 @@
 import { For, createSignal, onMount } from "solid-js";
-import { client } from "../lib/pocketbase";
 import { getImageUrl } from "../lib/pocketbase";
+import { getBlogPosts } from "../lib/api";
 
 export default function BlogList({ lang, type }) {
   const [items, setItems] = createSignal([]);
 
   onMount(async () => {
     try {
-      const res = await client.collection("blog").getFullList(50, {
-        filter: `type="${type}"`,
-        fields:
-          "id, collectionId, image, path, title, description:excerpt(200, true)",
-      });
-      setItems(res);
+      const posts = await getBlogPosts(type);
+      setItems(posts);
     } catch (err) {
       console.error("Error fetching items:", err);
-      setError(err);
     }
   });
   return (

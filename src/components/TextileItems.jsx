@@ -1,5 +1,6 @@
 import { For, createSignal, onMount, Show } from "solid-js";
-import { client, getImage } from "../lib/pocketbase";
+import { getImage } from "../lib/pocketbase";
+import { getTextileItems } from "../lib/api";
 
 export default function TextileItems({ lang }) {
   const [items, setItems] = createSignal([]);
@@ -7,8 +8,8 @@ export default function TextileItems({ lang }) {
 
   onMount(async () => {
     try {
-      const res = await client.collection("textile_eliza").getList(1, 50);
-      setItems(res.items.sort((a, b) => a.order - b.order));
+      const items = await getTextileItems();
+      setItems(items);
     } catch (err) {
       console.error("Error fetching items:", err);
     } finally {

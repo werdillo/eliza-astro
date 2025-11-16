@@ -1,5 +1,5 @@
 import { For, createSignal, onMount, Show } from "solid-js";
-import { client } from "../lib/pocketbase";
+import { getContacts } from "../lib/api";
 
 export default function Contacts({ lang }) {
   const [items, setItems] = createSignal([]);
@@ -7,11 +7,9 @@ export default function Contacts({ lang }) {
 
   onMount(async () => {
     try {
-      const res = await client.collection("contacts_eliza").getList(1, 50, {
-        sort: "order",
-      });
-      setItems(res.items);
-      console.log(res.items);
+      const contacts = await getContacts();
+      setItems(contacts);
+      console.log(contacts);
       setLoading(false);
     } catch (err) {
       console.error("Error fetching contacts:", err);

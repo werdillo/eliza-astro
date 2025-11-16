@@ -1,5 +1,6 @@
 import { For, createSignal, onMount, Show } from "solid-js";
-import { client, url } from "../lib/pocketbase";
+import { url } from "../lib/pocketbase";
+import { getGallery } from "../lib/api";
 
 export default function GalleryImages() {
   const [items, setItems] = createSignal([]);
@@ -13,14 +14,15 @@ export default function GalleryImages() {
 
   onMount(async () => {
     try {
-      const res = await client.collection("gallery_eliza").getList(1, 50);
-      const firstItem = res.items[0];
+      const galleryItem = await getGallery();
 
-      setGalleryData({
-        collectionId: firstItem.collectionId,
-        id: firstItem.id,
-      });
-      setItems(firstItem.image || []);
+      if (galleryItem) {
+        setGalleryData({
+          collectionId: galleryItem.collectionId,
+          id: galleryItem.id,
+        });
+        setItems(galleryItem.image || []);
+      }
     } catch (err) {
       console.error("Error fetching gallery items:", err);
     } finally {

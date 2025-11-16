@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Slider from "../../components/Slider";
-import Awards from "../../components/Awards";
+import Slider from "../../components/Slider.astro";
+import Awards from "../../components/Awards.astro";
 export function getStaticPaths() {
     return [
         { params: { lang: "en" } },
@@ -47,7 +47,7 @@ const currentSeo = seoData[lang] || seoData.lv;
     url={`/${lang}`}
     image="/og-image-home.jpg"
 >
-    <Slider client:load />
+    <Slider />
     <div class="cards">
         <a
             href="https://www.sophisticated-living.com/"
@@ -72,7 +72,7 @@ const currentSeo = seoData[lang] || seoData.lv;
             </div>
         </a>
     </div>
-    <Awards client:only />
+    <Awards />
 </Layout>
 <style>
     .cards {

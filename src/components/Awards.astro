@@ -1,0 +1,55 @@
+---
+// Awards component using Swiper
+const awards = Array.from(
+    { length: 12 },
+    (_, index) => `award_${index + 1}.jpg`,
+);
+---
+
+<div class="awards">
+    <swiper-container
+        id="awards-swiper"
+        pagination="false"
+        speed="500"
+        loop="true"
+        autoplay-delay="3000"
+    >
+        {
+            awards.map((image) => (
+                <swiper-slide>
+                    <div class="-wrapper">
+                        <img
+                            src={`/awards/${image}`}
+                            alt="Award certificate"
+                            class="-img"
+                            loading="lazy"
+                        />
+                    </div>
+                </swiper-slide>
+            ))
+        }
+    </swiper-container>
+</div>
+
+<script>
+    import { register } from "swiper/element/bundle";
+    register();
+
+    // Configure breakpoints after DOM is ready
+    document.addEventListener("DOMContentLoaded", () => {
+        const swiperEl = document.querySelector("#awards-swiper") as any;
+        if (swiperEl) {
+            const breakpoints = {
+                1400: { slidesPerView: 8, navigation: true },
+                1200: { slidesPerView: 6, navigation: true },
+                768: { slidesPerView: 4 },
+                500: { slidesPerView: 3 },
+                300: { slidesPerView: 3 },
+            };
+
+            Object.assign(swiperEl, {
+                breakpoints: breakpoints,
+            });
+        }
+    });
+</script>

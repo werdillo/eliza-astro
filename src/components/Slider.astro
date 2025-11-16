@@ -1,0 +1,34 @@
+---
+// Slider component using Swiper
+const images = [
+  "/slider/Pic6.jpg",
+  "/slider/Pic1.jpg",
+  "/slider/Pic7.jpg",
+  "/slider/Pic3.jpg",
+];
+---
+
+<swiper-container
+  slides-per-view="1"
+  navigation="true"
+  pagination="false"
+  speed="500"
+  loop="true"
+  autoplay-delay="10000"
+>
+  {
+    images.map((image) => (
+      <swiper-slide>
+        <div
+          class="home-slider"
+          style={`background-image: url(${image}); background-size: cover; background-position: center; width: 100%;`}
+        />
+      </swiper-slide>
+    ))
+  }
+</swiper-container>
+
+<script>
+  import { register } from "swiper/element/bundle";
+  register();
+</script>

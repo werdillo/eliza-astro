@@ -5,21 +5,10 @@ export const url = "https://norteks.dpdns.org/";
 export const client = new PocketBase(url);
 
 export const getImageUrl = (item) => {
-  console.log("🖼️ getImageUrl called with item:", item);
-
   const collectionId = item.collectionId || "pmlzc10hatw7ufi";
   const fileId = item.id;
   const fileName = item.image;
-
-  console.log("🔗 Image URL components:", {
-    collectionId,
-    fileId,
-    fileName,
-    url,
-  });
-
   const imageUrl = `${url}/api/files/${collectionId}/${fileId}/${fileName}`;
-  console.log("🎯 Final image URL:", imageUrl);
 
   return imageUrl;
 };

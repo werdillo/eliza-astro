@@ -20,7 +20,6 @@ export default function Collections({ brand, lang }) {
         (acc[item.type] ||= []).push(item);
         return acc;
       }, {});
-      console.log(grouped);
       setGroupedItems(grouped);
     } catch (err) {
       console.error("Error fetching items:", err);

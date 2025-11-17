@@ -1,37 +1,29 @@
 ---
-import textileIcon from "../../assets/images/icons/mobile/textile.svg";
-import matressesIcon from "../../assets/images/icons/mobile/matresses.svg";
+import collectionIcon from "../../assets/images/icons/mobile/collection.svg";
+import mattressesIcon from "../../assets/images/icons/mobile/mattresses.svg";
 import porolonIcon from "../../assets/images/icons/mobile/porolon.svg";
 import componentsIcon from "../../assets/images/icons/mobile/components.svg";
 import horecaIcon from "../../assets/images/icons/mobile/horeca.svg";
 import galleryIcon from "../../assets/images/icons/mobile/gallery.svg";
-import catalogsIcon from "../../assets/images/icons/mobile/catalogs.svg";
-import aboutIcon from "../../assets/images/icons/mobile/about.svg";
 import { Image } from "astro:assets";
 import { mainLinks, secondaryLinks } from "./Links";
 
 const { lang = "lv" } = Astro.params;
 const currentPath = Astro.url.pathname;
 
-// Маппинг иконок для основного меню
 const iconMap = {
-    "/collections": textileIcon,
-    "/matressess": matressesIcon,
+    "/collections": collectionIcon,
+    "/mattresses": mattressesIcon,
     "https://porolons.lv/": porolonIcon,
     "/components": componentsIcon,
     "/horeca": horecaIcon,
+    "/gallery": galleryIcon, // fallback icon
+    "/catalogs": collectionIcon, // fallback icon
+    "/about-us": collectionIcon, // fallback icon
+    "/contact": collectionIcon, // fallback icon
 };
 
-// Маппинг иконок для вторичного меню
-const secondaryIconMap = {
-    "/gallery": galleryIcon,
-    "/catalogs": catalogsIcon,
-    "/about-us": aboutIcon,
-    "/contact": aboutIcon, // используем about иконку для контактов
-};
-
-// Объединяем основные и вторичные ссылки для мобильного меню
-const allMenuItems = [...mainLinks.slice(0, 5)]; // берем первые 4 основные + 1 вторичную для мобильного меню
+const allMenuItems = [...mainLinks.slice(0, 4), ...secondaryLinks.slice(0, 1)];
 
 const menuItemsWithIcons = allMenuItems.map((link) => {
     const fullHref = link.href.startsWith("http")
@@ -43,7 +35,7 @@ const menuItemsWithIcons = allMenuItems.map((link) => {
 
     return {
         href: fullHref,
-        icon: iconMap[link.href] || secondaryIconMap[link.href] || textileIcon, // fallback к textile иконке
+        icon: iconMap[link.href] || collectionIcon, // fallback к collection иконке
         text: link[`label_${lang}`],
         isActive: isActive,
         external: link.external || false,

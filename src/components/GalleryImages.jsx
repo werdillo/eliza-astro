@@ -9,7 +9,8 @@ export default function GalleryImages() {
 
   const getImage = (img) => {
     const { collectionId, id } = galleryData();
-    return `https://norteks.dpdns.org/api/files/${collectionId}/${id}/${img}`;
+    const baseUrl = import.meta.env.PUBLIC_POCKETBASE_URL;
+    return `${baseUrl}/api/files/${collectionId}/${id}/${img}`;
   };
 
   onMount(async () => {

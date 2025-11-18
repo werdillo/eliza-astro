@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Matresses from "../../components/Matresses";
+import Mattresses from "../../components/Mattresses";
 
 export function getStaticPaths() {
     return [
@@ -43,9 +43,9 @@ const currentSeo = seoData[lang] || seoData.lv;
     title={currentSeo.title}
     description={currentSeo.description}
     keywords={currentSeo.keywords}
-    url={`/${lang}/matressess`}
+    url={`/${lang}/mattresses`}
     image="/og-image-mattresses.jpg"
     type="website"
 >
-    <Matresses lang={lang} client:visible />
+    <Mattresses lang={lang} client:visible />
 </Layout>

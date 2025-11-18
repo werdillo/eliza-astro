@@ -32,7 +32,7 @@ export default function Matresses({ lang }) {
         <div class="product-list">
           <For each={items()}>
             {(item) => (
-              <a href={`/${lang}/matress?name=${item.path}`}>
+              <a href={`/${lang}/mattress?name=${item.path}`}>
                 <div class="product-landing">
                   <img src={getImageUrl(item)} alt={item.name} class="-img" />
                   <p class="-text">{item.name.toUpperCase()}</p>

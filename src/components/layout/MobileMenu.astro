@@ -1,10 +1,11 @@
 ---
 import collectionIcon from "../../assets/images/icons/mobile/collection.svg";
-import mattressesIcon from "../../assets/images/icons/mobile/mattresses.svg";
+import mattressIcon from "../../assets/images/icons/mobile/mattresses.svg";
 import porolonIcon from "../../assets/images/icons/mobile/porolon.svg";
 import componentsIcon from "../../assets/images/icons/mobile/components.svg";
 import horecaIcon from "../../assets/images/icons/mobile/horeca.svg";
 import galleryIcon from "../../assets/images/icons/mobile/gallery.svg";
+
 import { Image } from "astro:assets";
 import { mainLinks, secondaryLinks } from "./Links";
 
@@ -13,54 +14,58 @@ const currentPath = Astro.url.pathname;
 
 const iconMap = {
     "/collections": collectionIcon,
-    "/mattresses": mattressesIcon,
+    "/mattress": mattressIcon,
     "https://porolons.lv/": porolonIcon,
     "/components": componentsIcon,
     "/horeca": horecaIcon,
-    "/gallery": galleryIcon, // fallback icon
-    "/catalogs": collectionIcon, // fallback icon
-    "/about-us": collectionIcon, // fallback icon
-    "/contact": collectionIcon, // fallback icon
+    "/gallery": galleryIcon,
+    "/catalogs": collectionIcon,
+    "/about-us": componentsIcon,
+    "/contact": horecaIcon,
 };
-
-const allMenuItems = [...mainLinks.slice(0, 4), ...secondaryLinks.slice(0, 1)];
-
-const menuItemsWithIcons = allMenuItems.map((link) => {
-    const fullHref = link.href.startsWith("http")
-        ? link.href
-        : `/${lang}${link.href}`;
-    const isActive =
-        currentPath === fullHref ||
-        (link.href !== "/" && currentPath.startsWith(fullHref));
-
-    return {
-        href: fullHref,
-        icon: iconMap[link.href] || collectionIcon, // fallback к collection иконке
-        text: link[`label_${lang}`],
-        isActive: isActive,
-        external: link.external || false,
-    };
-});
 ---
 
 <nav class="mobile-menu">
     <div class="-wrapper">
-        {
-            menuItemsWithIcons.map((item) => (
-                <a
-                    href={item.href}
-                    class={item.isActive ? "-link active" : "-link"}
-                    {...(item.external
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                >
-                    <div class="-icon">
-                        <Image src={item.icon} alt={item.text} />
-                    </div>
-                    <span class="-text">{item.text}</span>
-                </a>
-            ))
-        }
+        <a href={`/${lang}/collections`} class="-link">
+            <div class="-icon">
+                <Image src={collectionIcon} alt="Collections" />
+            </div>
+            <span class="-text">Collections</span>
+        </a>
+
+        <a href={`/${lang}/mattresses`} class="-link">
+            <div class="-icon">
+                <Image src={mattressIcon} alt="Mattress" />
+            </div>
+            <span class="-text">Mattress</span>
+        </a>
+
+        <a
+            href="https://porolons.lv/"
+            class="-link"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <div class="-icon">
+                <Image src={porolonIcon} alt="Porolon" />
+            </div>
+            <span class="-text">Porolon</span>
+        </a>
+
+        <a href={`/${lang}/components`} class="-link">
+            <div class="-icon">
+                <Image src={componentsIcon} alt="Components" />
+            </div>
+            <span class="-text">Components</span>
+        </a>
+
+        <a href={`/${lang}/gallery`} class="-link">
+            <div class="-icon">
+                <Image src={galleryIcon} alt="Gallery" />
+            </div>
+            <span class="-text">Gallery</span>
+        </a>
     </div>
 </nav>
 

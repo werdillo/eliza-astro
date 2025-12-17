@@ -191,9 +191,11 @@ export default function ProductItem({ type = "def", lang }) {
                 class="-text"
                 innerHTML={item()[`description_${lang}`]}
               ></div>
-              <a href={getShema(item())} target="_blank">
-                <button class="-button">{translate[lang].dimensions}</button>
-              </a>
+              <Show when={item().schema}>
+                <a href={getShema(item())} target="_blank">
+                  <button class="-button">{translate[lang].dimensions}</button>
+                </a>
+              </Show>
             </div>
           </Show>
 

@@ -16,7 +16,7 @@ export const mainLinks = [
   {
     href: "/sale",
     label_en: "Sale",
-    label_lv: "Izpardošana",
+    label_lv: "Izpārdošana",
     label_ru: "Распродажа",
     external: false,
   },

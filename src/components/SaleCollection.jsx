@@ -16,10 +16,20 @@ export default function SaleCollection({ brand, lang }) {
     try {
       const items = await getSalePage();
 
-      const grouped = items.reduce((acc, item) => {
+      // Filter out hidden items
+      const visibleItems = items.filter((item) => !item.hide);
+
+      // Group by type and sort by index
+      const grouped = visibleItems.reduce((acc, item) => {
         (acc[item.type] ||= []).push(item);
         return acc;
       }, {});
+
+      // Sort each group by index
+      Object.keys(grouped).forEach((type) => {
+        grouped[type].sort((a, b) => (a.index || 0) - (b.index || 0));
+      });
+
       setGroupedItems(grouped);
     } catch (err) {
       console.error("Error fetching items:", err);

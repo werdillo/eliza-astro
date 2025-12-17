@@ -65,7 +65,7 @@ swiper-container {
         font-family: "Avenir", sans-serif;
         font-size: 36px;
         font-weight: 700;
-        color: #303030;
+        color: #dc3545;
     }
     .swiper1 {
         max-width: 65vw;
@@ -282,7 +282,7 @@ swiper-container {
         font-family: "Avenir", sans-serif;
         font-size: 18px;
         font-weight: 600;
-        color: #303030;
+        color: #dc3545;
     }
 }
 
@@ -410,6 +410,10 @@ a:visited {
                     height: auto;
                 }
             }
+        }
+        &.event-highlight {
+            color: #dc3545 !important;
+            font-weight: 700 !important;
         }
     }
 }

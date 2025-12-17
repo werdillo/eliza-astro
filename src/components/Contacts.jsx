@@ -80,6 +80,11 @@ export default function Contacts({ lang }) {
               <p class="-text">{contact[`weekday_${lang}`] || "—"}</p>
               <p class="-text">{contact[`break_${lang}`] || "—"}</p>
               <p class="-text">{contact[`weeken_${lang}`] || "—"}</p>
+              <Show when={contact.show_event}>
+                <p class="-text event-highlight">
+                  {contact[`event_${lang}`] || ""}
+                </p>
+              </Show>
             </div>
           )}
         </For>

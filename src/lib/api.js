@@ -15,38 +15,6 @@ export const getTextileItems = async (limit = 50) => {
 };
 
 /**
- * Blog API
- */
-export const getBlogPosts = async (type, limit = 50) => {
-  try {
-    const res = await client.collection("blog").getFullList(limit, {
-      filter: `type="${type}"`,
-      fields:
-        "id, collectionId, image, path, title, description:excerpt(200, true)",
-    });
-    return res;
-  } catch (err) {
-    console.error("Error fetching blog posts:", err);
-    throw err;
-  }
-};
-
-export const getBlogPostByPath = async (path, limit = 50) => {
-  try {
-    const res = await client.collection("blog").getList(1, limit, {
-      filter: `path="${path}"`,
-    });
-    if (res.items.length === 0) {
-      throw new Error("Post not found");
-    }
-    return res.items[0];
-  } catch (err) {
-    console.error("Error fetching blog post:", err);
-    throw err;
-  }
-};
-
-/**
  * Products API
  */
 export const getProducts = async (brand, limit = 50) => {
@@ -130,6 +98,34 @@ export const getMatressByPath = async (path, limit = 50) => {
     return res.items[0];
   } catch (err) {
     console.error("Error fetching mattress:", err);
+    throw err;
+  }
+};
+
+/**
+ * Sale API
+ */
+export const getSalePage = async (limit = 50) => {
+  try {
+    const res = await client.collection("sale_eliza").getList(1, limit);
+    return res.items;
+  } catch (err) {
+    console.error("Error fetching sale page:", err);
+    throw err;
+  }
+};
+
+export const getSaleProductByPath = async (path, limit = 50) => {
+  try {
+    const res = await client.collection("sale_eliza").getList(1, limit, {
+      filter: `path="${path}"`,
+    });
+    if (res.items.length === 0) {
+      throw new Error("Sale product not found");
+    }
+    return res.items[0];
+  } catch (err) {
+    console.error("Error fetching sale product:", err);
     throw err;
   }
 };

@@ -1,0 +1,52 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProductItem from "../../components/ProductItem";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
+}
+const { lang } = Astro.params;
+
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Izpārdošanas produkts - Eliza-K | Īpašie piedāvājumi un atlaides",
+        description:
+            "Apskatiet detalizētu informāciju par Eliza-K izpārdošanas produktiem. Kvalitatīvas mēbeles ar lielām atlaidēm - specifikācijas, izmēri un īpašās cenas.",
+        keywords:
+            "izpārdošanas produkts, mēbeles ar atlaidi, īpašie piedāvājumi, Eliza-K sale, atlaižu produkti, izpārdošana, akcijas cenas",
+    },
+    en: {
+        title: "Sale Product - Eliza-K | Special Offers and Discounts",
+        description:
+            "View detailed information about Eliza-K sale products. Quality furniture with great discounts - specifications, dimensions and special prices.",
+        keywords:
+            "sale product, discounted furniture, special offers, Eliza-K sale, discount products, clearance, sale prices",
+    },
+    ru: {
+        title: "Товар со скидкой - Eliza-K | Специальные предложения и скидки",
+        description:
+            "Посмотрите подробную информацию о товарах распродажи Eliza-K. Качественная мебель с большими скидками - спецификации, размеры и специальные цены.",
+        keywords:
+            "товар со скидкой, мебель со скидкой, специальные предложения, Eliza-K распродажа, товары со скидкой, распродажа, акционные цены",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
+---
+
+<Layout
+    offset={false}
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/sale-product`}
+    image="/og-image-sale-product.jpg"
+    type="website"
+>
+    <ProductItem client:only lang={lang} type="sale" />
+</Layout>

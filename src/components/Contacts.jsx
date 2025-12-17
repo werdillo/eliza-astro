@@ -9,7 +9,6 @@ export default function Contacts({ lang }) {
     try {
       const contacts = await getContacts();
       setItems(contacts);
-      console.log(contacts);
       setLoading(false);
     } catch (err) {
       console.error("Error fetching contacts:", err);

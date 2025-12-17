@@ -14,6 +14,13 @@ export const mainLinks = [
     external: false,
   },
   {
+    href: "/sale",
+    label_en: "Sale",
+    label_lv: "Izpardošana",
+    label_ru: "Распродажа",
+    external: false,
+  },
+  {
     href: "https://porolons.lv/",
     label_en: "Porolon",
     label_lv: "Porolons",
@@ -27,6 +34,9 @@ export const mainLinks = [
     label_ru: "Компоненты",
     external: false,
   },
+];
+
+export const secondaryLinks = [
   {
     href: "/horeca",
     label_en: "HoReCa",
@@ -34,9 +44,6 @@ export const mainLinks = [
     label_ru: "HoReCa",
     external: false,
   },
-];
-
-export const secondaryLinks = [
   {
     href: "/gallery",
     label_en: "Gallery",
@@ -49,12 +56,12 @@ export const secondaryLinks = [
     label_lv: "Katalogi",
     label_ru: "Каталоги",
   },
-  {
-    href: "/about-us",
-    label_en: "About us",
-    label_lv: "Par mums",
-    label_ru: "О нас",
-  },
+  // {
+  //   href: "/about-us",
+  //   label_en: "About us",
+  //   label_lv: "Par mums",
+  //   label_ru: "О нас",
+  // },
   {
     href: "/contact",
     label_en: "Contact",

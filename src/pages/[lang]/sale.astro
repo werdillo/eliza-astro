@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SaleCollection from "../../components/SaleCollection";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "lv" } },
+        { params: { lang: "ru" } },
+    ];
+}
+const { lang } = Astro.params;
+
+// SEO data by language
+const seoData = {
+    lv: {
+        title: "Izpārdošana - Eliza-K | Mēbeles ar atlaidi",
+        description:
+            "Izmantojiet Eliza-K izpārdošanas piedāvājumus - kvalitatīvas mēbeles par īpašām cenām. Dīvāni, gultas un citas mēbeles ar lielām atlaidēm.",
+        keywords:
+            "izpārdošana, mēbeles ar atlaidi, īpašie piedāvājumi, Eliza-K sale, dīvāni ar atlaidi, gultas ar atlaidi, akcijas mēbeles",
+    },
+    en: {
+        title: "Sale - Eliza-K | Discounted Furniture",
+        description:
+            "Take advantage of Eliza-K sale offers - quality furniture at special prices. Sofas, beds and other furniture with great discounts.",
+        keywords:
+            "sale, discounted furniture, special offers, Eliza-K sale, sofas on sale, beds on sale, furniture deals",
+    },
+    ru: {
+        title: "Распродажа - Eliza-K | Мебель со скидкой",
+        description:
+            "Воспользуйтесь предложениями распродажи Eliza-K - качественная мебель по специальным ценам. Диваны, кровати и другая мебель с большими скидками.",
+        keywords:
+            "распродажа, мебель со скидкой, специальные предложения, Eliza-K распродажа, диваны со скидкой, кровати со скидкой, акции на мебель",
+    },
+};
+
+const currentSeo = seoData[lang] || seoData.lv;
+---
+
+<Layout
+    title={currentSeo.title}
+    description={currentSeo.description}
+    keywords={currentSeo.keywords}
+    url={`/${lang}/sale`}
+    image="/og-image-sale.jpg"
+    type="website"
+>
+    <SaleCollection lang={lang} brand="sale" client:visible />
+</Layout>

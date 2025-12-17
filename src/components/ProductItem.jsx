@@ -1,6 +1,10 @@
 import { For, Show, createSignal, onMount } from "solid-js";
 import { getImage, getShema, getMatressFile } from "../lib/pocketbase";
-import { getProductByPath, getMatressByPath } from "../lib/api";
+import {
+  getProductByPath,
+  getMatressByPath,
+  getSaleProductByPath,
+} from "../lib/api";
 import { register } from "swiper/element/bundle";
 register();
 
@@ -17,6 +21,8 @@ export default function ProductItem({ type = "def", lang }) {
       cleaning: "Cleaning",
       description: "Description",
       fabrics: "Fabrics",
+      price: "Price",
+      oldPrice: "Was",
     },
     ru: {
       sendEmail: "Отправить email",
@@ -24,6 +30,8 @@ export default function ProductItem({ type = "def", lang }) {
       cleaning: "Уход",
       description: "Описание",
       fabrics: "Ткани",
+      price: "Цена",
+      oldPrice: "Было",
     },
     lv: {
       sendEmail: "Sūtīt e-pastu",
@@ -31,15 +39,19 @@ export default function ProductItem({ type = "def", lang }) {
       cleaning: "Tīrīšana",
       description: "Apraksts",
       fabrics: "Audumi",
+      price: "Cena",
+      oldPrice: "Bija",
     },
   };
 
   onMount(async () => {
     try {
       const product =
-        type === "def"
-          ? await getProductByPath(params.name)
-          : await getMatressByPath(params.name);
+        type === "sale"
+          ? await getSaleProductByPath(params.name)
+          : type === "def"
+            ? await getProductByPath(params.name)
+            : await getMatressByPath(params.name);
       setItem(product);
     } catch (err) {
       console.error("Error fetching items:", err);
@@ -100,7 +112,7 @@ export default function ProductItem({ type = "def", lang }) {
               fallback={
                 <img
                   src={
-                    type === "def"
+                    type === "def" || type === "sale"
                       ? getImage(item(), item().images?.[0])
                       : getImage(item(), item().image)
                   }
@@ -135,6 +147,23 @@ export default function ProductItem({ type = "def", lang }) {
           </div>
           <div className="-right">
             <div class="-title">{item().name}</div>
+            <Show when={type === "sale" && (item().price || item().oldPrice)}>
+              <div
+                class="price-container"
+                style={{
+                  "justify-content": "flex-start",
+                }}
+              >
+                <Show when={item().price}>
+                  <span class="price">€{item().price}</span>
+                </Show>
+                <Show when={item().oldPrice}>
+                  <span class="old-price" style={{ "font-size": "24px" }}>
+                    €{item().oldPrice}
+                  </span>
+                </Show>
+              </div>
+            </Show>
             <Show when={type === "mattress" && item()?.[`file_${lang}`]}>
               <div style={{ display: "flex", gap: "12px" }}>
                 <a href={getMatressFile(item(), lang)} target="_blank">

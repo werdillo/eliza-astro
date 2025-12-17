@@ -49,6 +49,24 @@ swiper-container {
     @media screen and (max-width: 1200px) {
         grid-template-columns: 1fr;
     }
+    .price-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+    .old-price {
+        font-family: "Avenir", sans-serif;
+        font-size: 14px;
+        color: rgb(150, 150, 150);
+        text-decoration: line-through;
+    }
+    .price {
+        font-family: "Avenir", sans-serif;
+        font-size: 36px;
+        font-weight: 700;
+        color: #303030;
+    }
     .swiper1 {
         max-width: 65vw;
     }
@@ -67,9 +85,8 @@ swiper-container {
         border: 0;
         padding: 0 24px;
         font-size: 18px;
-        margin-top: 20px;
         cursor: pointer;
-
+        margin-top: 4px;
         &.xl {
             height: 60px;
             width: 100%;
@@ -78,7 +95,6 @@ swiper-container {
                 height: 50px;
                 width: 60%;
                 font-size: 24px;
-                margin-bottom: 20px;
             }
         }
     }
@@ -249,6 +265,24 @@ swiper-container {
         aspect-ratio: 16/9;
         object-fit: cover;
         object-position: top;
+    }
+    .price-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+    .old-price {
+        font-family: "Avenir", sans-serif;
+        font-size: 14px;
+        color: rgb(150, 150, 150);
+        text-decoration: line-through;
+    }
+    .price {
+        font-family: "Avenir", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: #303030;
     }
 }
 

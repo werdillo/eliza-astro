@@ -5,67 +5,54 @@ import porolonIcon from "../../assets/images/icons/mobile/porolon.svg";
 import componentsIcon from "../../assets/images/icons/mobile/components.svg";
 import horecaIcon from "../../assets/images/icons/mobile/horeca.svg";
 import galleryIcon from "../../assets/images/icons/mobile/gallery.svg";
+import saleIcon from "../../assets/images/icons/mobile/sale.svg";
 
 import { Image } from "astro:assets";
-import { mainLinks, secondaryLinks } from "./Links";
+import { mainLinks } from "./Links";
 
 const { lang = "lv" } = Astro.params;
 const currentPath = Astro.url.pathname;
 
 const iconMap = {
     "/collections": collectionIcon,
-    "/mattress": mattressIcon,
+    "/mattresses": mattressIcon,
+    "/sale": saleIcon,
     "https://porolons.lv/": porolonIcon,
     "/components": componentsIcon,
     "/horeca": horecaIcon,
     "/gallery": galleryIcon,
-    "/catalogs": collectionIcon,
-    "/about-us": componentsIcon,
-    "/contact": horecaIcon,
+};
+
+const getLabelForLang = (link) => {
+    return link[`label_${lang}`] || link.label_en;
 };
 ---
 
 <nav class="mobile-menu">
     <div class="-wrapper">
-        <a href={`/${lang}/collections`} class="-link">
-            <div class="-icon">
-                <Image src={collectionIcon} alt="Collections" />
-            </div>
-            <span class="-text">Collections</span>
-        </a>
+        {
+            mainLinks.map((link) => {
+                const href = link.external ? link.href : `/${lang}${link.href}`;
+                const isActive = currentPath.includes(link.href);
+                const icon = iconMap[link.href];
+                const label = getLabelForLang(link);
+                const isSale = link.href === "/sale";
 
-        <a href={`/${lang}/mattresses`} class="-link">
-            <div class="-icon">
-                <Image src={mattressIcon} alt="Mattress" />
-            </div>
-            <span class="-text">Mattress</span>
-        </a>
-
-        <a
-            href="https://porolons.lv/"
-            class="-link"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <div class="-icon">
-                <Image src={porolonIcon} alt="Porolon" />
-            </div>
-            <span class="-text">Porolon</span>
-        </a>
-
-        <a href={`/${lang}/components`} class="-link">
-            <div class="-icon">
-                <Image src={componentsIcon} alt="Components" />
-            </div>
-            <span class="-text">Components</span>
-        </a>
-
-        <a href={`/${lang}/gallery`} class="-link">
-            <div class="-icon">
-                <Image src={galleryIcon} alt="Gallery" />
-            </div>
-            <span class="-text">Gallery</span>
-        </a>
+                return (
+                    <a
+                        href={href}
+                        class={`-link ${isActive ? "active" : ""} ${isSale ? "sale" : ""}`}
+                        target={link.external ? "_blank" : undefined}
+                        rel={link.external ? "noopener noreferrer" : undefined}
+                    >
+                        <div class="-icon">
+                            {icon && <Image src={icon} alt={label} />}
+                        </div>
+                        <span class="-text">{label}</span>
+                    </a>
+                );
+            })
+        }
     </div>
 </nav>
 
@@ -117,6 +104,20 @@ const iconMap = {
 
                 .-icon img {
                     opacity: 1;
+                }
+            }
+
+            &.sale {
+                color: #dc3545 !important;
+
+                .-icon img {
+                    opacity: 1 !important;
+                    filter: invert(27%) sepia(51%) saturate(2878%)
+                        hue-rotate(346deg) brightness(104%) contrast(97%) !important;
+                }
+
+                .-text {
+                    color: #dc3545 !important;
                 }
             }
         }

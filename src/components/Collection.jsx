@@ -7,9 +7,9 @@ export default function Collections({ brand, lang }) {
   const [loading, setLoading] = createSignal(true);
 
   const translate = {
-    en: { sofa: "Sofas", bed: "Beds" },
-    ru: { sofa: "Диваны", bed: "Кровати" },
-    lv: { sofa: "Dīvāni", bed: "Gultas" },
+    en: { sofa: "Sofas", bed: "Beds", chair: "Chair", other: "Other" },
+    ru: { sofa: "Диваны", bed: "Кровати", chair: "Стуля", other: "Другое" },
+    lv: { sofa: "Dīvāni", bed: "Gultas", chair: "Krēsli", other: "Cits" },
   };
 
   onMount(async () => {

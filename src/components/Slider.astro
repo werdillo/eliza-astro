@@ -1,34 +1,236 @@
 ---
 // Slider component using Swiper
-const images = [
-  "/slider/Pic6.jpg",
-  "/slider/Pic1.jpg",
-  "/slider/Pic7.jpg",
-  "/slider/Pic3.jpg",
+const { lang = "lv" } = Astro.params;
+
+const slides = [
+    {
+        image: "/slider/Pic6.jpg",
+        title: {
+            en: "Premium Elegance",
+            lv: "Premium elegance",
+            ru: "Премиальная элегантность",
+        },
+        text: {
+            en: "Where luxury meets craftsmanship",
+            lv: "Kur luksuss satiekas ar meistarību",
+            ru: "Где роскошь встречается с мастерством",
+        },
+        button: {
+            en: "Discover BBold",
+            lv: "Atklājiet BBold",
+            ru: "Откройте BBold",
+        },
+        link: `/${lang}/collection/bbold`,
+    },
+    {
+        image: "/slider/Pic1.jpg",
+        title: {
+            en: "Timeless Comfort",
+            lv: "Mūžīgs komforts",
+            ru: "Вечный комфорт",
+        },
+        text: {
+            en: "Quality that endures, style that inspires",
+            lv: "Kvalitāte, kas iztur laiku, stils, kas iedvesmo",
+            ru: "Качество на века, стиль вдохновляет",
+        },
+        button: {
+            en: "Explore Basic",
+            lv: "Izpētiet Basic",
+            ru: "Изучите Basic",
+        },
+        link: `/${lang}/collection/basic`,
+    },
+    {
+        image: "/slider/Pic7.jpg",
+        title: {
+            en: "Exclusive Offers",
+            lv: "Ekskluzīvi piedāvājumi",
+            ru: "Эксклюзивные предложения",
+        },
+        text: {
+            en: "Exceptional prices. Uncompromising quality",
+            lv: "Izcila cena. Nekompromisa kvalitāte",
+            ru: "Исключительные цены. Безупречное качество",
+        },
+        button: {
+            en: "Shop Sale",
+            lv: "Izpārdošana",
+            ru: "Распродажа",
+        },
+        link: `/${lang}/sale`,
+    },
 ];
 ---
 
 <swiper-container
-  slides-per-view="1"
-  navigation="true"
-  pagination="false"
-  speed="500"
-  loop="true"
-  autoplay-delay="10000"
+    slides-per-view="1"
+    navigation="true"
+    pagination="false"
+    speed="500"
+    loop="true"
+    autoplay-delay="10000"
 >
-  {
-    images.map((image) => (
-      <swiper-slide>
-        <div
-          class="home-slider"
-          style={`background-image: url(${image}); background-size: cover; background-position: center; width: 100%;`}
-        />
-      </swiper-slide>
-    ))
-  }
+    {
+        slides.map((slide) => (
+            <swiper-slide>
+                <div class="slider-wrapper">
+                    <div
+                        class="home-slider"
+                        style={`background-image: url(${slide.image}); background-size: cover; background-position: center; width: 100%;`}
+                    />
+                    <div class="slider-overlay">
+                        <div class="slider-content">
+                            <h1 class="slider-title">{slide.title[lang]}</h1>
+                            <p class="slider-text">{slide.text[lang]}</p>
+                            <a href={slide.link} class="slider-button">
+                                {slide.button[lang]}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </swiper-slide>
+        ))
+    }
 </swiper-container>
 
+<style>
+    .slider-wrapper {
+        position: relative;
+        width: 100%;
+        height: 600px;
+    }
+
+    .home-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .slider-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.5) 0%,
+            rgba(0, 0, 0, 0.2) 50%,
+            rgba(0, 0, 0, 0) 100%
+        );
+    }
+
+    .slider-content {
+        max-width: 700px;
+        margin-left: 150px;
+        padding: 0 40px;
+        color: #ffffff;
+        text-align: left;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    .slider-title {
+        font-family: "Avenir", sans-serif;
+        font-size: 72px;
+        font-weight: 300;
+        letter-spacing: 2px;
+        margin: 0 0 20px 0;
+        line-height: 1.1;
+        text-transform: uppercase;
+    }
+
+    .slider-text {
+        font-family: "Avenir", sans-serif;
+        font-size: 32px;
+        font-weight: 400;
+        margin: 0 0 40px 0;
+        line-height: 1.4;
+        opacity: 0.95;
+    }
+
+    .slider-button {
+        display: inline-block;
+        font-family: "Avenir", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        padding: 16px 40px;
+        background: #ffffff;
+        color: #303030;
+        text-decoration: none;
+        border: 2px solid #ffffff;
+        transition: all 0.3s ease;
+    }
+
+    .slider-button:hover {
+        background: transparent;
+        color: #ffffff;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .slider-wrapper {
+            height: 400px;
+        }
+
+        .slider-content {
+            margin-left: 30px;
+            padding: 0 20px;
+        }
+
+        .slider-title {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .slider-text {
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .slider-button {
+            font-size: 14px;
+            padding: 12px 30px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .slider-wrapper {
+            height: 300px;
+        }
+
+        .slider-title {
+            font-size: 28px;
+        }
+
+        .slider-text {
+            font-size: 14px;
+        }
+
+        .slider-button {
+            padding: 10px 24px;
+        }
+    }
+</style>
+
 <script>
-  import { register } from "swiper/element/bundle";
-  register();
+    import { register } from "swiper/element/bundle";
+    register();
 </script>

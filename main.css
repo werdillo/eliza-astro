@@ -17,7 +17,7 @@ swiper-container {
 }
 
 .home-slider {
-    height: 600px;
+    height: 650px;
     @media screen and (max-width: 600px) {
         height: 40vh;
         object-fit: contain;

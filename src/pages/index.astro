@@ -2,7 +2,32 @@
 import Layout from "../layouts/Layout.astro";
 import Slider from "../components/Slider.astro";
 import Awards from "../components/Awards.astro";
+import Pic6 from "../assets/images/collection/Pic6.jpg";
+import Pic7 from "../assets/images/collection/Pic7.jpg";
+import bboldImg from "../assets/images/collection/bbold.png";
+
 const lang = "lv";
+
+const cards = [
+    {
+        url: "https://www.sophisticated-living.com/",
+        image: Pic7,
+        text: "Sophisticated Living",
+        external: true,
+    },
+    {
+        url: `/${lang}/collection/bbold`,
+        image: bboldImg,
+        text: "BBold",
+        external: false,
+    },
+    {
+        url: `/${lang}/collection/basic`,
+        image: Pic6,
+        text: "Basic",
+        external: false,
+    },
+];
 
 // SEO data by language
 const seoData = {
@@ -42,28 +67,23 @@ const currentSeo = seoData[lang] || seoData.lv;
 >
     <Slider />
     <div class="cards">
-        <a
-            href="https://www.sophisticated-living.com/"
-            rel="noopener noreferrer"
-            target="_blank"
-        >
-            <div class="card">
-                <div class="bg-image"></div>
-                <span class="card-text">Sophisticated Living</span>
-            </div>
-        </a>
-        <a href={"/" + lang + "/collection/bbold"}>
-            <div class="card">
-                <div class="bg-image bbold"></div>
-                <span class="card-text">BBold</span>
-            </div>
-        </a>
-        <a href={"/" + lang + "/collection/basic"}>
-            <div class="card">
-                <div class="bg-image basic"></div>
-                <span class="card-text">Basic</span>
-            </div>
-        </a>
+        {
+            cards.map((card) => (
+                <a
+                    href={card.url}
+                    rel={card.external ? "noopener noreferrer" : undefined}
+                    target={card.external ? "_blank" : undefined}
+                >
+                    <div class="card">
+                        <div
+                            class="bg-image"
+                            style={`background-image: url(${card.image.src}); background-position: center; background-size: cover; background-repeat: no-repeat;`}
+                        />
+                        <span class="card-text">{card.text}</span>
+                    </div>
+                </a>
+            ))
+        }
     </div>
     <Awards />
 </Layout>
@@ -97,18 +117,11 @@ const currentSeo = seoData[lang] || seoData.lv;
         left: 0;
         width: 100%;
         height: 100%;
-        background: url("/collection/Pic7.jpg") center/cover no-repeat;
         filter: brightness(0.7); /* Darker image */
         z-index: 1;
         transition: 250ms;
         &:hover {
             filter: brightness(0.6); /* Darker image */
-        }
-        &.basic {
-            background: url("/collection/Pic6.jpg") center/cover no-repeat;
-        }
-        &.bbold {
-            background: url("/collection/bbold.png") center/cover no-repeat;
         }
     }
     .card-text {

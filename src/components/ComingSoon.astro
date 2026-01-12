@@ -1,31 +1,36 @@
 ---
 // src/components/ComingSoon.astro
+import Pic6 from "../assets/images/collection/Pic6.jpg";
+
 export interface Props {
-  lang?: string; // параметр языка, по умолчанию 'ru'
+    lang?: string; // параметр языка, по умолчанию 'ru'
 }
 
-const { lang = 'lv' } = Astro.props;
+const { lang = "lv" } = Astro.props;
 
 // Содержимое для разных языков
 const content = {
-  en: {
-    title: "Coming Soon",
-    message: "Our website is currently under development. We're working hard to bring you an amazing experience.",
-    subMessage: "Please check back later for updates.",
-    button: "Home"
-  },
-  ru: {
-    title: "Скоро открытие",
-    message: "Наш сайт в настоящее время находится в разработке. Мы усердно работаем, чтобы предоставить вам потрясающий опыт.",
-    subMessage: "Пожалуйста, загляните позже для обновлений.",
-    button: "Главная"
-  },
-  lv: {
-    title: "Drīzumā",
-    message: "Mūsu vietne pašlaik ir izstrādes procesā. Mēs cītīgi strādājam, lai jums sniegtu lielisku pieredzi.",
-    subMessage: "Lūdzu, apmeklējiet mūs vēlāk, lai uzzinātu jaunumus.",
-    button: "Sākumlapa"
-  }
+    en: {
+        title: "Coming Soon",
+        message:
+            "Our website is currently under development. We're working hard to bring you an amazing experience.",
+        subMessage: "Please check back later for updates.",
+        button: "Home",
+    },
+    ru: {
+        title: "Скоро открытие",
+        message:
+            "Наш сайт в настоящее время находится в разработке. Мы усердно работаем, чтобы предоставить вам потрясающий опыт.",
+        subMessage: "Пожалуйста, загляните позже для обновлений.",
+        button: "Главная",
+    },
+    lv: {
+        title: "Drīzumā",
+        message:
+            "Mūsu vietne pašlaik ir izstrādes procesā. Mēs cītīgi strādājam, lai jums sniegtu lielisku pieredzi.",
+        subMessage: "Lūdzu, apmeklējiet mūs vēlāk, lai uzzinātu jaunumus.",
+        button: "Sākumlapa",
+    },
 };
 
 // Выбираем содержимое для текущего языка
@@ -33,91 +38,93 @@ const currentContent = content[lang] || content.ru;
 ---
 
 <div class="fullscreen-container">
-  <div class="fullscreen-bg"></div>
-  
-  <div class="content">
-    <div class="message">
-      <h1>{currentContent.title}</h1>
-      <p>{currentContent.message}</p>
-      <p>{currentContent.subMessage}</p>
-      
-      <div class="language-switcher">
-        <a href={"/" +lang} class="language-btn">{currentContent.button}</a>
-      </div>
+    <div class="fullscreen-bg" style={`background-image: url(${Pic6.src});`}>
     </div>
-  </div>
+
+    <div class="content">
+        <div class="message">
+            <h1>{currentContent.title}</h1>
+            <p>{currentContent.message}</p>
+            <p>{currentContent.subMessage}</p>
+
+            <div class="language-switcher">
+                <a href={"/" + lang} class="language-btn"
+                    >{currentContent.button}</a
+                >
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
-  .fullscreen-container {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-  }
-  
-  .fullscreen-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/collection/Pic6.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.6);
-    z-index: -1;
-  }
-  
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: white;
-    text-align: center;
-    padding: 2rem;
-  }
-  
-  .message {
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 2rem;
-    border-radius: 10px;
-    max-width: 600px;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .language-switcher {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    justify-content: center;
-  }
-  
-  .language-btn {
-    background: none;
-    border: 2px solid white;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-  }
-  
-  .language-btn:hover {
-    background-color: white;
-    color: black;
-  }
+    .fullscreen-container {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+    }
+
+    .fullscreen-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.6);
+        z-index: -1;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: white;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .message {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 600px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .language-switcher {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        justify-content: center;
+    }
+
+    .language-btn {
+        background: none;
+        border: 2px solid white;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .language-btn:hover {
+        background-color: white;
+        color: black;
+    }
 </style>

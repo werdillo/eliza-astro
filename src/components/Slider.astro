@@ -1,10 +1,14 @@
 ---
 // Slider component using Swiper
+import Pic1 from "../assets/images/collection/Pic1.jpg";
+import Pic6 from "../assets/images/collection/Pic6.jpg";
+import Pic7 from "../assets/images/collection/Pic7.jpg";
+
 const { lang = "lv" } = Astro.params;
 
 const slides = [
     {
-        image: "/slider/Pic6.jpg",
+        image: Pic6,
         title: {
             en: "Premium Elegance",
             lv: "Premium elegance",
@@ -23,7 +27,7 @@ const slides = [
         link: `/${lang}/collection/bbold`,
     },
     {
-        image: "/slider/Pic1.jpg",
+        image: Pic1,
         title: {
             en: "Timeless Comfort",
             lv: "Mūžīgs komforts",
@@ -42,7 +46,7 @@ const slides = [
         link: `/${lang}/collection/basic`,
     },
     {
-        image: "/slider/Pic7.jpg",
+        image: Pic7,
         title: {
             en: "Exclusive Offers",
             lv: "Ekskluzīvi piedāvājumi",
@@ -77,7 +81,7 @@ const slides = [
                 <div class="slider-wrapper">
                     <div
                         class="home-slider"
-                        style={`background-image: url(${slide.image}); background-size: cover; background-position: center; width: 100%;`}
+                        style={`background-image: url(${slide.image.src}); background-size: cover; background-position: center; width: 100%;`}
                     />
                     <div class="slider-overlay">
                         <div class="slider-content">

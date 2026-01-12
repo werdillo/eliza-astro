@@ -1,11 +1,11 @@
 ---
 import { Image } from "astro:assets";
-import pic1 from "../../../assets/images/hoReCa/Ca.png";
-import pic2 from "../../../assets/images/hoReCa/Ho.png";
-import pic3 from "../../../assets/images/hoReCa/Re.png";
 import Layout from "../../../layouts/Layout.astro";
+import { horecaItems } from "../../../constants/horeca";
+import { t, type Language } from "../../../constants/translations";
 
 const { lang } = Astro.params;
+const currentLang = lang as Language;
 
 export function getStaticPaths() {
     return [
@@ -41,14 +41,6 @@ const seoData = {
 };
 
 const currentSeo = seoData[lang] || seoData.lv;
-
-const translations = {
-    en: { hotels: "Hotels", cafe: "Cafe", restaurants: "Restaurants" },
-    lv: { hotels: "Viesnīcas", cafe: "Kafejnīcas", restaurants: "Restorāni" },
-    ru: { hotels: "Отели", cafe: "Кафе", restaurants: "Рестораны" },
-};
-
-const t = translations[lang] || translations.lv;
 ---
 
 <Layout
@@ -61,24 +53,24 @@ const t = translations[lang] || translations.lv;
     type="website"
 >
     <div class="collections">
-        <!-- <a href={"/" + lang + "/horeca/hotels"} class="collection-link"> -->
-        <div class="-item">
-            <Image class="-img" alt="" src={pic2} />
-            <span class="-text">{t.hotels}</span>
-        </div>
-        <!-- </a> -->
-        <!-- <a href={"/" + lang + "/horeca/cafe"} class="collection-link"> -->
-        <div class="-item">
-            <Image class="-img" alt="" src={pic3} />
-            <span class="-text">{t.cafe}</span>
-        </div>
-        <!-- </a> -->
-        <!-- <a href={"/" + lang + "/horeca/projects"} class="collection-link"> -->
-        <div class="-item">
-            <Image class="-img" alt="" src={pic1} />
-            <span class="-text">{t.restaurants} </span>
-        </div>
-        <!-- </a> -->
+        {
+            horecaItems.map((item) => {
+                const text = t(item.translationKey, currentLang);
+                return (
+                    <a
+                        href={item.url}
+                        class="collection-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <div class="-item">
+                            <Image class="-img" alt={text} src={item.image} />
+                            <span class="-text">{text}</span>
+                        </div>
+                    </a>
+                );
+            })
+        }
     </div>
 </Layout>
 

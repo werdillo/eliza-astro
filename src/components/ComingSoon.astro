@@ -1,40 +1,14 @@
 ---
 // src/components/ComingSoon.astro
 import Pic6 from "../assets/images/collection/Pic6.jpg";
+import { t, type Language } from "../constants/translations";
 
 export interface Props {
-    lang?: string; // параметр языка, по умолчанию 'ru'
+    lang?: string; // параметр языка, по умолчанию 'lv'
 }
 
 const { lang = "lv" } = Astro.props;
-
-// Содержимое для разных языков
-const content = {
-    en: {
-        title: "Coming Soon",
-        message:
-            "Our website is currently under development. We're working hard to bring you an amazing experience.",
-        subMessage: "Please check back later for updates.",
-        button: "Home",
-    },
-    ru: {
-        title: "Скоро открытие",
-        message:
-            "Наш сайт в настоящее время находится в разработке. Мы усердно работаем, чтобы предоставить вам потрясающий опыт.",
-        subMessage: "Пожалуйста, загляните позже для обновлений.",
-        button: "Главная",
-    },
-    lv: {
-        title: "Drīzumā",
-        message:
-            "Mūsu vietne pašlaik ir izstrādes procesā. Mēs cītīgi strādājam, lai jums sniegtu lielisku pieredzi.",
-        subMessage: "Lūdzu, apmeklējiet mūs vēlāk, lai uzzinātu jaunumus.",
-        button: "Sākumlapa",
-    },
-};
-
-// Выбираем содержимое для текущего языка
-const currentContent = content[lang] || content.ru;
+const currentLang = lang as Language;
 ---
 
 <div class="fullscreen-container">
@@ -43,13 +17,13 @@ const currentContent = content[lang] || content.ru;
 
     <div class="content">
         <div class="message">
-            <h1>{currentContent.title}</h1>
-            <p>{currentContent.message}</p>
-            <p>{currentContent.subMessage}</p>
+            <h1>{t("comingSoon.title", currentLang)}</h1>
+            <p>{t("comingSoon.message", currentLang)}</p>
+            <p>{t("comingSoon.subMessage", currentLang)}</p>
 
             <div class="language-switcher">
                 <a href={"/" + lang} class="language-btn"
-                    >{currentContent.button}</a
+                    >{t("comingSoon.button", currentLang)}</a
                 >
             </div>
         </div>

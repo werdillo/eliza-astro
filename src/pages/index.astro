@@ -2,32 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import Slider from "../components/Slider.astro";
 import Awards from "../components/Awards.astro";
-import Pic6 from "../assets/images/collection/Pic6.jpg";
-import Pic7 from "../assets/images/collection/Pic7.jpg";
-import bboldImg from "../assets/images/collection/bbold.png";
+import { collectionCards } from "../constants/collections";
+import { t, type Language } from "../constants/translations";
 
 const lang = "lv";
-
-const cards = [
-    {
-        url: "https://www.sophisticated-living.com/",
-        image: Pic7,
-        text: "Sophisticated Living",
-        external: true,
-    },
-    {
-        url: `/${lang}/collection/bbold`,
-        image: bboldImg,
-        text: "BBold",
-        external: false,
-    },
-    {
-        url: `/${lang}/collection/basic`,
-        image: Pic6,
-        text: "Basic",
-        external: false,
-    },
-];
+const currentLang = lang as Language;
 
 // SEO data by language
 const seoData = {
@@ -68,21 +47,26 @@ const currentSeo = seoData[lang] || seoData.lv;
     <Slider />
     <div class="cards">
         {
-            cards.map((card) => (
-                <a
-                    href={card.url}
-                    rel={card.external ? "noopener noreferrer" : undefined}
-                    target={card.external ? "_blank" : undefined}
-                >
-                    <div class="card">
-                        <div
-                            class="bg-image"
-                            style={`background-image: url(${card.image.src}); background-position: center; background-size: cover; background-repeat: no-repeat;`}
-                        />
-                        <span class="card-text">{card.text}</span>
-                    </div>
-                </a>
-            ))
+            collectionCards.map((card) => {
+                const url =
+                    typeof card.url === "function" ? card.url(lang) : card.url;
+                const text = t(card.translationKey, currentLang);
+                return (
+                    <a
+                        href={url}
+                        rel={card.external ? "noopener noreferrer" : undefined}
+                        target={card.external ? "_blank" : undefined}
+                    >
+                        <div class="card">
+                            <div
+                                class="bg-image"
+                                style={`background-image: url(${card.image.src}); background-position: center; background-size: cover; background-repeat: no-repeat;`}
+                            />
+                            <span class="card-text">{text}</span>
+                        </div>
+                    </a>
+                );
+            })
         }
     </div>
     <Awards />

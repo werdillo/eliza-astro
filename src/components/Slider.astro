@@ -3,65 +3,31 @@
 import Pic1 from "../assets/images/collection/Pic1.jpg";
 import Pic6 from "../assets/images/collection/Pic6.jpg";
 import Pic7 from "../assets/images/collection/Pic7.jpg";
+import { t, type Language } from "../constants/translations";
 
 const { lang = "lv" } = Astro.params;
+const currentLang = lang as Language;
 
 const slides = [
     {
         image: Pic6,
-        title: {
-            en: "Premium Elegance",
-            lv: "Premium elegance",
-            ru: "Премиальная элегантность",
-        },
-        text: {
-            en: "Where luxury meets craftsmanship",
-            lv: "Kur luksuss satiekas ar meistarību",
-            ru: "Где роскошь встречается с мастерством",
-        },
-        button: {
-            en: "Discover BBold",
-            lv: "Atklājiet BBold",
-            ru: "Откройте BBold",
-        },
+        title: t("slider.slide1.title", currentLang),
+        text: t("slider.slide1.text", currentLang),
+        button: t("slider.slide1.button", currentLang),
         link: `/${lang}/collection/bbold`,
     },
     {
         image: Pic1,
-        title: {
-            en: "Timeless Comfort",
-            lv: "Mūžīgs komforts",
-            ru: "Вечный комфорт",
-        },
-        text: {
-            en: "Quality that endures. Style that inspires",
-            lv: "Kvalitāte, kas iztur laiku. Stils, kas iedvesmo",
-            ru: "Качество на века. Вдохновляющий стиль",
-        },
-        button: {
-            en: "Explore Basic",
-            lv: "Izpētiet Basic",
-            ru: "Изучите Basic",
-        },
+        title: t("slider.slide2.title", currentLang),
+        text: t("slider.slide2.text", currentLang),
+        button: t("slider.slide2.button", currentLang),
         link: `/${lang}/collection/basic`,
     },
     {
         image: Pic7,
-        title: {
-            en: "Exclusive Offers",
-            lv: "Ekskluzīvi piedāvājumi",
-            ru: "Эксклюзивные предложения",
-        },
-        text: {
-            en: "Exceptional prices. Uncompromising quality",
-            lv: "Izcila cena. Teicama kvalitāte",
-            ru: "Исключительные цены. Безупречное качество",
-        },
-        button: {
-            en: "Shop Sale",
-            lv: "Izpārdošana",
-            ru: "Распродажа",
-        },
+        title: t("slider.slide3.title", currentLang),
+        text: t("slider.slide3.text", currentLang),
+        button: t("slider.slide3.button", currentLang),
         link: `/${lang}/sale`,
     },
 ];
@@ -85,10 +51,10 @@ const slides = [
                     />
                     <div class="slider-overlay">
                         <div class="slider-content">
-                            <h1 class="slider-title">{slide.title[lang]}</h1>
-                            <p class="slider-text">{slide.text[lang]}</p>
+                            <h1 class="slider-title">{slide.title}</h1>
+                            <p class="slider-text">{slide.text}</p>
                             <a href={slide.link} class="slider-button">
-                                {slide.button[lang]}
+                                {slide.button}
                             </a>
                         </div>
                     </div>

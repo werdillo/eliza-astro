@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import ProductItem from "../../components/products/ProductItem";
+import ProductPage from "../../components/products/ProductPage";
 
 export function getStaticPaths() {
     return [
@@ -48,5 +48,5 @@ const currentSeo = seoData[lang] || seoData.lv;
     image="/og-image-sale-product.jpg"
     type="website"
 >
-    <ProductItem client:only lang={lang} type="sale" />
+    <ProductPage client:only lang={lang} type="sale" />
 </Layout>

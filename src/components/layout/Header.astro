@@ -1,12 +1,12 @@
 ---
 import { Image } from "astro:assets";
 import Logo from "../../assets/images/eliza-logo.svg";
-import LanguageDropdown from "./LanguageDropdown";
+import LanguageDropdown from "./header/LanguageDropdown";
 
 const { lang = "lv" } = Astro.params;
 const currentPath = Astro.url.pathname;
 import { mainLinks, secondaryLinks } from "./Links";
-import BurgerMenu from "./BurgerMenu";
+import BurgerMenu from "./header/BurgerMenu";
 
 const isActive = (path: string) =>
     currentPath.includes(path) ? "-link active" : "-link";

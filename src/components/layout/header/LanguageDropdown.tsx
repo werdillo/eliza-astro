@@ -1,6 +1,6 @@
 import { createSignal, Show, onMount, onCleanup, For } from "solid-js";
 import type { Component } from "solid-js";
-import "../../assets/css/LanguageDropdown.css";
+import "../../../assets/css/LanguageDropdown.css";
 
 interface Language {
   code: string;

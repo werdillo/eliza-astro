@@ -1,66 +1,66 @@
-import "../../assets/css/dropdown.css"
-import { createSignal, Show, For } from 'solid-js';
+import "../../../assets/css/dropdown.css";
+import { createSignal, Show, For } from "solid-js";
 
-const DropdownMenu = ({lang}) => {
+const DropdownMenu = ({ lang }) => {
   const [openStates, setOpenStates] = createSignal({
     products: false,
     collections: false,
-    components: false
+    components: false,
   });
 
   const [timeoutIds, setTimeoutIds] = createSignal({
     products: null,
     collections: null,
-    components: null
+    components: null,
   });
 
   const menuData = {
     collections: [
       {
-        title: 'Bbold',
-        description: 'Современная дизайнерская коллекция',
-        href: '/collection/bbold'
+        title: "Bbold",
+        description: "Современная дизайнерская коллекция",
+        href: "/collection/bbold",
       },
       {
-        title: 'Basic',
-        description: 'Базовая коллекция мебели',
-        href: '/collection/basic'
+        title: "Basic",
+        description: "Базовая коллекция мебели",
+        href: "/collection/basic",
       },
       {
-        title: 'Sophisticated living',
-        description: 'Премиальная коллекция для изысканного интерьера',
-        href: '/collection/sophisticated'
-      }
+        title: "Sophisticated living",
+        description: "Премиальная коллекция для изысканного интерьера",
+        href: "/collection/sophisticated",
+      },
     ],
     components: [
       {
-        title: 'Поролон',
-        description: 'Высококачественные наполнители',
-        href: '/components/foam'
+        title: "Поролон",
+        description: "Высококачественные наполнители",
+        href: "/components/foam",
       },
       {
-        title: 'Ткани',
-        description: 'Разнообразные варианты обивки',
-        href: '/textile'
-      }
+        title: "Ткани",
+        description: "Разнообразные варианты обивки",
+        href: "/textile",
+      },
     ],
     language: [
       {
-        title: 'LV',
-        description: 'Высококачественные наполнители',
-        href: '/components/foam'
+        title: "LV",
+        description: "Высококачественные наполнители",
+        href: "/components/foam",
       },
       {
-        title: 'RU',
-        description: 'Высококачественные наполнители',
-        href: '/components/foam'
+        title: "RU",
+        description: "Высококачественные наполнители",
+        href: "/components/foam",
       },
       {
-        title: 'EN',
-        description: 'Высококачественные наполнители',
-        href: '/components/foam'
+        title: "EN",
+        description: "Высококачественные наполнители",
+        href: "/components/foam",
       },
-    ]
+    ],
   };
 
   const handleMouseEnter = (dropdownId) => {
@@ -68,10 +68,10 @@ const DropdownMenu = ({lang}) => {
       products: false,
       collections: false,
       components: false,
-      [dropdownId]: true
+      [dropdownId]: true,
     };
-    
-    Object.keys(timeoutIds()).forEach(id => {
+
+    Object.keys(timeoutIds()).forEach((id) => {
       if (timeoutIds()[id]) {
         clearTimeout(timeoutIds()[id]);
       }
@@ -80,7 +80,7 @@ const DropdownMenu = ({lang}) => {
     setTimeoutIds({
       products: null,
       collections: null,
-      components: null
+      components: null,
     });
 
     setOpenStates(newOpenStates);
@@ -89,7 +89,7 @@ const DropdownMenu = ({lang}) => {
   const handleMouseLeave = (dropdownId) => {
     const timeout = setTimeout(() => {
       const dropdown = document.querySelector(`.dropdown-${dropdownId}`);
-      const isHovered = dropdown.matches(':hover');
+      const isHovered = dropdown.matches(":hover");
       if (!isHovered) {
         setOpenStates({ ...openStates(), [dropdownId]: false });
       }
@@ -114,11 +114,11 @@ const DropdownMenu = ({lang}) => {
         //   };
         //   setOpenStates(newOpenStates);
         // }}
-        class={`dropdown-button ${openStates()[id] ? 'active' : ''}`}
+        class={`dropdown-button ${openStates()[id] ? "active" : ""}`}
       >
         {label}
         <svg
-          class={`dropdown-arrow ${openStates()[id] ? 'rotate' : ''}`}
+          class={`dropdown-arrow ${openStates()[id] ? "rotate" : ""}`}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"

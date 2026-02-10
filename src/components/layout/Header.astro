@@ -95,6 +95,16 @@ const isActive = (path: string) =>
         grid-template-columns: 1fr auto 1fr;
         align-items: center;
         gap: 25px;
+        @media (max-width: 1500px) {
+            gap: 18px;
+        }
+        @media (max-width: 1430px) {
+            gap: 15px;
+        }
+        @media (max-width: 1300px) {
+            grid-template-columns: auto 1fr auto;
+            gap: 10px;
+        }
     }
 
     .-logo-link {
@@ -114,8 +124,17 @@ const isActive = (path: string) =>
         gap: var(--link-gap);
         flex-wrap: wrap;
         align-items: center;
+        @media (max-width: 1500px) {
+            gap: 30px;
+        }
+        @media (max-width: 1430px) {
+            gap: 25px;
+        }
         @media (max-width: 1400px) {
             gap: 20px;
+        }
+        @media (max-width: 1300px) {
+            gap: 15px;
         }
         @media (max-width: 600px) {
             gap: 12px;
@@ -130,8 +149,18 @@ const isActive = (path: string) =>
         font-size: 14px;
         text-decoration: none;
         transition: all 0.3s ease;
+        white-space: nowrap;
+        @media (max-width: 1500px) {
+            font-size: 13.5px;
+        }
+        @media (max-width: 1430px) {
+            font-size: 13px;
+        }
         @media (max-width: 1400px) {
             font-size: 12px;
+        }
+        @media (max-width: 1300px) {
+            font-size: 11px;
         }
         &:hover,
         &.active {
@@ -152,6 +181,12 @@ const isActive = (path: string) =>
             border-radius: 6px !important;
             font-weight: 600 !important;
             box-shadow: 0 2px 8px rgba(220, 53, 69, 0.4) !important;
+            @media (max-width: 1430px) {
+                padding: 5px 12px !important;
+            }
+            @media (max-width: 1300px) {
+                padding: 4px 10px !important;
+            }
 
             &:hover,
             &.active {

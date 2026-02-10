@@ -8,7 +8,7 @@ export const mainLinks = [
   },
   {
     href: "/mattresses",
-    label_en: "Mattreses",
+    label_en: "Mattresses",
     label_lv: "Matrači",
     label_ru: "Матрацы",
     external: false,
@@ -22,7 +22,7 @@ export const mainLinks = [
   },
   {
     href: "https://porolons.lv/",
-    label_en: "Porolon",
+    label_en: "Foam",
     label_lv: "Porolons",
     label_ru: "Поролон",
     external: true,
@@ -52,7 +52,7 @@ export const secondaryLinks = [
   },
   {
     href: "/catalogs",
-    label_en: "Catalogs",
+    label_en: "Catalogue",
     label_lv: "Katalogi",
     label_ru: "Каталоги",
   },

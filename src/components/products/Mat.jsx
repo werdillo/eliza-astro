@@ -1,8 +1,17 @@
 import { For, createSignal, onMount, Show } from "solid-js";
-import { getImageUrl } from "../../lib/pocketbase";
+import { getImage } from "../../lib/pocketbase";
 import { getMatresses } from "../../lib/api";
 
 export default function Mat({ lang }) {
+  const getImageByLang = (item) => {
+    // Try to get language-specific image first
+    const langImage = item[`image_${lang}`];
+    if (langImage) {
+      return getImage(item, langImage);
+    }
+    // Fallback to default image
+    return item.image ? getImage(item, item.image) : "";
+  };
   const [items, setItems] = createSignal([]);
   const [loading, setLoading] = createSignal(true);
 
@@ -34,7 +43,11 @@ export default function Mat({ lang }) {
             {(item) => (
               <a href={`/${lang}/mattress?name=${item.path}`}>
                 <div class="product-landing">
-                  <img src={getImageUrl(item)} alt={item.name} class="-img" />
+                  <img
+                    src={getImageByLang(item)}
+                    alt={item.name}
+                    class="-img"
+                  />
                   <p class="-text">{item.name.toUpperCase()}</p>
                 </div>
               </a>

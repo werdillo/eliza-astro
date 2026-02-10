@@ -1,6 +1,6 @@
 import { For, createSignal, onMount, Show } from "solid-js";
-import { getImage } from "../lib/pocketbase";
-import { getTextileItems } from "../lib/api";
+import { getImage } from "../../lib/pocketbase";
+import { getTextileItems } from "../../lib/api";
 
 export default function TextileItems({ lang }) {
   const [items, setItems] = createSignal([]);

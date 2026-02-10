@@ -1,8 +1,8 @@
 import { For, createSignal, onMount, Show } from "solid-js";
-import { getImageUrl } from "../lib/pocketbase";
-import { getMatresses } from "../lib/api";
+import { getImageUrl } from "../../lib/pocketbase";
+import { getMatresses } from "../../lib/api";
 
-export default function Matresses({ lang }) {
+export default function Mat({ lang }) {
   const [items, setItems] = createSignal([]);
   const [loading, setLoading] = createSignal(true);
 

@@ -1,10 +1,10 @@
 import { For, Show, createSignal, onMount } from "solid-js";
-import { getImage, getShema, getMatressFile } from "../lib/pocketbase";
+import { getImage, getShema, getMatressFile } from "../../lib/pocketbase";
 import {
   getProductByPath,
   getMatressByPath,
   getSaleProductByPath,
-} from "../lib/api";
+} from "../../lib/api";
 import { register } from "swiper/element/bundle";
 register();
 

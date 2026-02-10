@@ -1,6 +1,6 @@
 import { For, Show, createSignal, onMount } from "solid-js";
-import { getImage } from "../lib/pocketbase";
-import { getProducts } from "../lib/api";
+import { getImage } from "../../lib/pocketbase";
+import { getProducts } from "../../lib/api";
 
 export default function Collections({ brand, lang }) {
   const [groupedItems, setGroupedItems] = createSignal({});

@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Mattresses from "../../components/Mattresses";
+import Mat from "../../components/products/Mat";
 
 export function getStaticPaths() {
     return [
@@ -47,5 +47,5 @@ const currentSeo = seoData[lang] || seoData.lv;
     image="/og-image-mattresses.jpg"
     type="website"
 >
-    <Mattresses lang={lang} client:visible />
+    <Mat lang={lang} client:visible />
 </Layout>

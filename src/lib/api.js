@@ -17,7 +17,7 @@ export const getTextileItems = async (limit = 50) => {
 /**
  * Products API
  */
-export const getProducts = async (brand, limit = 50) => {
+export const getProducts = async (brand, limit = 100) => {
   try {
     const res = await client.collection("products_eliza").getList(1, limit, {
       filter: `collection="${brand}"`,
@@ -105,7 +105,7 @@ export const getMatressByPath = async (path, limit = 50) => {
 /**
  * Sale API
  */
-export const getSalePage = async (limit = 50) => {
+export const getSalePage = async (limit = 100) => {
   try {
     const res = await client.collection("sale_eliza").getList(1, limit);
     return res.items;

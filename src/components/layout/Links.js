@@ -7,8 +7,8 @@ export const mainLinks = [
     external: false,
   },
   {
-    href: "/mattresses",
-    label_en: "Mattresses",
+    href: "/matresses",
+    label_en: "Matresses",
     label_lv: "Matrači",
     label_ru: "Матрацы",
     external: false,

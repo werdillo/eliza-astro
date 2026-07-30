@@ -10,12 +10,12 @@
     "astro": "bunx --bun astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "3.7.2",
-    "@astrojs/solid-js": "^6.0.1",
-    "astro": "6.3.7",
+    "@astrojs/sitemap": "3.7.3",
+    "@astrojs/solid-js": "^7.0.1",
+    "astro": "7.1.6",
     "astro-compress": "^2.4.1",
     "pocketbase": "^0.27.0",
-    "solid-js": "^1.9.13",
-    "swiper": "^12.1.4"
+    "solid-js": "^1.9.14",
+    "swiper": "^14.0.7"
   }
 }

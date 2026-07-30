@@ -1,7 +1,6 @@
 export const contacts = [
   {
     "key": "showroom",
-    "address": "Rīga, A. Deglava iela 50, LV-1035",
     "mail": "teika@eliza-k.lv",
     "phone": ["29112499"]
   },

@@ -50,43 +50,63 @@ export default function Contacts({ lang }) {
         }
       >
         <For each={items()}>
-          {(contact) => (
-            <div class="contacts-wrapper">
-              <p class="-text xl special">{contact[`title_${lang}`]}</p>
-              <p class="-text">
-                <a
-                  href={`https://maps.google.com/?q=${contact.address}`}
-                  target="_blank"
-                  class="contact-link"
-                >
-                  {contact.address}
-                </a>
-              </p>
-              <p class="-text">
-                <a href={`mailto:${contact.email}`}>{contact.email}</a>
-              </p>
-              <p class="-text">
-                {contact.phone
-                  .split(",")
-                  .map((phone) => phone.trim())
-                  .map((phone) => <a href={`tel:+371${phone}`}>{phone}</a>)
-                  .reduce(
-                    (prev, curr) =>
-                      prev === null ? [curr] : [prev, ", ", curr],
-                    null,
-                  )}
-              </p>
-              <p class="-text xl work-time">{title[lang]}</p>
-              <p class="-text">{contact[`weekday_${lang}`] || "—"}</p>
-              <p class="-text">{contact[`break_${lang}`] || "—"}</p>
-              <p class="-text">{contact[`weeken_${lang}`] || "—"}</p>
-              <Show when={contact.show_event}>
-                <p class="-text event-highlight">
-                  {contact[`event_${lang}`] || ""}
+          {(contact) => {
+            // Проверяем наличие хотя бы одного из полей с временем работы
+            const hasWorkingHours = () =>
+              Boolean(
+                contact[`weekday_${lang}`] ||
+                  contact[`break_${lang}`] ||
+                  contact[`weeken_${lang}`]
+              );
+
+            return (
+              <div class="contacts-wrapper">
+                <p class="-text xl special">{contact[`title_${lang}`]}</p>
+                <p class="-text">
+                  <a
+                    href={`https://maps.google.com/?q=${contact.address}`}
+                    target="_blank"
+                    class="contact-link"
+                  >
+                    {contact.address}
+                  </a>
                 </p>
-              </Show>
-            </div>
-          )}
+                <p class="-text">
+                  <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                </p>
+                <p class="-text">
+                  {contact.phone
+                    ?.split(",")
+                    .map((phone) => phone.trim())
+                    .map((phone) => <a href={`tel:+371${phone}`}>{phone}</a>)
+                    .reduce(
+                      (prev, curr) =>
+                        prev === null ? [curr] : [prev, ", ", curr],
+                      null
+                    )}
+                </p>
+
+                <Show when={hasWorkingHours()}>
+                  <p class="-text xl work-time">{title[lang]}</p>
+                  <Show when={contact[`weekday_${lang}`]}>
+                    <p class="-text">{contact[`weekday_${lang}`]}</p>
+                  </Show>
+                  <Show when={contact[`break_${lang}`]}>
+                    <p class="-text">{contact[`break_${lang}`]}</p>
+                  </Show>
+                  <Show when={contact[`weeken_${lang}`]}>
+                    <p class="-text">{contact[`weeken_${lang}`]}</p>
+                  </Show>
+                </Show>
+
+                <Show when={contact.show_event}>
+                  <p class="-text event-highlight">
+                    {contact[`event_${lang}`] || ""}
+                  </p>
+                </Show>
+              </div>
+            );
+          }}
         </For>
       </Show>
     </div>

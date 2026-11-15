@@ -1,5 +1,5 @@
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { contacts } from "#/company/contacts";
+import { contacts } from "#/site/company";
 import { socialLinks } from "#/app/frame";
 
 /** The site's address: every canonical, alternate and schema URL starts with it. */

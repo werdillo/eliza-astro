@@ -1,7 +1,7 @@
 ---
 import { Layout, pages } from "#/app/layout";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { CollectionGrid } from "#/catalog/collections";
+import { CollectionGrid } from "#/site/collections";
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));
 }

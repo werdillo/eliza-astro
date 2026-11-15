@@ -21,15 +21,18 @@ src/
     image-tile/    photograph with a label
     landing-tile/  picture on a light card with a caption
   features/      used by every domain, owned by none
-    i18n/          languages, t(), langPath, LanguageDropdown
+    i18n/          languages, langPath, LanguageDropdown
     analytics/     Google tag
     coming-soon/   placeholder page for a section not open yet
-  catalog/       domain: what a visitor browses
-    products/      product pages (product, sale-product, mattress): routes, schema, components
-    home/ collections/ sale/ mattresses/ textile/ materials/ catalogs/
-    shared/        product record type and type labels (imported by path)
-  horeca/        domain: hotels, restaurants, cafes (segments/)
-  company/       domain: the company (contacts/, awards/, gallery/)
+  site/          domain: the whole public site as one matrix
+    products/      product pages (product, sale-product, mattress), the sale and mattress listings, routes, schema
+    collections/   collection index, one collection's grid, the home collection cards
+    materials/     components page (foam and textile) and the fabric page
+    catalogs/      printed catalogues
+    company/       contacts, awards, gallery
+    segments/      HoReCa segments (hotels, restaurants, cafes)
+    home/          home page hero
+    shared/        product record type, type labels and collection photographs (imported by path)
   app/           composition root
     layout/        document shell, SEO head and schema, page copy, Redirect
     frame/         header, footer, mobile tab bar, navigation
@@ -47,8 +50,8 @@ are checked by `src/app/tests`. Text sizes, weights and line heights are set onl
 Content lives in PocketBase. The site is rebuilt to show a change:
 
 1. Read `PUBLIC_POCKETBASE_URL` from `.env.local` (see `.env.dist`).
-2. `bun run build` fetches the collections listed in `src/catalog/products/api.ts`,
-   `src/catalog/textile/api.ts`, `src/company/contacts/api.ts`, `src/company/gallery/api.ts` and writes `dist/`.
+2. `bun run build` fetches the collections listed in `src/site/products/api.ts`,
+   `src/site/materials/api.ts`, `src/site/company/api/contacts.ts`, `src/site/company/api/gallery.ts` and writes `dist/`.
 3. Serve `dist/` from any static host.
 
 To rebuild on every change, trigger the host's build hook from PocketBase. Host-agnostic recipe: create a

@@ -1,0 +1,28 @@
+---
+import type { Language } from "#/features/i18n";
+import type { Product, ProductKind } from "#/site/shared/product";
+import ProductImageSlider from "./ProductImageSlider.astro";
+import ProductInfo from "./ProductInfo.astro";
+import ProductDescription from "./ProductDescription.astro";
+import ProductFabrics from "./ProductFabrics.astro";
+
+export interface Props {
+  item: Product;
+  kind: ProductKind;
+  lang: Language;
+}
+
+const { item, kind, lang } = Astro.props;
+---
+
+<div>
+  <div class="product-item">
+    <ProductImageSlider item={item} kind={kind} />
+    <ProductInfo item={item} kind={kind} lang={lang} />
+  </div>
+
+  <div class="product-item">
+    <ProductDescription item={item} lang={lang} />
+    <ProductFabrics kind={kind} item={item} lang={lang} />
+  </div>
+</div>

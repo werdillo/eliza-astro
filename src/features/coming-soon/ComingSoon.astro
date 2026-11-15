@@ -1,14 +1,15 @@
 ---
-import type { ImageMetadata } from "astro";
-import { t, type Language } from "#/features/i18n";
+import type { Language } from "#/features/i18n";
 import { H2, P1, P2 } from "#/components/typography";
+import background from "./assets/background.jpg";
+import { comingSoonCopy } from "./data";
 
 export interface Props {
   lang?: Language;
-  background: ImageMetadata;
 }
 
-const { lang = "lv", background } = Astro.props;
+const { lang = "lv" } = Astro.props;
+const copy = comingSoonCopy[lang];
 ---
 
 <div class="relative h-[100vh] w-full">
@@ -16,13 +17,13 @@ const { lang = "lv", background } = Astro.props;
 
   <div class="flex flex-col items-center justify-center h-full text-white text-center p-[2rem]">
     <div class="bg-scrim-60 p-[2rem] rounded-[10px] max-w-[600px]">
-      <H2 as="h1" class="mb-[1rem]">{t("comingSoon.title", lang)}</H2>
-      <P1 class="mb-[1.5rem]">{t("comingSoon.message", lang)}</P1>
-      <P1 class="mb-[1.5rem]">{t("comingSoon.subMessage", lang)}</P1>
+      <H2 as="h1" class="mb-[1rem]">{copy.title}</H2>
+      <P1 class="mb-[1.5rem]">{copy.message}</P1>
+      <P1 class="mb-[1.5rem]">{copy.subMessage}</P1>
 
       <div class="flex gap-[1rem] mt-[1.5rem] justify-center">
         <a href={"/" + lang} class="[background:none] [border:2px_solid_var(--color-text)] text-white px-[1rem] py-[0.5rem] rounded-[var(--radius-tile)] cursor-pointer no-underline inline-block [transition:all_0.3s_ease] hov:[background-color:var(--color-text)] hov:text-black">
-          <P2 as="span">{t("comingSoon.button", lang)}</P2>
+          <P2 as="span">{copy.button}</P2>
         </a>
       </div>
     </div>

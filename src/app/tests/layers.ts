@@ -5,9 +5,8 @@ import { fileURLToPath } from "node:url";
 /**
  * Shared scanning for the structure tests: the source tree, its modules and the boxes they belong to.
  *
- * A box is a folder directly inside a layer (`components/slider`, `catalog/products`, `core/fetch`),
- * or one of the two app boxes `app/layout` and `app/frame`. `shared/` and the other slice folders are
- * not boxes.
+ * A box is a folder directly inside a layer (`components/slider`, `site/products`, `core/fetch`),
+ * or one of the two app boxes `app/layout` and `app/frame`. `site/shared` is not a box.
  */
 export const SRC = fileURLToPath(new URL("../..", import.meta.url));
 
@@ -16,15 +15,13 @@ export const LAYERS: Record<string, string[]> = {
   core: ["core"],
   components: ["core", "components"],
   features: ["core", "components", "features"],
-  catalog: ["core", "components", "features"],
-  horeca: ["core", "components", "features"],
-  company: ["core", "components", "features"],
-  app: ["core", "components", "features", "catalog", "horeca", "company", "app"],
-  pages: ["core", "components", "features", "catalog", "horeca", "company", "app", "pages"],
+  site: ["core", "components", "features"],
+  app: ["core", "components", "features", "site", "app"],
+  pages: ["core", "components", "features", "site", "app", "pages"],
 };
 
 /** The domains: each may import only itself, of the domains. */
-export const DOMAINS = ["catalog", "horeca", "company"];
+export const DOMAINS = ["site"];
 
 const CODE = /\.(ts|tsx|astro)$/;
 

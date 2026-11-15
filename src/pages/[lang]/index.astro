@@ -1,8 +1,9 @@
 ---
 import { Layout, pages } from "#/app/layout";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { Awards } from "#/company/awards";
-import { CollectionCards, HomeHero } from "#/catalog/home";
+import { Awards } from "#/site/company";
+import { CollectionCards } from "#/site/collections";
+import { HomeHero } from "#/site/home";
 
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));

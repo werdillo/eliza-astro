@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { expect, test } from "vitest";
 import { SRC, boxOf, rel, sourceFiles } from "./layers";
 
-const LAYER_FOLDERS = ["core", "components", "features", "catalog", "horeca", "company", "app"];
+const LAYER_FOLDERS = ["core", "components", "features", "site", "app"];
 
 test("every layer folder has a README", () => {
   const missing = LAYER_FOLDERS.filter((layer) => !existsSync(join(SRC, layer, "README.md")));

@@ -2,7 +2,7 @@
 // The old product URL, `/en/product?name=<path>`: sent on to `/en/product/<slug>/`.
 import { Redirect, pages } from "#/app/layout";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { productRedirects } from "#/catalog/products";
+import { productRedirects } from "#/site/products";
 
 export async function getStaticPaths() {
   const map = await productRedirects("def");

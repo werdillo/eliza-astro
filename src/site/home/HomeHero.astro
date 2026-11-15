@@ -1,0 +1,29 @@
+---
+import { Slider } from "#/components/slider";
+import type { Language } from "#/features/i18n";
+import HeroSlide from "./HeroSlide.astro";
+import { heroSlides } from "./data";
+
+export interface Props {
+  lang?: Language;
+}
+
+const { lang = "lv" } = Astro.props;
+---
+
+<Slider slidesPerView="1" navigation="true" pagination="false" speed="500" loop="true" autoplayDelay="10000">
+  {
+    heroSlides.map((slide, index) => (
+      <swiper-slide>
+        <HeroSlide
+          first={index === 0}
+          image={slide.image}
+          title={slide.title[lang]}
+          text={slide.text[lang]}
+          button={slide.button[lang]}
+          href={`/${lang}${slide.path}`}
+        />
+      </swiper-slide>
+    ))
+  }
+</Slider>

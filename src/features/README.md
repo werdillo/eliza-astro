@@ -5,6 +5,6 @@ analytics tag, the placeholder page. Features import `core/`, `components/` and 
 doors.
 
 Boxes:
-- `i18n/` — translations, `t()`, `langPath`, `LANGUAGES`, `LanguageDropdown`.
+- `i18n/` — languages, `langPath`, `LANGUAGES`, `LanguageDropdown`.
 - `analytics/` — the Google tag.
 - `coming-soon/` — the placeholder page for a section not yet open.

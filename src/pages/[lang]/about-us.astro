@@ -2,7 +2,6 @@
 import { Layout, pages } from "#/app/layout";
 import { LANGUAGES, type Language } from "#/features/i18n";
 import { ComingSoon } from "#/features/coming-soon";
-import Pic6 from "#/catalog/collections/assets/Pic6.jpg";
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
@@ -11,5 +10,5 @@ const lang = Astro.params.lang as Language;
 ---
 
 <Layout lang={lang} path="/about-us" title={pages.aboutUs[lang].title} description={pages.aboutUs[lang].description} offset={false}>
-  <ComingSoon lang={lang} background={Pic6} />
+  <ComingSoon lang={lang} />
 </Layout>

@@ -1,0 +1,16 @@
+---
+export interface Props {
+    href: string;
+    label: string;
+    active: boolean;
+    sale?: boolean;
+}
+
+const { href, label, active, sale = false } = Astro.props;
+
+// The sale link keeps its own colours whatever its state, as the old rule did with !important.
+const colour = sale ? "text-white" : active ? "text-accent" : "text-white hov:text-accent";
+const skin = sale ? (active ? "header-sale-live" : "header-sale") : "";
+---
+
+<a href={href} class={`header-link ${colour} ${skin}`}>{label}</a>

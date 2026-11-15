@@ -1,1 +1,1 @@
-import "./skeleton.css";
+export { default as Skeleton, type SkeletonShape } from "./Skeleton";

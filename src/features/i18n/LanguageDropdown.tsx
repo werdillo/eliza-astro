@@ -1,6 +1,5 @@
 import { createSignal, Show, onMount, onCleanup, For } from "solid-js";
 import type { Component } from "solid-js";
-import "./LanguageDropdown.css";
 
 interface Language {
   code: string;
@@ -79,16 +78,16 @@ const LanguageDropdown: Component<Props> = (props) => {
   });
 
   return (
-    <div class="dropdown" ref={dropdownRef}>
+    <div class="relative inline-block" ref={dropdownRef}>
       <button
-        class={`dropdown-button ${isOpen() ? "active" : ""}`}
+        class={`inline-flex items-center [border:0] px-[var(--space-12)] py-[var(--space-8)] text-fs-16 font-normal text-white bg-glass rounded-[var(--radius-small)] cursor-pointer [transition:all_0.2s_ease] hov:bg-glass-strong [&:focus]:[outline:none] ${isOpen() ? "bg-glass-strong" : ""}`}
         onClick={toggleDropdown}
         aria-expanded={isOpen()}
         aria-haspopup="menu"
       >
         {props.currentLang.toUpperCase()}
         <svg
-          class={`dropdown-arrow ${isOpen() ? "rotate" : ""}`}
+          class={`w-[16px] h-[16px] ml-[var(--space-4)] opacity-[0.8] [transition:transform_0.2s_ease] ${isOpen() ? "[transform:rotate(180deg)]" : ""}`}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -101,12 +100,19 @@ const LanguageDropdown: Component<Props> = (props) => {
       </button>
 
       <Show when={isOpen()}>
-        <div class={`dropdown-menu ${isAnimatingOut() ? "hiding" : "show"}`}>
-          <div class="menu-items">
+        <div
+          class={`absolute right-0 mt-[var(--space-8)] w-[100px] bg-dropdown rounded-[var(--radius-small)] [box-shadow:var(--shadow-dropdown)] [border:1px_solid_var(--color-glass)] z-50 [transform-origin:top_right] block ${
+            isAnimatingOut() ? "[animation:slideUp_0.2s_ease-out_forwards]" : "[animation:slideDown_0.2s_ease-out_forwards]"
+          }`}
+        >
+          <div class="py-[var(--space-4)]">
             <For each={availableLanguages()}>
               {(lang) => (
-                <a href={getLanguageUrl(lang.code)} class="menu-item">
-                  <div class="item-title">{lang.title}</div>
+                <a
+                  href={getLanguageUrl(lang.code)}
+                  class="block px-[var(--space-12)] py-[var(--space-8)] no-underline [transition:background-color_0.2s_ease] text-white hov:bg-glass"
+                >
+                  <div class="text-fs-14 font-normal text-white mb-[var(--space-2)]">{lang.title}</div>
                 </a>
               )}
             </For>

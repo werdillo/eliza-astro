@@ -14,20 +14,17 @@ export default function ProductDescription(props: Props) {
 
   return (
     <Show when={props.item()?.[`description_${props.lang}`]}>
-      <div class="-card">
-        <div class="-text m bd">{t().description}</div>
+      <div class="product-card">
+        <div class="product-heading">{t().description}</div>
         <div
-          class="-text"
+          class="product-text"
           // Descriptions are HTML written in the CMS by the site owner.
           // oxlint-disable-next-line solid/no-innerhtml
           innerHTML={props.item()[`description_${props.lang}`]}
         />
         <Show when={props.item().schema}>
-          <a
-            href={fileUrl(props.item() as Product, props.item().schema)}
-            target="_blank"
-          >
-            <button class="-button">{t().dimensions}</button>
+          <a href={fileUrl(props.item() as Product, props.item().schema)} target="_blank">
+            <button class="product-button">{t().dimensions}</button>
           </a>
         </Show>
       </div>

@@ -1,34 +1,33 @@
 import { For, Show } from "solid-js";
 import type { JSX } from "solid-js";
 import type { ProductKind } from "#/catalog/shared/product";
+import { Skeleton, type SkeletonShape } from "#/components/skeleton";
 
-const renderSkeleton = (className: string, count = 1): JSX.Element => (
-  <For each={Array(count).fill(undefined)}>
-    {() => <div class={`skeleton ${className}`} />}
-  </For>
+const renderSkeleton = (shape: SkeletonShape, count = 1): JSX.Element => (
+  <For each={Array(count).fill(undefined)}>{() => <Skeleton shape={shape} />}</For>
 );
 
 export default function SkeletonLoader(props: { type: ProductKind }) {
   return (
     <>
       <div class="product-item">
-        <div class="skeleton slider" />
-        <div class="-right">
-          {renderSkeleton("text title")}
+        <Skeleton shape="slider" />
+        <div class="product-right">
+          {renderSkeleton("title")}
           {renderSkeleton("button")}
         </div>
       </div>
       <Show when={props.type !== "mattress"}>
-        <div class="product-item l">
-          <div class="-card">
-            {renderSkeleton("text title")}
-            <div>{renderSkeleton("text l", 4)}</div>
-            {renderSkeleton("text title")}
+        <div class="product-item">
+          <div class="product-card">
+            {renderSkeleton("title")}
+            <div>{renderSkeleton("row", 4)}</div>
+            {renderSkeleton("title")}
           </div>
-          <div class="-card">
-            {renderSkeleton("text title")}
-            <div class="-textile">{renderSkeleton("textile", 3)}</div>
-            {renderSkeleton("text title")}
+          <div class="product-card">
+            {renderSkeleton("title")}
+            <div class="product-textile">{renderSkeleton("textile", 3)}</div>
+            {renderSkeleton("title")}
           </div>
         </div>
       </Show>

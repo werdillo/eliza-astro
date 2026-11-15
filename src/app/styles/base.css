@@ -1,0 +1,14 @@
+/*
+ * The global rules that a utility cannot express: Swiper's custom element is styled by its tag, and
+ * a link takes the colour of its parent and loses its underline. `:where` keeps these at zero
+ * specificity, so every utility class on the markup still wins over them.
+ */
+swiper-container {
+    max-width: 100vw;
+    width: 100%;
+}
+
+a:where(:link, :visited, :hover, :active) {
+    color: inherit;
+    text-decoration: none;
+}

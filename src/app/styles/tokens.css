@@ -1,9 +1,83 @@
-/* Design tokens: the colours, sizes and timings shared by the layout and the kit. */
+/*
+ * Design tokens: every colour, font family, shadow, radius and size that more than one place uses.
+ * UnoCSS reads the colour and font names through uno.config.ts (bg-layout, text-accent, font-avenir).
+ */
 :root {
-    --layout: #303030;
-    --header: 60px;
-    --swiper-navigation-color: #454545;
-    --background-color: rgba(0, 0, 0, 0.75);
-    --text-color: #ffffff;
-    --transition-speed: 0.3s;
+  /* Colours by role */
+  --color-layout: #303030; /* header and footer background, the slider button text */
+  --color-text: #ffffff; /* text on dark surfaces */
+  --color-accent: aqua; /* hover and active links */
+  --color-sale: #dc3545; /* sale prices and the sale link */
+  --color-sale-deep: #c82333;
+  --color-sale-bright: #e04555;
+  --color-sale-bright-deep: #d83343;
+  --color-sale-glow: rgba(220, 53, 69, 0.4);
+  --color-sale-glow-strong: rgba(220, 53, 69, 0.6);
+  --color-skeleton: #e2e2e2; /* loading placeholders */
+  --color-ink: #363636; /* labels on light tiles */
+  --color-ink-deep: #191919; /* product names on light tiles */
+  --color-price-old: #969696; /* crossed-out prices */
+  --color-orange: #e19915; /* contact accents */
+  --color-bar: rgba(47, 47, 47, 0.95); /* mobile tab bar */
+  --color-overlay: rgba(0, 0, 0, 0.75); /* burger menu panel */
+  --color-glass: rgba(255, 255, 255, 0.1); /* soft fills and hairlines on dark surfaces */
+  --color-glass-strong: rgba(255, 255, 255, 0.2);
+  --color-glass-soft: rgba(255, 255, 255, 0.6);
+  --color-dropdown: #2a2a2a; /* language menu */
+  --color-rule: #444444; /* footer rule */
+  --color-button: #555555; /* product buttons */
+  --color-photo: #f0f0f0; /* image background behind HoReCa photos */
+  --color-scrim: rgba(0, 0, 0, 0.9); /* collection tile background */
+  --color-scrim-60: rgba(0, 0, 0, 0.6);
+  --color-scrim-50: rgba(0, 0, 0, 0.5);
+  --color-scrim-20: rgba(0, 0, 0, 0.2);
+  --color-clear: rgba(0, 0, 0, 0);
+  --color-highlight: #00d4ff; /* mobile tab hover */
+  --swiper-navigation-color: #454545; /* read by Swiper */
+
+  /* Shadows */
+  --shadow-tile: 0px 0px 17px rgba(0, 0, 0, 0.15);
+  --shadow-tile-hover: 0px 0px 25px rgba(0, 0, 0, 0.25);
+  --shadow-photo: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  --shadow-photo-hover: 0px 0px 40px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-dropdown: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-product-hover: 0px 10px 10px rgba(59, 59, 59, 0.1);
+  --shadow-sale: 0 2px 8px var(--color-sale-glow);
+  --shadow-sale-hover: 0 4px 12px var(--color-sale-glow-strong);
+  --drop-catalog: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.15));
+  --drop-catalog-hover: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2));
+
+  /* Fonts */
+  --font-avenir: "Avenir", sans-serif;
+  --font-body: Arial, sans-serif;
+  --font-cambay: "Cambay";
+
+  /* Spacing scale: margins, paddings and gaps are one of these */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-30: 30px;
+  --space-40: 40px;
+  --space-50: 50px;
+  --space-60: 60px;
+  --space-70: 70px;
+
+  /* Transition durations */
+  --duration-fast: 0.2s;
+  --duration-base: 0.3s;
+  --duration-slow: 0.5s;
+
+  /* Sizes and radii */
+  --header-height: 60px;
+  --header-height-mobile: 70px;
+  --transition-speed: var(--duration-base);
+  --radius-tiny: 2px;
+  --radius-tile: 5px;
+  --radius-small: 4px;
+  --radius-sale: 6px;
+  --radius-pill: 12px;
 }

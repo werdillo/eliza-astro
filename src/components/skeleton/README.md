@@ -1,6 +1,4 @@
 # skeleton
 
-The placeholder blocks shown while a list or a product loads (`.skeleton` and its modifiers). Loaded
-once by the app layout; it has no markup of its own.
-
-Door: loads `skeleton.css` for its side effect.
+Loading placeholders for the islands: a grey block in the shape of the content that is still loading,
+built from the `skeleton-*` shortcuts of `uno.config.ts`.

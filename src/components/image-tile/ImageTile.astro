@@ -1,0 +1,21 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+export interface Props {
+    href: string;
+    image: ImageMetadata;
+    alt: string;
+    label: string;
+    external?: boolean;
+}
+
+const { href, image, alt, label, external = false } = Astro.props;
+---
+
+<a href={href} class="tile-link" target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}>
+    <div class="tile">
+        <Image class="tile-img" alt={alt} src={image} />
+        <span class="tile-label">{label}</span>
+    </div>
+</a>

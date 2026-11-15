@@ -1,155 +1,27 @@
 ---
 import { Image } from "astro:assets";
 import type { Language } from "#/features/i18n";
-import collection_2018 from "./assets/collection_2018.jpg";
-import collection_2019 from "./assets/collection_2019.jpg";
-import collection_2021 from "./assets/collection_2021.jpg";
+import { catalogCopy, catalogs } from "./data";
 
 export interface Props {
     lang?: Language;
 }
 
 const { lang = "lv" } = Astro.props;
-
-const translate: Record<Language, { pageTitle: string; catalog: string }> = {
-    en: {
-        pageTitle: "Catalogue",
-        catalog: "Catalogue",
-    },
-    ru: {
-        pageTitle: "Каталоги",
-        catalog: "Каталог",
-    },
-    lv: {
-        pageTitle: "Katalogi",
-        catalog: "Katalogs",
-    },
-};
-
-const t = (key: "pageTitle" | "catalog") => translate[lang][key] || key;
+const copy = catalogCopy[lang] ?? catalogCopy.lv;
 ---
 
-<div class="catalogs-text">{t("pageTitle")}</div>
+<div class="catalogs-title">{copy.pageTitle}</div>
 
 <div class="catalogs">
-    <div class="catalog">
-        <a
-            href="/catalog_2018.pdf"
-            class="-link"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <Image
-                src={collection_2018}
-                alt="Eliza-K Furniture Catalog 2018 - Premium furniture collection PDF download"
-                class="-img"
-            />
-        </a>
-        <span class="-text">{t("catalog")} 2018</span>
-    </div>
-
-    <div class="catalog">
-        <a
-            href="/catalog_2019.pdf"
-            class="-link"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <Image
-                src={collection_2019}
-                alt="Eliza-K Furniture Catalog 2019 - Latest premium furniture designs PDF"
-                class="-img"
-            />
-        </a>
-        <span class="-text">{t("catalog")} 2019</span>
-    </div>
-    <div class="catalog">
-        <a
-            href="/catalog_2021.pdf"
-            class="-link"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <Image
-                src={collection_2021}
-                alt="Eliza-K Furniture Catalog 2021 - Modern premium furniture collection PDF"
-                class="-img"
-            />
-        </a>
-        <span class="-text">{t("catalog")} 2021</span>
-    </div>
+    {
+        catalogs.map((catalog) => (
+            <div class="catalog">
+                <a href={catalog.file} class="catalog-link" target="_blank" rel="noopener noreferrer">
+                    <Image src={catalog.image} alt={catalog.alt} class="catalog-img" />
+                </a>
+                <span class="catalog-label">{`${copy.catalog} ${catalog.year}`}</span>
+            </div>
+        ))
+    }
 </div>
-
-<style>
-    .catalogs {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10vw;
-        margin-right: 30px;
-        place-content: center;
-        padding: 20px 0;
-        margin: 20px 0;
-    }
-    .catalogs-text {
-        font-size: 36px;
-        width: 30%;
-        margin-top: 40px;
-        text-align: center;
-        font-family: "Avenir", sans-serif;
-        font-weight: 500;
-        @media screen and (max-width: 768px) {
-            font-size: 16px;
-            margin: 20px auto;
-            width: 90%;
-        }
-    }
-
-    .catalog {
-        padding-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-
-        .-link {
-            display: flex;
-            justify-content: center;
-
-            .-img {
-                filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.15));
-                min-height: 240px;
-                height: 360px;
-                display: flex;
-                width: auto;
-                margin-bottom: 10px;
-                transition: 250ms;
-
-                &:hover {
-                    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.2));
-                    transform: scale(1.02);
-                }
-                &:active {
-                    transform: scale(1.1);
-                }
-                @media screen and (max-width: 1500px) {
-                    height: 260px;
-                    min-height: 260px;
-                }
-
-                @media screen and (max-width: 1200px) {
-                    height: 220px;
-                    min-height: 220px;
-                }
-            }
-        }
-
-        .-text {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            font-family: "Avenir", sans-serif;
-            font-size: 16px;
-        }
-    }
-</style>

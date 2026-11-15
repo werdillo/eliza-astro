@@ -1,6 +1,7 @@
 import { For, createSignal, onMount, Show } from "solid-js";
 import { fileUrl, type RecordModel } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
+import { Skeleton } from "#/components/skeleton";
 import { getTextileItems } from "./api";
 
 interface Props {
@@ -29,9 +30,9 @@ export default function TextileItems(props: Props) {
     if (!image) return null;
 
     return (
-      <div class="-item">
-        <div class="-text">{text}</div>
-        <img class="-img" src={fileUrl(item, image)} alt={item.name} />
+      <div class="textile-item">
+        <div class="textile-label">{text}</div>
+        <img class="textile-img" src={fileUrl(item, image)} alt={item.name} />
       </div>
     );
   };
@@ -42,14 +43,12 @@ export default function TextileItems(props: Props) {
         <For each={[1, 2]}>
           {() => (
             <>
-              <div class="container">
-                <div class="skeleton text title margin-40" />
+              <div class="w-full">
+                <Skeleton shape="title" />
               </div>
-              <div class="container">
-                <div class="textile">
-                  <For each={[1, 2, 3, 4]}>
-                    {() => <div class="skeleton textile" />}
-                  </For>
+              <div class="w-full">
+                <div class="textile-grid">
+                  <For each={[1, 2, 3, 4]}>{() => <Skeleton shape="textile" />}</For>
                 </div>
               </div>
             </>
@@ -61,13 +60,11 @@ export default function TextileItems(props: Props) {
         <For each={items()}>
           {(item) => (
             <>
-              <div class="container">
+              <div class="w-full">
                 <div class="textile-title">{item[`title_${props.lang}`]}</div>
               </div>
-              <div class="textile">
-                <For each={[1, 2, 3, 4]}>
-                  {(imageNum) => renderTextileItem(item, imageNum)}
-                </For>
+              <div class="textile-grid">
+                <For each={[1, 2, 3, 4]}>{(imageNum) => renderTextileItem(item, imageNum)}</For>
               </div>
             </>
           )}

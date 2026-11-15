@@ -1,155 +1,43 @@
 ---
-import collectionIcon from "../assets/images/icons/mobile/collection.svg";
-import mattressIcon from "../assets/images/icons/mobile/mattresses.svg";
-import porolonIcon from "../assets/images/icons/mobile/porolon.svg";
-import componentsIcon from "../assets/images/icons/mobile/components.svg";
-import horecaIcon from "../assets/images/icons/mobile/horeca.svg";
-import galleryIcon from "../assets/images/icons/mobile/gallery.svg";
-import saleIcon from "../assets/images/icons/mobile/sale.svg";
-
 import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
-import { mainLinks, navLabel, type NavLink } from "./navigation";
+import { mainLinks, navLabel } from "./navigation";
 
 const { lang = "lv" } = Astro.params;
 const currentPath = Astro.url.pathname;
-
-const iconMap: Record<string, ImageMetadata> = {
-    "/collections": collectionIcon,
-    "/matresses": mattressIcon,
-    "/sale": saleIcon,
-    "https://porolons.lv/": porolonIcon,
-    "/components": componentsIcon,
-    "/horeca": horecaIcon,
-    "/gallery": galleryIcon,
-};
-
-const getLabelForLang = (link: NavLink) => navLabel(link, lang);
 ---
 
-<nav class="mobile-menu">
-    <div class="-wrapper">
+<nav class="fixed bottom-0 left-0 right-0 z-[1000] bg-bar [backdrop-filter:blur(10px)] [border-top:1px_solid_var(--color-glass)] min-768:hidden">
+    <div class="px-[var(--space-8)] py-[var(--space-2)] flex items-center justify-around max-w-full">
         {
             mainLinks.map((link) => {
-                const href = link.external ? link.href : `/${lang}${link.href}`;
                 const isActive = currentPath.includes(link.href);
-                const icon = iconMap[link.href];
-                const label = getLabelForLang(link);
                 const isSale = link.href === "/sale";
+                const label = navLabel(link, lang);
+                const state = isSale
+                    ? "text-sale hov:bg-glass"
+                    : isActive
+                      ? "text-white hov:bg-glass"
+                      : "text-glass-soft hov:text-highlight hov:bg-glass";
+                const iconState = isSale
+                    ? "opacity-100 [filter:invert(27%)_sepia(51%)_saturate(2878%)_hue-rotate(346deg)_brightness(104%)_contrast(97%)]"
+                    : isActive
+                      ? "opacity-100"
+                      : "opacity-[0.6] group-hover:opacity-100";
 
                 return (
                     <a
-                        href={href}
-                        class={`-link ${isActive ? "active" : ""} ${isSale ? "sale" : ""}`}
+                        href={link.external ? link.href : `/${lang}${link.href}`}
+                        class={`group mobile-link ${state}`}
                         target={link.external ? "_blank" : undefined}
                         rel={link.external ? "noopener noreferrer" : undefined}
                     >
-                        <div class="-icon">
-                            {icon && <Image src={icon} alt={label} />}
+                        <div class="flex items-center justify-center w-[24px] h-[24px]">
+                            {link.icon && <Image src={link.icon} alt={label} class={`w-[20px] h-[20px] [transition:all_0.3s_ease] ${iconState}`} />}
                         </div>
-                        <span class="-text">{label}</span>
+                        <span class={`mobile-link-text ${isSale ? "text-sale" : ""}`}>{label}</span>
                     </a>
                 );
             })
         }
     </div>
 </nav>
-
-<style>
-    .mobile-menu {
-        z-index: 1000;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(47, 47, 47, 0.95);
-        backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        @media (min-width: 768px) {
-            display: none;
-        }
-
-        .-wrapper {
-            padding: 2px 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            max-width: 100%;
-        }
-
-        .-link {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            padding: 4px 6px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            min-width: 50px;
-
-            &:hover {
-                background: rgba(255, 255, 255, 0.1);
-                color: #00d4ff;
-
-                .-icon img {
-                    opacity: 1;
-                }
-            }
-
-            &.active {
-                color: #ffffff;
-
-                .-icon img {
-                    opacity: 1;
-                }
-            }
-
-            &.sale {
-                color: #dc3545 !important;
-
-                .-icon img {
-                    opacity: 1 !important;
-                    filter: invert(27%) sepia(51%) saturate(2878%)
-                        hue-rotate(346deg) brightness(104%) contrast(97%) !important;
-                }
-
-                .-text {
-                    color: #dc3545 !important;
-                }
-            }
-        }
-
-        .-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-
-            img {
-                width: 20px;
-                height: 20px;
-                opacity: 0.6;
-                transition: all 0.3s ease;
-            }
-        }
-
-        .-text {
-            font-size: 10px;
-            font-weight: 500;
-            text-align: center;
-            line-height: 1.2;
-
-            @media (max-width: 380px) {
-                font-size: 9px;
-            }
-        }
-
-        .-link:hover .-icon img,
-        .-link.active .-icon img {
-            opacity: 1;
-        }
-    }
-</style>

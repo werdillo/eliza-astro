@@ -1,5 +1,6 @@
 // Конфигурация коллекций для главной страницы
 import type { ImageMetadata } from "astro";
+import Pic1 from "#/catalog/collections/assets/Pic1.jpg";
 import Pic6 from "#/catalog/collections/assets/Pic6.jpg";
 import Pic7 from "#/catalog/collections/assets/Pic7.jpg";
 import bboldImg from "#/catalog/collections/assets/bbold.png";
@@ -34,4 +35,11 @@ export const collectionCards: CollectionCard[] = [
     translationKey: "collections.basic",
     external: false,
   },
+];
+
+/** The slides of the home slider; the texts are `slider.<key>.title|text|button`. */
+export const heroSlides = [
+  { key: "slider.slide1", image: Pic6, path: "/collection/bbold" },
+  { key: "slider.slide2", image: Pic1, path: "/collection/basic" },
+  { key: "slider.slide3", image: Pic7, path: "/sale" },
 ];

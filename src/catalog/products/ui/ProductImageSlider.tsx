@@ -22,7 +22,7 @@ export default function ProductImageSlider(props: Props) {
               : fileUrl(props.item() as Product, props.item().image)
           }
           alt=""
-          class="-slider"
+          class="product-slider"
         />
       }
     >
@@ -34,16 +34,12 @@ export default function ProductImageSlider(props: Props) {
         speed="500"
         loop="true"
         autoplay-delay="5000"
-        class="product-item-swiper"
+        class="product-swiper"
       >
         <For each={props.item().images}>
           {(image) => (
             <swiper-slide>
-              <img
-                src={fileUrl(props.item() as Product, image)}
-                alt=""
-                class="-slider"
-              />
+              <img src={fileUrl(props.item() as Product, image)} alt="" class="product-slider" />
             </swiper-slide>
           )}
         </For>

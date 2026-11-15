@@ -3,6 +3,8 @@ import { fileUrl } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
 import type { Product } from "#/catalog/shared/product";
 import { typeLabels } from "#/catalog/shared/typeLabels";
+import { Skeleton } from "#/components/skeleton";
+import { LandingTile } from "#/components/landing-tile";
 import { getProducts } from "../api";
 
 interface Props {
@@ -32,13 +34,11 @@ export default function Collections(props: Props) {
 
   const SkeletonLoader = () => (
     <>
-      <div class="container">
-        <div class="skeleton text title" />
+      <div class="w-full">
+        <Skeleton shape="title" />
       </div>
       <div class="product-list">
-        <For each={Array(8).fill(undefined)}>
-          {() => <div class="skeleton" />}
-        </For>
+        <For each={Array(8).fill(undefined)}>{() => <Skeleton />}</For>
       </div>
     </>
   );
@@ -48,24 +48,15 @@ export default function Collections(props: Props) {
       <For each={Object.entries(groupedItems())}>
         {([type, items]) => (
           <>
-            <div class="container">
-              <div class="title">
-                {typeLabels[props.lang][type.toLowerCase()]}
-              </div>
+            <div class="w-full">
+              <div class="list-title">{typeLabels[props.lang][type.toLowerCase()]}</div>
             </div>
             <div class="product-list">
               <For each={items}>
                 {(item) => (
-                  <a href={`/${props.lang}/product?name=${item.path}`}>
-                    <div class="product-landing">
-                      <img
-                        src={fileUrl(item, item.images[0])}
-                        alt=""
-                        class="-img"
-                      />
-                      <p class="-text">{item.name.toUpperCase()}</p>
-                    </div>
-                  </a>
+                  <LandingTile href={`/${props.lang}/product?name=${item.path}`} src={fileUrl(item, item.images[0])} alt="">
+                    <p class="landing-name">{item.name.toUpperCase()}</p>
+                  </LandingTile>
                 )}
               </For>
             </div>

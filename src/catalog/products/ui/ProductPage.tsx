@@ -1,11 +1,7 @@
 import { Show, createSignal, onMount } from "solid-js";
 import type { Language } from "#/features/i18n";
 import type { Product, ProductKind } from "#/catalog/shared/product";
-import {
-  getMatressByPath,
-  getProductByPath,
-  getSaleProductByPath,
-} from "../api";
+import { getMatressByPath, getProductByPath, getSaleProductByPath } from "../api";
 import ProductImageSlider from "./ProductImageSlider";
 import ProductInfo from "./ProductInfo";
 import ProductDescription from "./ProductDescription";
@@ -53,7 +49,7 @@ export default function ProductPage(props: Props) {
           <ProductInfo item={item} type={kind()} lang={props.lang} />
         </div>
 
-        <div class="product-item l">
+        <div class="product-item">
           <ProductDescription item={item} lang={props.lang} />
           <ProductFabrics item={item} type={kind()} lang={props.lang} />
         </div>

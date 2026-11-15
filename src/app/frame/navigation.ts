@@ -1,4 +1,10 @@
+import type { ImageMetadata } from "astro";
 import type { Language } from "#/features/i18n";
+import collectionIcon from "../assets/images/icons/mobile/collection.svg";
+import mattressIcon from "../assets/images/icons/mobile/mattresses.svg";
+import porolonIcon from "../assets/images/icons/mobile/porolon.svg";
+import componentsIcon from "../assets/images/icons/mobile/components.svg";
+import saleIcon from "../assets/images/icons/mobile/sale.svg";
 
 export interface NavLink {
   /** A site path (`/sale`, joined with the language prefix) or an absolute URL. */
@@ -7,6 +13,8 @@ export interface NavLink {
   label_lv: string;
   label_ru: string;
   external?: boolean;
+  /** The icon of the mobile tab bar, when the link is shown there. */
+  icon?: ImageMetadata;
 }
 
 /** The label of a link in a language; English when the language has none. */
@@ -21,6 +29,7 @@ export const mainLinks: NavLink[] = [
     label_lv: "Kolekcijas",
     label_ru: "Коллекции",
     external: false,
+    icon: collectionIcon,
   },
   {
     href: "/matresses",
@@ -28,6 +37,7 @@ export const mainLinks: NavLink[] = [
     label_lv: "Matrači",
     label_ru: "Матрацы",
     external: false,
+    icon: mattressIcon,
   },
   {
     href: "/sale",
@@ -35,6 +45,7 @@ export const mainLinks: NavLink[] = [
     label_lv: "Izpārdošana",
     label_ru: "Распродажа",
     external: false,
+    icon: saleIcon,
   },
   {
     href: "https://porolons.lv/",
@@ -42,6 +53,7 @@ export const mainLinks: NavLink[] = [
     label_lv: "Porolons",
     label_ru: "Поролон",
     external: true,
+    icon: porolonIcon,
   },
   {
     href: "/components",
@@ -49,6 +61,7 @@ export const mainLinks: NavLink[] = [
     label_lv: "Komponenti",
     label_ru: "Компоненты",
     external: false,
+    icon: componentsIcon,
   },
 ];
 

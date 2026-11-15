@@ -5,10 +5,10 @@ icons and logo, and the structure tests. It may import every layer; nothing impo
 pages.
 
 Boxes:
-- `layout/` — the document shell (`Layout`).
+- `layout/` — the document shell (`Layout`) and its SEO head.
 - `frame/` — the header, footer and mobile tab bar, and the navigation lists.
 
 Folders without a door:
-- `styles/` — `tokens.css` (custom properties) and `main.css` (shared page classes).
+- `styles/` — `tokens.css`, `base.css`, `animations.css`.
 - `assets/` — the logo and the mobile tab icons.
 - `tests/` — the layer and box checks run by `bun run test`.

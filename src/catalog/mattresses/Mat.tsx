@@ -1,7 +1,9 @@
-import { For, createSignal, onMount, Show } from "solid-js";
+import { For, Show, createSignal, onMount } from "solid-js";
 import { fileUrl } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
 import type { Product } from "#/catalog/shared/product";
+import { Skeleton } from "#/components/skeleton";
+import { LandingTile } from "#/components/landing-tile";
 import { getMatresses } from "./api";
 
 interface Props {
@@ -33,31 +35,23 @@ export default function Mat(props: Props) {
   });
 
   return (
-    <>
-      <Show when={loading()}>
+    <Show
+      when={!loading()}
+      fallback={
         <div class="product-list">
-          <For each={Array(8).fill(undefined)}>{() => <div class="skeleton" />}</For>
+          <For each={Array(8).fill(undefined)}>{() => <Skeleton />}</For>
         </div>
-      </Show>
-
-      <Show when={!loading()}>
-        <div class="product-list">
-          <For each={items()}>
-            {(item) => (
-              <a href={`/${props.lang}/mattress?name=${item.path}`}>
-                <div class="product-landing">
-                  <img
-                    src={getImageByLang(item)}
-                    alt={item.name}
-                    class="-img"
-                  />
-                  <p class="-text">{item.name.toUpperCase()}</p>
-                </div>
-              </a>
-            )}
-          </For>
-        </div>
-      </Show>
-    </>
+      }
+    >
+      <div class="product-list">
+        <For each={items()}>
+          {(item) => (
+            <LandingTile href={`/${props.lang}/mattress?name=${item.path}`} src={getImageByLang(item)} alt={item.name}>
+              <p class="landing-name">{item.name.toUpperCase()}</p>
+            </LandingTile>
+          )}
+        </For>
+      </div>
+    </Show>
   );
 }

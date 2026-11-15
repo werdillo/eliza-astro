@@ -1,0 +1,17 @@
+---
+import { socialLinks } from "./data";
+---
+
+<div class="mt-[1rem] pt-[2rem] text-center max-767:mt-[2rem] max-767:pt-[1.5rem]">
+    <div class="flex justify-center gap-[1.5rem] flex-wrap max-767:gap-[1rem]">
+        {
+            socialLinks.map((social) => (
+                <a href={social.url} target="_blank" rel="noopener noreferrer" class="social-icon" aria-label={social.name}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-[24px] h-[24px] max-767:w-[22px] max-767:h-[22px]">
+                        <path d={social.icon} />
+                    </svg>
+                </a>
+            ))
+        }
+    </div>
+</div>

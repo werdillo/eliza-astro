@@ -1,0 +1,32 @@
+---
+import type { ContactPoint } from "#/company/contacts";
+
+export interface Props {
+    title: string;
+    contact: ContactPoint;
+}
+
+const { title, contact } = Astro.props;
+---
+
+<div>
+    <h3 class="text-fs-20 font-bold mb-[1rem] max-767:text-fs-18">{title}</h3>
+    <p class="my-[0.5rem] leading-[1.5]">
+        <a href={`https://maps.google.com/?q=${contact.address}`} target="_blank" class="footer-link">
+            {contact.address}
+        </a>
+    </p>
+    <p class="my-[0.5rem] leading-[1.5]">
+        <a href={`mailto:${contact.mail}`} class="footer-link">{contact.mail}</a>
+    </p>
+    <p class="my-[0.5rem] leading-[1.5]">
+        {
+            contact.phone.map((phone, index) => (
+                <>
+                    {index > 0 ? ", " : null}
+                    <a href={`tel:+371${phone}`} class="footer-link">{phone}</a>
+                </>
+            ))
+        }
+    </p>
+</div>

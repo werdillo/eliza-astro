@@ -1,5 +1,6 @@
 import { For, createSignal, onMount, Show } from "solid-js";
 import { pocketbaseUrl } from "#/core/pocketbase";
+import { Skeleton } from "#/components/skeleton";
 import { getGallery } from "./api";
 
 export default function GalleryImages() {
@@ -34,21 +35,14 @@ export default function GalleryImages() {
   });
 
   return (
-    <div class="gallery">
+    <div class="gallery-grid">
       <Show when={loading()}>
-        <For each={Array(12).fill(undefined)}>{() => <div class="skeleton" />}</For>
+        <For each={Array(12).fill(undefined)}>{() => <Skeleton />}</For>
       </Show>
 
       <Show when={!loading()}>
         <For each={items()}>
-          {(item) => (
-            <img
-              class="-img"
-              src={getImage(item)}
-              alt="Gallery image"
-              loading="lazy"
-            />
-          )}
+          {(item) => <img class="gallery-img" src={getImage(item)} alt="Gallery image" loading="lazy" />}
         </For>
       </Show>
     </div>

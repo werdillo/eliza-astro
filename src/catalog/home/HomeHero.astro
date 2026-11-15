@@ -1,203 +1,28 @@
 ---
 import { Slider } from "#/components/slider";
 import { t, type Language } from "#/features/i18n";
-import Pic1 from "#/catalog/collections/assets/Pic1.jpg";
-import Pic6 from "#/catalog/collections/assets/Pic6.jpg";
-import Pic7 from "#/catalog/collections/assets/Pic7.jpg";
+import HeroSlide from "./HeroSlide.astro";
+import { heroSlides } from "./data";
 
 export interface Props {
     lang?: Language;
 }
 
 const { lang = "lv" } = Astro.props;
-
-const slides = [
-    {
-        image: Pic6,
-        title: t("slider.slide1.title", lang),
-        text: t("slider.slide1.text", lang),
-        button: t("slider.slide1.button", lang),
-        link: `/${lang}/collection/bbold`,
-    },
-    {
-        image: Pic1,
-        title: t("slider.slide2.title", lang),
-        text: t("slider.slide2.text", lang),
-        button: t("slider.slide2.button", lang),
-        link: `/${lang}/collection/basic`,
-    },
-    {
-        image: Pic7,
-        title: t("slider.slide3.title", lang),
-        text: t("slider.slide3.text", lang),
-        button: t("slider.slide3.button", lang),
-        link: `/${lang}/sale`,
-    },
-];
 ---
 
-<Slider
-    slidesPerView="1"
-    navigation="true"
-    pagination="false"
-    speed="500"
-    loop="true"
-    autoplayDelay="10000"
->
+<Slider slidesPerView="1" navigation="true" pagination="false" speed="500" loop="true" autoplayDelay="10000">
     {
-        slides.map((slide) => (
+        heroSlides.map((slide) => (
             <swiper-slide>
-                <div class="slider-wrapper">
-                    <div
-                        class="home-slider"
-                        style={`background-image: url(${slide.image.src}); background-size: cover; background-position: center; width: 100%;`}
-                    />
-                    <div class="slider-overlay">
-                        <div class="slider-content">
-                            <h1 class="slider-title">{slide.title}</h1>
-                            <p class="slider-text">{slide.text}</p>
-                            <a href={slide.link} class="slider-button">
-                                {slide.button}
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <HeroSlide
+                    image={slide.image}
+                    title={t(`${slide.key}.title`, lang)}
+                    text={t(`${slide.key}.text`, lang)}
+                    button={t(`${slide.key}.button`, lang)}
+                    href={`/${lang}${slide.path}`}
+                />
             </swiper-slide>
         ))
     }
 </Slider>
-
-<style>
-    .slider-wrapper {
-        position: relative;
-        width: 100%;
-        height: 600px;
-    }
-
-    .home-slider {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .slider-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        background: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.5) 0%,
-            rgba(0, 0, 0, 0.2) 50%,
-            rgba(0, 0, 0, 0) 100%
-        );
-    }
-
-    .slider-content {
-        max-width: 700px;
-        margin-left: 150px;
-        padding: 0 40px;
-        color: #ffffff;
-        text-align: left;
-    }
-
-    .slider-title {
-        font-family: "Avenir", sans-serif;
-        font-size: 72px;
-        font-weight: 300;
-        letter-spacing: 2px;
-        margin: 0 0 20px 0;
-        line-height: 1.1;
-        text-transform: uppercase;
-    }
-
-    .slider-text {
-        font-family: "Avenir", sans-serif;
-        font-size: 32px;
-        font-weight: 400;
-        margin: 0 0 40px 0;
-        line-height: 1.4;
-        opacity: 0.95;
-    }
-
-    .slider-button {
-        display: inline-block;
-        font-family: "Avenir", sans-serif;
-        font-size: 16px;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        padding: 16px 40px;
-        background: #ffffff;
-        color: #303030;
-        text-decoration: none;
-        border: 2px solid #ffffff;
-        transition: all 0.3s ease;
-    }
-
-    .slider-button:hover {
-        background: transparent;
-        color: #ffffff;
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(5px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @media screen and (max-width: 768px) {
-        .slider-wrapper {
-            height: 400px;
-        }
-
-        .slider-content {
-            margin-left: 30px;
-            padding: 0 20px;
-        }
-
-        .slider-title {
-            font-size: 36px;
-            margin-bottom: 15px;
-        }
-
-        .slider-text {
-            font-size: 16px;
-            margin-bottom: 25px;
-        }
-
-        .slider-button {
-            font-size: 14px;
-            padding: 12px 30px;
-        }
-    }
-
-    @media screen and (max-width: 480px) {
-        .slider-wrapper {
-            height: 300px;
-        }
-
-        .slider-title {
-            font-size: 28px;
-        }
-
-        .slider-text {
-            font-size: 14px;
-        }
-
-        .slider-button {
-            padding: 10px 24px;
-        }
-    }
-</style>

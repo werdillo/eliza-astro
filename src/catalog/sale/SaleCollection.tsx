@@ -3,6 +3,8 @@ import { fileUrl } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
 import type { Product } from "#/catalog/shared/product";
 import { typeLabels } from "#/catalog/shared/typeLabels";
+import { Skeleton } from "#/components/skeleton";
+import { LandingTile } from "#/components/landing-tile";
 import { getSalePage } from "./api";
 
 interface Props {
@@ -41,13 +43,11 @@ export default function SaleCollection(props: Props) {
 
   const SkeletonLoader = () => (
     <>
-      <div class="container">
-        <div class="skeleton text title" />
+      <div class="w-full">
+        <Skeleton shape="title" />
       </div>
       <div class="product-list">
-        <For each={Array(8).fill(undefined)}>
-          {() => <div class="skeleton" />}
-        </For>
+        <For each={Array(8).fill(undefined)}>{() => <Skeleton />}</For>
       </div>
     </>
   );
@@ -57,54 +57,25 @@ export default function SaleCollection(props: Props) {
       <For each={Object.entries(groupedItems())}>
         {([type, items]) => (
           <>
-            <div class="container">
-              <div class="title">{typeLabels[props.lang][type.toLowerCase()]}</div>
+            <div class="w-full">
+              <div class="list-title">{typeLabels[props.lang][type.toLowerCase()]}</div>
             </div>
             <div class="product-list">
               <For each={items}>
                 {(item) => (
-                  <a href={`/${props.lang}/sale-product?name=${item.path}`}>
-                    <div class="product-landing">
-                      <img
-                        src={fileUrl(item, item.images[0])}
-                        alt=""
-                        class="-img"
-                      />
-                      <Show
-                        when={item.price}
-                        fallback={
-                          <p class="-text">{item.name.toUpperCase()}</p>
-                        }
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            "justify-content": "space-between",
-                            "align-items": "center",
-                            "margin-top": "5px",
-                            gap: "10px",
-                            padding: "2px",
-                          }}
-                        >
-                          <p
-                            class="-text"
-                            style={{ margin: "0", "text-align": "left" }}
-                          >
-                            {item.name.toUpperCase()}
-                          </p>
-                          <div
-                            class="price-container"
-                            style={{ margin: "0", "flex-shrink": "0" }}
-                          >
-                            <Show when={item.oldPrice}>
-                              <span class="old-price">€{item.oldPrice}</span>
-                            </Show>
-                            <span class="price">€{item.price}</span>
-                          </div>
+                  <LandingTile href={`/${props.lang}/sale-product?name=${item.path}`} src={fileUrl(item, item.images[0])} alt="">
+                    <Show when={item.price} fallback={<p class="landing-name">{item.name.toUpperCase()}</p>}>
+                      <div class="flex justify-between items-center mt-[4px] gap-[12px] p-[2px]">
+                        <p class="sale-name">{item.name.toUpperCase()}</p>
+                        <div class="landing-price-row m-0 shrink-0">
+                          <Show when={item.oldPrice}>
+                            <span class="landing-old-price">€{item.oldPrice}</span>
+                          </Show>
+                          <span class="landing-price">€{item.price}</span>
                         </div>
-                      </Show>
-                    </div>
-                  </a>
+                      </div>
+                    </Show>
+                  </LandingTile>
                 )}
               </For>
             </div>

@@ -1,27 +1,28 @@
 ---
 import { Image } from "astro:assets";
 import type { Language } from "#/features/i18n";
+import { H3, P2 } from "#/components/typography";
 import { catalogCopy, catalogs } from "./data";
 
 export interface Props {
-    lang?: Language;
+  lang?: Language;
 }
 
 const { lang = "lv" } = Astro.props;
 const copy = catalogCopy[lang] ?? catalogCopy.lv;
 ---
 
-<div class="catalogs-title">{copy.pageTitle}</div>
+<H3 as="h1" class="catalogs-title">{copy.pageTitle}</H3>
 
 <div class="catalogs">
-    {
-        catalogs.map((catalog) => (
-            <div class="catalog">
-                <a href={catalog.file} class="catalog-link" target="_blank" rel="noopener noreferrer">
-                    <Image src={catalog.image} alt={catalog.alt} class="catalog-img" />
-                </a>
-                <span class="catalog-label">{`${copy.catalog} ${catalog.year}`}</span>
-            </div>
-        ))
-    }
+  {
+    catalogs.map((catalog) => (
+      <div class="catalog">
+        <a href={catalog.file} class="catalog-link" target="_blank" rel="noopener noreferrer">
+          <Image src={catalog.image} alt={catalog.alt} class="catalog-img" />
+        </a>
+        <P2 as="span" class="catalog-label">{`${copy.catalog} ${catalog.year}`}</P2>
+      </div>
+    ))
+  }
 </div>

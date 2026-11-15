@@ -1,52 +1,16 @@
 ---
-import { Layout } from "#/app/layout";
-import type { Language } from "#/features/i18n";
-import { ProductPage } from "#/catalog/products";
+// The old product URL, `/en/product?name=<path>`: sent on to `/en/product/<slug>/`.
+import { Redirect, pages } from "#/app/layout";
+import { LANGUAGES, type Language } from "#/features/i18n";
+import { productRedirects } from "#/catalog/products";
 
-export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "lv" } },
-        { params: { lang: "ru" } },
-    ];
+export async function getStaticPaths() {
+  const map = await productRedirects("def");
+  return LANGUAGES.map((lang) => ({ params: { lang }, props: { map } }));
 }
-const lang = Astro.params.lang as Language;
 
-// SEO data by language
-const seoData = {
-    lv: {
-        title: "Produkts - Eliza-K | Premium mēbeļu detaļas un specifikācijas",
-        description:
-            "Apskatiet detalizētu informāciju par Eliza-K premium mēbeļu produktiem. Specifikācijas, izmēri, materiāli un cenas mūsu ekskluzīvajām mēbelēm.",
-        keywords:
-            "produkts, mēbeļu detaļas, specifikācijas, premium mēbeles, Eliza-K produkti, mēbeļu informācija, cenas, materiāli",
-    },
-    en: {
-        title: "Product - Eliza-K | Premium Furniture Details and Specifications",
-        description:
-            "View detailed information about Eliza-K premium furniture products. Specifications, dimensions, materials and prices for our exclusive furniture.",
-        keywords:
-            "product, furniture details, specifications, premium furniture, Eliza-K products, furniture information, prices, materials",
-    },
-    ru: {
-        title: "Продукт - Eliza-K | Детали и спецификации премиум мебели",
-        description:
-            "Посмотрите подробную информацию о продукции премиум мебели Eliza-K. Спецификации, размеры, материалы и цены на нашу эксклюзивную мебель.",
-        keywords:
-            "продукт, детали мебели, спецификации, премиум мебель, продукция Eliza-K, информация о мебели, цены, материалы",
-    },
-};
-
-const currentSeo = seoData[lang] || seoData.lv;
+const { lang } = Astro.params as { lang: Language };
+const { map } = Astro.props;
 ---
-<Layout
-    offset={false}
-    title={currentSeo.title}
-    description={currentSeo.description}
-    keywords={currentSeo.keywords}
-    url={`/${lang}/product`}
-    image="/og-image-product.jpg"
-    type="website"
->
-    <ProductPage client:only lang={lang} />
-</Layout>
+
+<Redirect lang={lang} base={`/${lang}/product/`} fallback={`/${lang}/collections/`} map={map} linkText={pages.collections[lang].h1 ?? ""} />

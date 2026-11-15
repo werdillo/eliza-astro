@@ -1,0 +1,17 @@
+---
+/** A picture on a light card with its caption below, linking somewhere. */
+export interface Props {
+  href: string;
+  src: string;
+  alt: string;
+}
+
+const { href, src, alt } = Astro.props;
+---
+
+<a href={href} class="block no-underline">
+  <div class="landing">
+    <img src={src} alt={alt} width="1600" height="900" loading="lazy" class="landing-img" />
+    <slot />
+  </div>
+</a>

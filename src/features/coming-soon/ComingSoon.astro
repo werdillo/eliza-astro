@@ -1,34 +1,30 @@
 ---
 import type { ImageMetadata } from "astro";
 import { t, type Language } from "#/features/i18n";
+import { H2, P1, P2 } from "#/components/typography";
 
 export interface Props {
-    lang?: Language;
-    background: ImageMetadata;
+  lang?: Language;
+  background: ImageMetadata;
 }
 
 const { lang = "lv", background } = Astro.props;
 ---
 
 <div class="relative h-[100vh] w-full">
-    <div
-        class="absolute top-0 left-0 w-full h-full bg-cover bg-center [filter:brightness(0.6)] z-[-1]"
-        style={`background-image: url(${background.src});`}
-    />
+  <img src={background.src} alt="" width={background.width} height={background.height} class="absolute top-0 left-0 w-full h-full object-cover object-center [filter:brightness(0.6)] z-[-1]" />
 
-    <div class="flex flex-col items-center justify-center h-full text-white text-center p-[2rem]">
-        <div class="bg-scrim-60 p-[2rem] rounded-[10px] max-w-[600px]">
-            <h1 class="text-fs-40 mb-[1rem]">{t("comingSoon.title", lang)}</h1>
-            <p class="text-fs-20 mb-[1.5rem]">{t("comingSoon.message", lang)}</p>
-            <p class="text-fs-20 mb-[1.5rem]">{t("comingSoon.subMessage", lang)}</p>
+  <div class="flex flex-col items-center justify-center h-full text-white text-center p-[2rem]">
+    <div class="bg-scrim-60 p-[2rem] rounded-[10px] max-w-[600px]">
+      <H2 as="h1" class="mb-[1rem]">{t("comingSoon.title", lang)}</H2>
+      <P1 class="mb-[1.5rem]">{t("comingSoon.message", lang)}</P1>
+      <P1 class="mb-[1.5rem]">{t("comingSoon.subMessage", lang)}</P1>
 
-            <div class="flex gap-[1rem] mt-[1.5rem] justify-center">
-                <a
-                    href={"/" + lang}
-                    class="[background:none] [border:2px_solid_var(--color-text)] text-white px-[1rem] py-[0.5rem] rounded-[var(--radius-tile)] cursor-pointer text-fs-16 [transition:all_0.3s_ease] no-underline inline-block hov:[background-color:var(--color-text)] hov:text-black"
-                    >{t("comingSoon.button", lang)}</a
-                >
-            </div>
-        </div>
+      <div class="flex gap-[1rem] mt-[1.5rem] justify-center">
+        <a href={"/" + lang} class="[background:none] [border:2px_solid_var(--color-text)] text-white px-[1rem] py-[0.5rem] rounded-[var(--radius-tile)] cursor-pointer no-underline inline-block [transition:all_0.3s_ease] hov:[background-color:var(--color-text)] hov:text-black">
+          <P2 as="span">{t("comingSoon.button", lang)}</P2>
+        </a>
+      </div>
     </div>
+  </div>
 </div>

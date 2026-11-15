@@ -1,0 +1,65 @@
+---
+import type { Language } from "#/features/i18n";
+import { H3, H4, H5, P1 } from "#/components/typography";
+import { getContacts } from "./api";
+
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const contacts = await getContacts();
+
+const titles: Record<string, string> = {
+  en: "Working time",
+  ru: "Время работы",
+  lv: "Darba laiks",
+};
+---
+
+<div class="contacts-grid">
+  {
+    contacts.map((contact) => {
+      const hasWorkingHours = Boolean(contact[`weekday_${lang}`] || contact[`break_${lang}`] || contact[`weeken_${lang}`]);
+      const phones = String(contact.phone ?? "")
+        .split(",")
+        .map((phone: string) => phone.trim())
+        .filter(Boolean);
+
+      return (
+        <section class="contacts-wrapper">
+          <H3 as="h2" class="h-[78px] max-1000:h-auto">{contact[`title_${lang}`]}</H3>
+          <P1>
+            <a href={`https://maps.google.com/?q=${contact.address}`} target="_blank" rel="noopener noreferrer">
+              {contact.address}
+            </a>
+          </P1>
+          <P1>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </P1>
+          <P1>
+            {phones.map((phone, index) => (
+              <>
+                {index > 0 ? ", " : null}
+                <a href={`tel:+371${phone}`}>{phone}</a>
+              </>
+            ))}
+          </P1>
+
+          {hasWorkingHours && (
+            <div>
+              <H4 as="h3" class="mt-[var(--space-30)]">{titles[lang]}</H4>
+              {contact[`weekday_${lang}`] && <P1>{contact[`weekday_${lang}`]}</P1>}
+              {contact[`break_${lang}`] && <P1>{contact[`break_${lang}`]}</P1>}
+              {contact[`weeken_${lang}`] && <P1>{contact[`weeken_${lang}`]}</P1>}
+            </div>
+          )}
+
+          {contact.show_event && (
+            <H5 as="p" class="text-sale">{contact[`event_${lang}`] || ""}</H5>
+          )}
+        </section>
+      );
+    })
+  }
+</div>

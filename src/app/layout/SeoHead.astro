@@ -1,66 +1,68 @@
 ---
-import { defaults, siteUrl, structuredData } from "./seo";
+import type { ImageMetadata } from "astro";
+import type { Language } from "#/features/i18n";
+import defaultImage from "#/app/assets/images/og-default.jpg";
+import { alternates, homeLabel, ogLocale, pageUrl, siteUrl, structuredData, type Crumb } from "./seo";
 
 export interface Props {
-    lang: string;
-    url?: string;
-    title?: string;
-    description?: string;
-    keywords?: string;
-    image?: string;
-    type: string;
+  lang: Language;
+  path: string;
+  title: string;
+  description: string;
+  image?: ImageMetadata | string;
+  type: string;
+  crumbs: Crumb[];
+  nodes: Record<string, unknown>[];
+  noindex: boolean;
 }
 
-const { lang, url, title, description, keywords, image, type } = Astro.props;
+const { lang, path, title, description, image, type, crumbs, nodes, noindex } = Astro.props;
 
-const seoTitle = title || defaults.title;
-const seoDescription = description || defaults.description;
-const seoKeywords = keywords || defaults.keywords;
-const seoImage = image || defaults.image;
-const seoUrl = url ? `${siteUrl}${url}` : siteUrl;
-const fullImageUrl = seoImage.startsWith("http") ? seoImage : `${siteUrl}${seoImage}`;
-const locale = lang === "lv" ? "lv_LV" : lang === "ru" ? "ru_RU" : "en_US";
+const url = pageUrl(lang, path);
+const home = { name: homeLabel[lang], url: pageUrl(lang) };
+const trail = crumbs.length > 0 ? [home, ...crumbs.map((c) => ({ name: c.name, url: pageUrl(lang, c.path) }))] : [];
+const picture = typeof image === "string" ? { src: image, width: undefined, height: undefined } : image ?? defaultImage;
+const absolute = (src: string) => (src.startsWith("http") ? src : `${siteUrl}${src}`);
+const imageUrl = absolute(picture.src);
+const schema = JSON.stringify(structuredData({ title, description, url, lang, crumbs: trail, nodes }));
 ---
 
-<!-- Basic Meta Tags -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 <meta name="author" content="Eliza-K" />
-<link rel="icon" href="/favicon.png" sizes="any" />
-<link rel="canonical" href={seoUrl} />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="/logo512.png" />
+<link rel="canonical" href={url} />
 
-<!-- Primary Meta Tags -->
-<title>{seoTitle}</title>
-<meta name="title" content={seoTitle} />
-<meta name="description" content={seoDescription} />
-<meta name="keywords" content={seoKeywords} />
+<title>{title}</title>
+<meta name="description" content={description} />
 
-<!-- Open Graph / Facebook -->
 <meta property="og:type" content={type} />
-<meta property="og:url" content={seoUrl} />
-<meta property="og:title" content={seoTitle} />
-<meta property="og:description" content={seoDescription} />
-<meta property="og:image" content={fullImageUrl} />
+<meta property="og:url" content={url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+{picture.width && <meta property="og:image:width" content={String(picture.width)} />}
+{picture.height && <meta property="og:image:height" content={String(picture.height)} />}
 <meta property="og:site_name" content="Eliza-K" />
-<meta property="og:locale" content={locale} />
+<meta property="og:locale" content={ogLocale(lang)} />
+{
+  alternates(path)
+    .filter((alt) => alt.lang !== "x-default" && alt.lang !== lang)
+    .map((alt) => <meta property="og:locale:alternate" content={ogLocale(alt.lang)} />)
+}
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={seoUrl} />
-<meta property="twitter:title" content={seoTitle} />
-<meta property="twitter:description" content={seoDescription} />
-<meta property="twitter:image" content={fullImageUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={url} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
 
-<!-- Hreflang Links -->
-<link rel="alternate" hreflang="lv" href={`${siteUrl}/lv${url || "/"}`} />
-<link rel="alternate" hreflang="en" href={`${siteUrl}/en${url || "/"}`} />
-<link rel="alternate" hreflang="ru" href={`${siteUrl}/ru${url || "/"}`} />
-<link rel="alternate" hreflang="x-default" href={`${siteUrl}/lv${url || "/"}`} />
+{alternates(path).map((alt) => <link rel="alternate" hreflang={alt.lang} href={alt.href} />)}
 
-<!-- Structured Data -->
-<script type="application/ld+json" set:html={JSON.stringify(structuredData({ title: seoTitle, description: seoDescription, url: seoUrl, lang }))} />
+<script type="application/ld+json" set:html={schema} />
 
-<!-- Additional SEO Tags -->
 <meta name="format-detection" content="telephone=no" />
 <meta name="theme-color" content="#ffffff" />

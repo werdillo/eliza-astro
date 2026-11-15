@@ -1,54 +1,14 @@
 ---
-import { Layout } from "#/app/layout";
-import type { Language } from "#/features/i18n";
+import { Layout, pages } from "#/app/layout";
+import { LANGUAGES, type Language } from "#/features/i18n";
 import { CatalogsList } from "#/catalog/catalogs";
-
-const lang = Astro.params.lang as Language;
-
-
 export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "lv" } },
-        { params: { lang: "ru" } },
-    ];
+  return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
 
-// SEO data by language
-const seoData = {
-    lv: {
-        title: "Katalogi - Eliza-K | Lejupielādējiet mūsu mēbeļu katalogus PDF",
-        description:
-            "Lejupielādējiet Eliza-K mēbeļu katalogus PDF formātā. Pilna informācija par mūsu premium mēbeļu kolekcijām 2018, 2019 un 2021. gadā. Katalogi ar cenām un specifikācijām.",
-        keywords:
-            "katalogi, PDF, mēbeļu katalogs, Eliza-K katalogs, lejupielāde, produktu katalogs, premium mēbeles, cenas, specifikācijas",
-    },
-    en: {
-        title: "Catalogs - Eliza-K | Download Our Furniture Catalogs PDF",
-        description:
-            "Download Eliza-K furniture catalogs in PDF format. Complete information about our premium furniture collections from 2018, 2019 and 2021. Catalogs with prices and specifications.",
-        keywords:
-            "catalogs, PDF, furniture catalog, Eliza-K catalog, download, product catalog, premium furniture, prices, specifications",
-    },
-    ru: {
-        title: "Каталоги - Eliza-K | Скачайте наши каталоги мебели PDF",
-        description:
-            "Скачайте каталоги мебели Eliza-K в формате PDF. Полная информация о наших коллекциях премиум мебели 2018, 2019 и 2021 года. Каталоги с ценами и спецификациями.",
-        keywords:
-            "каталоги, PDF, каталог мебели, каталог Eliza-K, скачать, каталог продукции, премиум мебель, цены, спецификации",
-    },
-};
-
-const currentSeo = seoData[lang] || seoData.lv;
-
+const lang = Astro.params.lang as Language;
 ---
-<Layout
-    title={currentSeo.title}
-    description={currentSeo.description}
-    keywords={currentSeo.keywords}
-    url={`/${lang}/catalogs`}
-    image="/og-image-catalogs.jpg"
-    type="website"
->
-    <CatalogsList lang={lang} />
+
+<Layout lang={lang} path="/catalogs" title={pages.catalogs[lang].title} description={pages.catalogs[lang].description}>
+  <CatalogsList lang={lang} />
 </Layout>

@@ -1,54 +1,15 @@
 ---
-import { Layout } from "#/app/layout";
-import type { Language } from "#/features/i18n";
+import { Layout, pages } from "#/app/layout";
+import { LANGUAGES, type Language } from "#/features/i18n";
 import { MaterialsList } from "#/catalog/materials";
-
 export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "lv" } },
-        { params: { lang: "ru" } },
-    ];
+  return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Language;
-
-// SEO data by language
-const seoData = {
-    lv: {
-        title: "Komponenti - Eliza-K | Porolons un audumi mēbelēm",
-        description:
-            "Eliza-K piedāvā kvalitatīvus komponentus mēbeļu ražošanai - porolons un plašs audumu klāsts. Profesionāli materiāli mīkstajām mēbelēm un interjera risinājumiem.",
-        keywords:
-            "mēbeļu komponenti, porolons, audumi, mīkstās mēbeles, tekstilmateriāli, mēbeļu audumi, kvalitāte, Eliza-K komponenti",
-    },
-    en: {
-        title: "Components - Eliza-K | Foam and Fabrics for Furniture",
-        description:
-            "Eliza-K offers quality components for furniture manufacturing - foam and wide selection of fabrics. Professional materials for upholstered furniture and interior solutions.",
-        keywords:
-            "furniture components, foam, fabrics, upholstered furniture, textile materials, furniture fabrics, quality, Eliza-K components",
-    },
-    ru: {
-        title: "Компоненты - Eliza-K | Поролон и ткани для мебели",
-        description:
-            "Eliza-K предлагает качественные компоненты для производства мебели - поролон и широкий выбор тканей. Профессиональные материалы для мягкой мебели и интерьерных решений.",
-        keywords:
-            "компоненты мебели, поролон, ткани, мягкая мебель, текстильные материалы, мебельные ткани, качество, компоненты Eliza-K",
-    },
-};
-
-const currentSeo = seoData[lang] || seoData.lv;
-
-
 ---
-<Layout
-    title={currentSeo.title}
-    description={currentSeo.description}
-    keywords={currentSeo.keywords}
-    url={`/${lang}/components`}
-    image="/og-image-components.jpg"
-    type="website"
->
-    <MaterialsList lang={lang} />
+
+<Layout lang={lang} path="/components" title={pages.components[lang].title} description={pages.components[lang].description}>
+  <h1 class="sr-only">{pages.components[lang].h1}</h1>
+  <MaterialsList lang={lang} />
 </Layout>

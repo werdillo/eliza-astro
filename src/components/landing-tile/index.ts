@@ -1,1 +1,1 @@
-export { default as LandingTile } from "./LandingTile";
+export { default as LandingTile } from "./LandingTile.astro";

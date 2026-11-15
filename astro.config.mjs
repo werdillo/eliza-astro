@@ -1,7 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
-import solidJs from "@astrojs/solid-js";
 import UnoCSS from "@unocss/astro";
 
 // https://astro.build/config
@@ -9,7 +8,6 @@ export default defineConfig({
   site: "https://eliza-k.lv",
   integrations: [
     UnoCSS({ injectReset: false }),
-    solidJs(),
     sitemap({
       i18n: {
         defaultLocale: "lv",

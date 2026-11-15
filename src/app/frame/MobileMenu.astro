@@ -1,43 +1,44 @@
 ---
 import { Image } from "astro:assets";
+import type { Language } from "#/features/i18n";
 import { mainLinks, navLabel } from "./navigation";
 
-const { lang = "lv" } = Astro.params;
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="fixed bottom-0 left-0 right-0 z-[1000] bg-bar [backdrop-filter:blur(10px)] [border-top:1px_solid_var(--color-glass)] min-768:hidden">
-    <div class="px-[var(--space-8)] py-[var(--space-2)] flex items-center justify-around max-w-full">
-        {
-            mainLinks.map((link) => {
-                const isActive = currentPath.includes(link.href);
-                const isSale = link.href === "/sale";
-                const label = navLabel(link, lang);
-                const state = isSale
-                    ? "text-sale hov:bg-glass"
-                    : isActive
-                      ? "text-white hov:bg-glass"
-                      : "text-glass-soft hov:text-highlight hov:bg-glass";
-                const iconState = isSale
-                    ? "opacity-100 [filter:invert(27%)_sepia(51%)_saturate(2878%)_hue-rotate(346deg)_brightness(104%)_contrast(97%)]"
-                    : isActive
-                      ? "opacity-100"
-                      : "opacity-[0.6] group-hover:opacity-100";
+<nav aria-label="Sections" class="fixed bottom-0 left-0 right-0 z-[1000] bg-bar [backdrop-filter:blur(10px)] [border-top:1px_solid_var(--color-glass)] min-768:hidden">
+  <div class="px-[var(--space-8)] py-[var(--space-2)] flex items-center justify-around max-w-full">
+    {
+      mainLinks.map((link) => {
+        const isActive = currentPath.includes(link.href);
+        const isSale = link.href === "/sale";
+        const label = navLabel(link, lang);
+        const state = isSale ? "text-sale hov:bg-glass" : isActive ? "text-white hov:bg-glass" : "text-glass-soft hov:text-highlight hov:bg-glass";
+        const iconState = isSale
+          ? "opacity-100 [filter:invert(27%)_sepia(51%)_saturate(2878%)_hue-rotate(346deg)_brightness(104%)_contrast(97%)]"
+          : isActive
+            ? "opacity-100"
+            : "opacity-[0.6] group-hover:opacity-100";
 
-                return (
-                    <a
-                        href={link.external ? link.href : `/${lang}${link.href}`}
-                        class={`group mobile-link ${state}`}
-                        target={link.external ? "_blank" : undefined}
-                        rel={link.external ? "noopener noreferrer" : undefined}
-                    >
-                        <div class="flex items-center justify-center w-[24px] h-[24px]">
-                            {link.icon && <Image src={link.icon} alt={label} class={`w-[20px] h-[20px] [transition:all_0.3s_ease] ${iconState}`} />}
-                        </div>
-                        <span class={`mobile-link-text ${isSale ? "text-sale" : ""}`}>{label}</span>
-                    </a>
-                );
-            })
-        }
-    </div>
+        return (
+          <a
+            href={link.external ? link.href : `/${lang}${link.href}`}
+            class={`group mobile-link no-underline ${state}`}
+            target={link.external ? "_blank" : undefined}
+            rel={link.external ? "noopener noreferrer" : undefined}
+          >
+            <div class="flex items-center justify-center w-[24px] h-[24px]">
+              {link.icon && <Image src={link.icon} alt="" class={`w-[20px] h-[20px] [transition:all_0.3s_ease] ${iconState}`} />}
+            </div>
+            <span class:list={["text-p3", isSale && "text-sale"]}>{label}</span>
+          </a>
+        );
+      })
+    }
+  </div>
 </nav>

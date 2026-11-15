@@ -15,16 +15,13 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.5",
-    "@astrojs/solid-js": "^7.1.6",
     "astro": "^7.4.12",
     "pocketbase": "^0.29.0",
-    "solid-js": "^1.9.19",
     "swiper": "^14.4.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@unocss/astro": "^66.13.0",
-    "eslint-plugin-solid": "^0.19.0",
     "oxlint": "^1.93.0",
     "typescript": "^6.0.3",
     "unocss": "^66.13.0",

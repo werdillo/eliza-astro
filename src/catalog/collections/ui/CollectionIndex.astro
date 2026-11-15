@@ -4,16 +4,16 @@ import { ImageTile } from "#/components/image-tile";
 import { collectionTiles } from "../data";
 
 export interface Props {
-    lang?: Language;
+  lang: Language;
 }
 
-const { lang = "lv" } = Astro.props;
+const { lang } = Astro.props;
 ---
 
 <div class="tile-grid">
-    {
-        collectionTiles.map((tile) => (
-            <ImageTile href={tile.href(lang)} image={tile.image} alt={tile.alt} label={tile.label} external={tile.external} />
-        ))
-    }
+  {
+    collectionTiles.map((tile) => (
+      <ImageTile href={tile.href(lang)} image={tile.image} alt={tile.alt} label={tile.label} external={tile.external} />
+    ))
+  }
 </div>

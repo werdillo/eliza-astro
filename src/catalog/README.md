@@ -1,11 +1,11 @@
 # catalog
 
 Everything a visitor browses to choose a product: the collections, the sale, the mattresses, the
-fabrics, the materials and the printed catalogues. The product page is shared by the regular, sale and
-mattress products.
+fabrics, the materials and the printed catalogues. The product pages of all three kinds are in
+`products/`.
 
 Boxes:
-- `products/` — the product page and its loader.
+- `products/` — the product pages (regular, sale, mattress), their routes and their schema.
 - `home/` — the home page hero, and the collection cards with their configuration.
 - `collections/` — the collections index page and one collection's grid.
 - `sale/` — the discounted items.
@@ -14,4 +14,4 @@ Boxes:
 - `materials/` — the foam and textile page.
 - `catalogs/` — the printed catalogues.
 
-Also `shared/`: the product record type and the product type labels, imported by path by the boxes above (not a box).
+Also `shared/`: the product record type and the type labels, imported by path by the boxes above (not a box).

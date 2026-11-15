@@ -1,51 +1,57 @@
 ---
 import { Image } from "astro:assets";
 import Logo from "../assets/images/eliza-logo.svg";
-import { LanguageDropdown, langPath } from "#/features/i18n";
+import { LanguageDropdown, langPath, type Language } from "#/features/i18n";
 import { BurgerMenu, type BurgerLink } from "#/components/burger-menu";
 import HeaderLink from "./HeaderLink.astro";
 import { mainLinks, navLabel, secondaryLinks } from "./navigation";
 
-const { lang = "lv" } = Astro.params;
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
 const currentPath = Astro.url.pathname;
+/** The page's path under its language, for the language switcher: `/collections/`. */
+const pathUnderLang = currentPath.replace(/^\/(lv|en|ru)(?=\/|$)/, "") || "/";
 
 const burgerLinks: BurgerLink[] = secondaryLinks.map((link) => ({
-    href: link.href.startsWith("http") ? link.href : langPath(lang, link.href),
-    label: navLabel(link, lang),
+  href: link.href.startsWith("http") ? link.href : langPath(lang, link.href),
+  label: navLabel(link, lang),
 }));
 ---
 
-<nav class="fixed top-0 z-[100] w-full h-[var(--header-height)] max-768:h-[var(--header-height-mobile)] bg-layout text-white">
-    <div class="h-full px-[var(--space-20)] max-1600:px-[var(--space-12)] flex z-[100] items-center">
-        <div class="w-full h-full grid grid-cols-[1fr_auto_1fr] items-center gap-[var(--space-30)] max-1500:gap-[var(--space-20)] max-1430:gap-[var(--space-16)] max-1300:gap-[var(--space-12)]">
-            <a href={`/${lang}`} class="block">
-                <Image src={Logo} alt="Logo" class="w-[120px] h-auto mt-[var(--space-2)] max-768:w-[110px]" />
-            </a>
-            <div class="header-links">
-                {
-                    mainLinks.map((link) => (
-                        <HeaderLink
-                            href={link.href.startsWith("http") ? link.href : langPath(lang, link.href)}
-                            label={navLabel(link, lang)}
-                            active={currentPath.includes(link.href)}
-                            sale={link.href === "/sale"}
-                        />
-                    ))
-                }
-            </div>
-            <div class="header-links justify-self-end">
-                {
-                    secondaryLinks.map((link) => (
-                        <HeaderLink
-                            href={langPath(lang, link.href)}
-                            label={navLabel(link, lang)}
-                            active={currentPath.includes(link.href)}
-                        />
-                    ))
-                }
-                <LanguageDropdown client:load currentLang={lang} currentPath={currentPath} />
-                <BurgerMenu items={burgerLinks} currentPath={currentPath} client:load />
-            </div>
-        </div>
+<header class="fixed top-0 z-[100] w-full h-[var(--header-height)] max-768:h-[var(--header-height-mobile)] bg-layout text-white">
+  <div class="h-full px-[var(--space-20)] max-1600:px-[var(--space-12)] flex z-[100] items-center">
+    <div class="w-full h-full grid grid-cols-[1fr_auto_1fr] items-center gap-[var(--space-30)] max-1500:gap-[var(--space-20)] max-1430:gap-[var(--space-16)] max-1300:gap-[var(--space-12)]">
+      <a href={`/${lang}/`} class="block" aria-label="Eliza-K">
+        <Image src={Logo} alt="Eliza-K" class="w-[120px] h-auto mt-[var(--space-2)] max-768:w-[110px]" />
+      </a>
+
+      <nav aria-label="Main" class="header-links">
+        {
+          mainLinks.map((link) => (
+            <HeaderLink
+              href={link.href.startsWith("http") ? link.href : langPath(lang, link.href)}
+              label={navLabel(link, lang)}
+              active={currentPath.includes(link.href)}
+              sale={link.href === "/sale"}
+            />
+          ))
+        }
+      </nav>
+
+      <div class="header-links justify-self-end">
+        <nav aria-label="Secondary" class="contents">
+          {
+            secondaryLinks.map((link) => (
+              <HeaderLink href={langPath(lang, link.href)} label={navLabel(link, lang)} active={currentPath.includes(link.href)} />
+            ))
+          }
+        </nav>
+        <LanguageDropdown currentLang={lang} path={pathUnderLang} />
+        <BurgerMenu items={burgerLinks} currentPath={currentPath} />
+      </div>
     </div>
-</nav>
+  </div>
+</header>

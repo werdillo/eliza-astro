@@ -1,1 +1,1 @@
-export { default as Mat } from "./Mat";
+export { default as MatGrid } from "./ui/MatGrid.astro";

@@ -1,0 +1,42 @@
+---
+/**
+ * A page that only sends the visitor on: the old `?name=<path>` product URLs. The script reads the
+ * name from the query, looks it up in `map` (path → new slug) and replaces the page with the new URL;
+ * without a match it goes to `fallback`. The link is for a visitor without scripts.
+ */
+export interface Props {
+  lang: string;
+  /** The new section: `/lv/product/`. */
+  base: string;
+  /** Where a name with no page goes: the listing. */
+  fallback: string;
+  /** Record path → URL slug, for the names that have a page. */
+  map: Record<string, string>;
+  linkText: string;
+}
+
+const { lang, base, fallback, map, linkText } = Astro.props;
+// `<` is escaped so the JSON cannot close the script element.
+const mapJson = JSON.stringify(map).replace(/</g, "\\u003c");
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eliza-K</title>
+    <script is:inline define:vars={{ mapJson, base, fallback }}>
+      (function () {
+        var name = new URLSearchParams(location.search).get("name");
+        var map = JSON.parse(mapJson);
+        var slug = name !== null && Object.prototype.hasOwnProperty.call(map, name) ? map[name] : null;
+        location.replace(slug ? base + slug + "/" : fallback);
+      })();
+    </script>
+  </head>
+  <body>
+    <p><a href={fallback}>{linkText}</a></p>
+  </body>
+</html>

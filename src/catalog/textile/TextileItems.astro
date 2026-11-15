@@ -1,0 +1,32 @@
+---
+import { fileUrl } from "#/core/pocketbase";
+import type { Language } from "#/features/i18n";
+import { H2, H3 } from "#/components/typography";
+import { getTextileItems } from "./api";
+
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const items = await getTextileItems();
+const photos = [1, 2, 3, 4];
+---
+
+{
+  items.map((item) => (
+    <section class="w-full">
+      <H2 as="h2" class="textile-title">{item[`title_${lang}`]}</H2>
+      <div class="textile-grid">
+        {photos.map((n) =>
+          item[`image${n}`] ? (
+            <div class="textile-item">
+              <H3 as="span" class="textile-label">{item[`text${n}`]}</H3>
+              <img class="textile-img" src={fileUrl(item, item[`image${n}`])} alt={item.name} width="1100" height="1100" loading="lazy" />
+            </div>
+          ) : null,
+        )}
+      </div>
+    </section>
+  ))
+}

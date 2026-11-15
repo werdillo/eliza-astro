@@ -1,0 +1,12 @@
+---
+// Heading look H3. `as` is the tag (default h3): the tag says the meaning, the look is always H3.
+export interface Props {
+  as?: string;
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const { as: Tag = "h3", class: extra, ...rest } = Astro.props;
+---
+
+<Tag class:list={["text-h3", extra]} {...rest}><slot /></Tag>

@@ -1,0 +1,22 @@
+---
+import { Layout, pageUrl, pages } from "#/app/layout";
+import { ProductPage, PRODUCT_SECTION, productImage, productMeta, productPages, productSchema } from "#/catalog/products";
+import type { Language } from "#/features/i18n";
+
+export async function getStaticPaths() {
+  return productPages("mattress");
+}
+
+const { item, kind, lang } = Astro.props;
+const path = `/${PRODUCT_SECTION[kind]}/${item.slug}`;
+const image = productImage(item, kind, lang);
+const meta = productMeta(item, kind, lang, pages.mattress[lang as Language].description);
+const crumbs = [
+  { name: pages.mattresses[lang as Language].h1 ?? "", path: "/matresses" },
+  { name: item.name, path },
+];
+---
+
+<Layout lang={lang} path={path} title={meta.title} description={meta.description} image={image} type="product" offset={false} crumbs={crumbs} nodes={[productSchema({ item, kind, lang, url: pageUrl(lang, path), image, description: meta.description })]}>
+  <ProductPage item={item} kind={kind} lang={lang} />
+</Layout>

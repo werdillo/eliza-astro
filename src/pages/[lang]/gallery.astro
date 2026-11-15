@@ -1,52 +1,15 @@
 ---
-import { Layout } from "#/app/layout";
-import type { Language } from "#/features/i18n";
+import { Layout, pages } from "#/app/layout";
+import { LANGUAGES, type Language } from "#/features/i18n";
 import { GalleryImages } from "#/company/gallery";
-
 export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "lv" } },
-        { params: { lang: "ru" } },
-    ];
+  return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Language;
-
-// SEO data by language
-const seoData = {
-    lv: {
-        title: "Galerija - Eliza-K | Foto no realizētajiem mēbeļu projektiem",
-        description:
-            "Apskatiet Eliza-K mēbeļu galeriju - foto no realizētajiem projektiem, premium mēbeļu dizaina risinājumiem un ražošanas procesiem. Iedvesma jūsu mājas iekārtošanai.",
-        keywords:
-            "galerija, mēbeļu foto, realizētie projekti, premium mēbeles, dizaina risinājumi, iekštelpu dizains, Eliza-K projekti, iedvesma",
-    },
-    en: {
-        title: "Gallery - Eliza-K | Photos from Completed Furniture Projects",
-        description:
-            "View Eliza-K furniture gallery - photos from completed projects, premium furniture design solutions and manufacturing processes. Inspiration for your home decoration.",
-        keywords:
-            "gallery, furniture photos, completed projects, premium furniture, design solutions, interior design, Eliza-K projects, inspiration",
-    },
-    ru: {
-        title: "Галерея - Eliza-K | Фото реализованных мебельных проектов",
-        description:
-            "Посмотрите галерею мебели Eliza-K - фото реализованных проектов, решений дизайна премиум мебели и производственных процессов. Вдохновение для украшения вашего дома.",
-        keywords:
-            "галерея, фото мебели, реализованные проекты, премиум мебель, дизайнерские решения, дизайн интерьера, проекты Eliza-K, вдохновение",
-    },
-};
-
-const currentSeo = seoData[lang] || seoData.lv;
 ---
-<Layout
-    title={currentSeo.title}
-    description={currentSeo.description}
-    keywords={currentSeo.keywords}
-    url={`/${lang}/gallery`}
-    image="/og-image-gallery.jpg"
-    type="website"
->
-    <GalleryImages client:load />
+
+<Layout lang={lang} path="/gallery" title={pages.gallery[lang].title} description={pages.gallery[lang].description}>
+  <h1 class="sr-only">{pages.gallery[lang].h1}</h1>
+  <GalleryImages />
 </Layout>

@@ -1,0 +1,12 @@
+---
+// Heading look H6. `as` is the tag (default h6): the tag says the meaning, the look is always H6.
+export interface Props {
+  as?: string;
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const { as: Tag = "h6", class: extra, ...rest } = Astro.props;
+---
+
+<Tag class:list={["text-h6", extra]} {...rest}><slot /></Tag>

@@ -1,54 +1,16 @@
 ---
-import { Layout } from "#/app/layout";
-import type { Language } from "#/features/i18n";
+import { Layout, pages } from "#/app/layout";
+import { LANGUAGES, type Language } from "#/features/i18n";
 import { ComingSoon } from "#/features/coming-soon";
 import Pic6 from "#/catalog/collections/assets/Pic6.jpg";
-
 export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "lv" } },
-        { params: { lang: "ru" } },
-    ];
+  return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
+
 const lang = Astro.params.lang as Language;
-
-// SEO data by language
-const seoData = {
-    lv: {
-        title: "Kafejnīcu mēbeles - Eliza-K | Stilīgas mēbeles kafejnīcām",
-        description:
-            "Eliza-K piedāvā stilīgas un praktiskas mēbeles kafejnīcām. Komfortabli krēsli, galdi un interjera risinājumi, kas rada patīkamu atmosfēru jūsu kafejnīcā.",
-        keywords:
-            "kafejnīcu mēbeles, kafejnīcu krēsli, kafejnīcu galdi, komerciālās mēbeles, Eliza-K kafejnīcas, HoReCa mēbeles",
-    },
-    en: {
-        title: "Cafe Furniture - Eliza-K | Stylish Furniture for Cafes",
-        description:
-            "Eliza-K offers stylish and practical furniture for cafes. Comfortable chairs, tables and interior solutions that create a pleasant atmosphere in your cafe.",
-        keywords:
-            "cafe furniture, cafe chairs, cafe tables, commercial furniture, Eliza-K cafes, HoReCa furniture",
-    },
-    ru: {
-        title: "Мебель для кафе - Eliza-K | Стильная мебель для кафе",
-        description:
-            "Eliza-K предлагает стильную и практичную мебель для кафе. Комфортные стулья, столы и интерьерные решения, создающие приятную атмосферу в вашем кафе.",
-        keywords:
-            "мебель для кафе, стулья для кафе, столы для кафе, коммерческая мебель, Eliza-K кафе, мебель HoReCa",
-    },
-};
-
-const currentSeo = seoData[lang] || seoData.lv;
+const crumbs = [{ name: pages.horeca[lang].h1 ?? "", path: "/horeca" }, { name: pages.cafe[lang].h1 ?? "", path: "/horeca/cafe" }];
 ---
-<Layout
-    offset={false}
-    title={currentSeo.title}
-    description={currentSeo.description}
-    keywords={currentSeo.keywords}
-    url={`/${lang}/horeca/cafe`}
-    image="/og-image-cafe.jpg"
-    type="website"
->
-    <ComingSoon lang={lang} background={Pic6} />
-    <!-- <BlogList lang={lang} type="cafe" client:only/> -->
+
+<Layout lang={lang} crumbs={crumbs} path="/horeca/cafe" title={pages.cafe[lang].title} description={pages.cafe[lang].description} offset={false}>
+  <ComingSoon lang={lang} background={Pic6} />
 </Layout>

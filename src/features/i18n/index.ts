@@ -1,3 +1,3 @@
 export { t, type Language } from "./translations";
-export { langPath } from "./lang";
-export { default as LanguageDropdown } from "./LanguageDropdown";
+export { langPath, LANGUAGES } from "./lang";
+export { default as LanguageDropdown } from "./LanguageDropdown.astro";

@@ -1,52 +1,15 @@
 ---
-import { Layout } from "#/app/layout";
-import type { Language } from "#/features/i18n";
+import { Layout, pages } from "#/app/layout";
+import { LANGUAGES, type Language } from "#/features/i18n";
 import { CollectionIndex } from "#/catalog/collections";
-
-const lang = Astro.params.lang as Language;
-
 export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "lv" } },
-        { params: { lang: "ru" } },
-    ];
+  return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
 
-// SEO data by language
-const seoData = {
-    lv: {
-        title: "Mēbeļu kolekcijas - Eliza-K | Sophisticated Living, BBold, Basic",
-        description:
-            "Apskatiet Eliza-K ekskluzīvās mēbeļu kolekcijas: Sophisticated Living premium līniju, moderno BBold kolekciju un praktisko Basic sēriju. Unikāls dizains un augstākā kvalitāte.",
-        keywords:
-            "mēbeļu kolekcijas, Sophisticated Living, BBold, Basic, premium mēbeles, dizaina mēbeles, ekskluzīvas mēbeles, Eliza-K kolekcijas",
-    },
-    en: {
-        title: "Furniture Collections - Eliza-K | Sophisticated Living, BBold, Basic",
-        description:
-            "Explore Eliza-K exclusive furniture collections: Sophisticated Living premium line, modern BBold collection and practical Basic series. Unique design and highest quality.",
-        keywords:
-            "furniture collections, Sophisticated Living, BBold, Basic, premium furniture, designer furniture, exclusive furniture, Eliza-K collections",
-    },
-    ru: {
-        title: "Коллекции мебели - Eliza-K | Sophisticated Living, BBold, Basic",
-        description:
-            "Изучите эксклюзивные коллекции мебели Eliza-K: премиум линию Sophisticated Living, современную коллекцию BBold и практичную серию Basic. Уникальный дизайн и высочайшее качество.",
-        keywords:
-            "коллекции мебели, Sophisticated Living, BBold, Basic, премиум мебель, дизайнерская мебель, эксклюзивная мебель, коллекции Eliza-K",
-    },
-};
-
-const currentSeo = seoData[lang] || seoData.lv;
+const lang = Astro.params.lang as Language;
 ---
-<Layout
-    offset={false}
-    title={currentSeo.title}
-    description={currentSeo.description}
-    keywords={currentSeo.keywords}
-    url={`/${lang}/collections`}
-    image="/og-image-collections.jpg"
->
-    <CollectionIndex lang={lang} />
+
+<Layout offset={false} lang={lang} path="/collections" title={pages.collections[lang].title} description={pages.collections[lang].description}>
+  <h1 class="sr-only">{pages.collections[lang].h1}</h1>
+  <CollectionIndex lang={lang} />
 </Layout>

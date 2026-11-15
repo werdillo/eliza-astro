@@ -4,17 +4,17 @@ import { ImageTile } from "#/components/image-tile";
 import { horecaItems } from "./data";
 
 export interface Props {
-    lang?: Language;
+  lang?: Language;
 }
 
 const { lang = "lv" } = Astro.props;
 ---
 
 <div class="tile-grid">
-    {
-        horecaItems.map((item) => {
-            const text = t(item.translationKey, lang);
-            return <ImageTile href={item.url} image={item.image} alt={text} label={text} external />;
-        })
-    }
+  {
+    horecaItems.map((item) => {
+      const text = t(item.translationKey, lang);
+      return <ImageTile href={item.url} image={item.image} alt={text} label={text} external />;
+    })
+  }
 </div>

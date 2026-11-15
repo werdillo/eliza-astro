@@ -1,47 +1,14 @@
 ---
-import { Layout } from "#/app/layout";
+// The home page at the root: the Latvian home, whose canonical is `/lv/`.
+import { Layout, pages } from "#/app/layout";
 import { Awards } from "#/company/awards";
 import { CollectionCards, HomeHero } from "#/catalog/home";
 
 const lang = "lv";
-
-// SEO data by language
-const seoData = {
-    lv: {
-        title: "Eliza-K - Ekskluzīva premium mēbeles Latvijā | Rīga",
-        description:
-            "Eliza-K - ekskluzīvu premium mēbeļu ražotājs Latvijā un Rīgā. Kolekcijas Sophisticated Living, BBold, Basic. Kvalitatīvas mēbeles, individuāls dizains, matračus, tekstils.",
-        keywords:
-            "premium mēbeles, ekskluzīvas mēbeles, mēbeles Latvija, mēbeles Rīga, Eliza-K, kvalitatīvas mēbeles, dizaina mēbeles, matraču, tekstils",
-    },
-    en: {
-        title: "Eliza-K - Exclusive Premium Furniture in Latvia | Riga",
-        description:
-            "Eliza-K - manufacturer of exclusive premium furniture in Latvia and Riga. Collections Sophisticated Living, BBold, Basic. Quality furniture, individual design, mattresses, textiles.",
-        keywords:
-            "premium furniture, exclusive furniture, furniture Latvia, furniture Riga, Eliza-K, quality furniture, designer furniture, mattresses, textiles",
-    },
-    ru: {
-        title: "Eliza-K - Эксклюзивная премиум мебель в Латвии | Рига",
-        description:
-            "Eliza-K - производитель эксклюзивной премиум мебели в Латвии и Риге. Коллекции Sophisticated Living, BBold, Basic. Качественная мебель, индивидуальный дизайн, матрасы, текстиль.",
-        keywords:
-            "премиум мебель, эксклюзивная мебель, мебель Латвия, мебель Рига, Eliza-K, качественная мебель, дизайнерская мебель, матрасы, текстиль",
-    },
-};
-
-const currentSeo = seoData[lang] || seoData.lv;
 ---
 
-<Layout
-    offset={false}
-    title={currentSeo.title}
-    description={currentSeo.description}
-    keywords={currentSeo.keywords}
-    url={`/${lang}`}
-    image="/og-image-home.jpg"
->
-    <HomeHero lang={lang} />
-    <CollectionCards lang={lang} />
-    <Awards />
+<Layout offset={false} lang={lang} title={pages.home[lang].title} description={pages.home[lang].description}>
+  <HomeHero lang={lang} />
+  <CollectionCards lang={lang} />
+  <Awards />
 </Layout>

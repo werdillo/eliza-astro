@@ -4,39 +4,35 @@
  * Attributes are passed as strings, exactly as Swiper reads them.
  */
 export interface Props {
-    id?: string;
-    slidesPerView?: string;
-    navigation?: string;
-    pagination?: string;
-    speed?: string;
-    loop?: string;
-    autoplayDelay?: string;
+  id?: string;
+  class?: string;
+  slidesPerView?: string;
+  navigation?: string;
+  pagination?: string;
+  paginationType?: string;
+  speed?: string;
+  loop?: string;
+  autoplayDelay?: string;
 }
 
-const {
-    id,
-    slidesPerView,
-    navigation,
-    pagination,
-    speed,
-    loop,
-    autoplayDelay,
-} = Astro.props;
+const { id, class: extra, slidesPerView, navigation, pagination, paginationType, speed, loop, autoplayDelay } = Astro.props;
 ---
 
 <swiper-container
-    id={id}
-    slides-per-view={slidesPerView}
-    navigation={navigation}
-    pagination={pagination}
-    speed={speed}
-    loop={loop}
-    autoplay-delay={autoplayDelay}
+  id={id}
+  class={extra}
+  slides-per-view={slidesPerView}
+  navigation={navigation}
+  pagination={pagination}
+  pagination-type={paginationType}
+  speed={speed}
+  loop={loop}
+  autoplay-delay={autoplayDelay}
 >
-    <slot />
+  <slot />
 </swiper-container>
 
 <script>
-    import { register } from "swiper/element/bundle";
-    register();
+  import { register } from "swiper/element/bundle";
+  register();
 </script>

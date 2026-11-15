@@ -1,4 +1,4 @@
 # shared
 
-What several catalogue boxes share: the product record type and the product type labels. Boxes in
-the catalogue import it by path.
+The product record type, the product kinds and the type labels. The catalogue's boxes import these by
+path (this folder is not a box, and no other domain may import it).

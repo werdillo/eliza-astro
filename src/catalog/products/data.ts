@@ -27,3 +27,10 @@ export const translations = {
     oldPrice: "Bija",
   },
 };
+
+/** The word that titles a page of each kind: "Produkts - Eliza-K | …", "Product - …". */
+export const kindWord = {
+  def: { lv: "Produkts", en: "Product", ru: "Продукт" },
+  sale: { lv: "Izpārdošanas produkts", en: "Sale Product", ru: "Товар со скидкой" },
+  mattress: { lv: "Matracis", en: "Mattress", ru: "Матрас" },
+} as const;

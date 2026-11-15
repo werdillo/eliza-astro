@@ -1,0 +1,58 @@
+---
+import { P3 } from "#/components/typography";
+import type { Language } from "./translations";
+
+export interface Props {
+  currentLang: Language;
+  /** The current page's path under its language, with a leading slash: `/collections/`. */
+  path: string;
+}
+
+const languages: { code: Language; title: string }[] = [
+  { code: "en", title: "English" },
+  { code: "lv", title: "Latviešu" },
+  { code: "ru", title: "Русский" },
+];
+
+const { currentLang, path } = Astro.props;
+const others = languages.filter((lang) => lang.code !== currentLang);
+---
+
+<details class="group relative inline-block" data-lang-menu>
+  <summary
+    class="inline-flex items-center list-none [&::-webkit-details-marker]:hidden [border:0] px-[var(--space-12)] py-[var(--space-8)] text-white bg-glass rounded-[var(--radius-small)] cursor-pointer [transition:all_0.2s_ease] hov:bg-glass-strong [&:focus]:[outline:none] [.group[open]_&]:bg-glass-strong"
+    aria-haspopup="menu"
+  >
+    <P3 as="span">{currentLang.toUpperCase()}</P3>
+    <svg class="w-[16px] h-[16px] ml-[var(--space-4)] opacity-[0.8] [transition:transform_0.2s_ease] [.group[open]_&]:[transform:rotate(180deg)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  </summary>
+
+  <div class="absolute right-0 mt-[var(--space-8)] w-[100px] bg-dropdown rounded-[var(--radius-small)] [box-shadow:var(--shadow-dropdown)] [border:1px_solid_var(--color-glass)] z-50 [transform-origin:top_right] [animation:slideDown_0.2s_ease-out_forwards]">
+    <div class="py-[var(--space-4)]">
+      {
+        others.map((lang) => (
+          <a href={`/${lang.code}${path}`} hreflang={lang.code} lang={lang.code} class="block px-[var(--space-12)] py-[var(--space-8)] no-underline [transition:background-color_0.2s_ease] text-white hov:bg-glass">
+            <P3 class="mb-[var(--space-2)]">{lang.title}</P3>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</details>
+
+<script>
+  // Closes the language menu on a click outside it, and on Escape (focus goes back to its summary).
+  document.querySelectorAll<HTMLDetailsElement>("[data-lang-menu]").forEach((menu) => {
+    document.addEventListener("click", (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+    });
+    document.addEventListener("keydown", (event) => {
+      if (menu.open && event.key === "Escape") {
+        menu.open = false;
+        menu.querySelector("summary")?.focus();
+      }
+    });
+  });
+</script>

@@ -1,21 +1,27 @@
 ---
 import { contacts, contactTitles } from "#/company/contacts";
+import type { Language } from "#/features/i18n";
+import { P3 } from "#/components/typography";
 import FooterColumn from "./FooterColumn.astro";
 import FooterSocial from "./FooterSocial.astro";
 
-const { lang = "lv" } = Astro.params;
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
 // Фолбек на латышский, если язык не найден
 const titles = contactTitles[lang] || contactTitles.lv;
 ---
 
-<footer class="text-left bg-layout py-[2rem] max-767:pb-[var(--space-70)] font-body text-white">
-    <div class="w-[90%] max-w-[1200px] mx-auto">
-        <div class="grid grid-cols-[1fr] gap-[2rem] min-768:grid-cols-[repeat(3,1fr)]">
-            {contacts.map((contact) => <FooterColumn title={titles[contact.key]} contact={contact} />)}
-        </div>
-        <FooterSocial />
-        <div class="mt-[2rem] pt-[1.5rem] [border-top:1px_solid_var(--color-rule)] text-center text-fs-14 max-767:mt-[1.5rem] max-767:pt-[1rem]">
-            <p>&copy; {new Date().getFullYear()} ELIZA</p>
-        </div>
+<footer class="text-left bg-layout py-[2rem] max-767:pb-[var(--space-70)] text-white">
+  <div class="w-[90%] max-w-[1200px] mx-auto">
+    <div class="grid grid-cols-[1fr] gap-[2rem] min-768:grid-cols-[repeat(3,1fr)]">
+      {contacts.map((contact) => <FooterColumn title={titles[contact.key]} contact={contact} />)}
     </div>
+    <FooterSocial />
+    <div class="mt-[2rem] pt-[1.5rem] [border-top:1px_solid_var(--color-rule)] text-center max-767:mt-[1.5rem] max-767:pt-[1rem]">
+      <P3 as="p">&copy; {new Date().getFullYear()} ELIZA</P3>
+    </div>
+  </div>
 </footer>

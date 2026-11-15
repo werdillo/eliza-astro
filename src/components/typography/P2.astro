@@ -1,0 +1,12 @@
+---
+// Text look P2. `as` is the tag (default p): the tag says the meaning, the look is always P2.
+export interface Props {
+  as?: string;
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const { as: Tag = "p", class: extra, ...rest } = Astro.props;
+---
+
+<Tag class:list={["text-p2", extra]} {...rest}><slot /></Tag>

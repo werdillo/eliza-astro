@@ -1,10 +1,4 @@
-import { client } from "#/core/pocketbase";
-import { logged } from "#/core/fetch";
-import type { Product } from "#/catalog/shared/product";
+import { getProductsOf } from "#/catalog/products";
 
-/** Every sale item; the page hides the ones marked `hide`. */
-export const getSalePage = (limit = 100) =>
-  logged("Error fetching sale page:", async () => {
-    const res = await client.collection("sale_eliza").getList<Product>(1, limit);
-    return res.items;
-  });
+/** The sale items that are shown; the hidden ones have a page but are not listed. */
+export const getSaleItems = async () => (await getProductsOf("sale")).filter((item) => !item.hide);

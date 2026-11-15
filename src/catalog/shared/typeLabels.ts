@@ -6,3 +6,6 @@ export const typeLabels: Record<Language, Record<string, string>> = {
   ru: { sofa: "Диваны", bed: "Кровати", chair: "Стуля", other: "Другое" },
   lv: { sofa: "Dīvāni", bed: "Gultas", chair: "Krēsli", other: "Cits" },
 };
+
+/** The label of a group; an unknown group shows its own name. */
+export const typeLabel = (lang: Language, type: string): string => typeLabels[lang][type.toLowerCase()] ?? type;

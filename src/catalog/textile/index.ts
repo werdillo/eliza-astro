@@ -1,1 +1,1 @@
-export { default as TextileItems } from "./TextileItems";
+export { default as TextileItems } from "./TextileItems.astro";

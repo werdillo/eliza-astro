@@ -1,0 +1,86 @@
+---
+import { H3 } from "#/components/typography";
+
+/** A link of the panel, with its href already carrying the language prefix. */
+export interface BurgerLink {
+  href: string;
+  label: string;
+}
+
+export interface Props {
+  items: BurgerLink[];
+  currentPath: string;
+}
+
+const { items, currentPath } = Astro.props;
+const line = "w-full h-[2px] bg-white [transition:all_var(--transition-speed)]";
+---
+
+<div class="z-[1000] min-1200:hidden" data-burger>
+  <button
+    type="button"
+    class="group relative flex flex-col justify-between w-[30px] h-[22px] [background:transparent] [border:none] cursor-pointer p-0 z-[1001] [&:focus]:[outline:none]"
+    aria-expanded="false"
+    aria-controls="burger-panel"
+    aria-label="Main Menu"
+    data-burger-button
+  >
+    <span class={`${line} [transform-origin:center] group-data-[open=true]:[transform:translateY(10px)_rotate(45deg)]`}></span>
+    <span class={`${line} group-data-[open=true]:opacity-0`}></span>
+    <span class={`${line} [transform-origin:center] group-data-[open=true]:[transform:translateY(-10px)_rotate(-45deg)]`}></span>
+  </button>
+
+  <nav
+    id="burger-panel"
+    aria-label="Mobile navigation"
+    class="fixed top-0 w-full h-[100vh] bg-overlay [transition:right_var(--transition-speed)] flex flex-col items-end justify-center z-[999] min-768:w-[320px] right-[-100%] data-[open=true]:right-0"
+    inert
+    data-burger-panel
+  >
+    <div class="z-[999] flex flex-col items-end pr-[var(--space-60)] w-full min-768:pr-[var(--space-40)]">
+      {
+        items.map((link) => {
+          const isActive = currentPath === link.href || currentPath.startsWith(link.href);
+          return (
+            <H3 as="a" href={link.href} class={`no-underline my-[var(--space-16)] [transition:opacity_var(--duration-fast)] hov:opacity-[0.8] ${isActive ? "text-accent" : "text-white"}`}>
+              {link.label}
+            </H3>
+          );
+        })
+      }
+    </div>
+  </nav>
+
+  <div class="fixed top-0 left-0 w-full h-full z-[99] hidden" data-burger-overlay></div>
+</div>
+
+<script>
+  // The menu: the button opens and closes the panel; a link, the dimmed background or Escape closes it.
+  // Closed, the panel is inert, so its links are not reachable by keyboard.
+  document.querySelectorAll<HTMLElement>("[data-burger]").forEach((root) => {
+    const button = root.querySelector<HTMLButtonElement>("[data-burger-button]");
+    const panel = root.querySelector<HTMLElement>("[data-burger-panel]");
+    const overlay = root.querySelector<HTMLElement>("[data-burger-overlay]");
+    if (!button || !panel || !overlay) return;
+
+    const set = (open: boolean) => {
+      button.setAttribute("aria-expanded", String(open));
+      panel.dataset.open = String(open);
+      button.dataset.open = String(open);
+      panel.inert = !open;
+      overlay.classList.toggle("hidden", !open);
+    };
+    const isOpen = () => button.getAttribute("aria-expanded") === "true";
+
+    button.addEventListener("click", () => set(!isOpen()));
+    overlay.addEventListener("click", () => set(false));
+    panel.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => set(false)));
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen()) {
+        set(false);
+        button.focus();
+      }
+    });
+    set(false);
+  });
+</script>

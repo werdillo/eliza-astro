@@ -2,8 +2,8 @@ import { client } from "#/core/pocketbase";
 import { logged } from "#/core/fetch";
 
 /** The fabric collections, in their display order. */
-export const getTextileItems = (limit = 50) =>
+export const getTextileItems = () =>
   logged("Error fetching textile items:", async () => {
-    const res = await client.collection("textile_eliza").getList(1, limit);
-    return res.items.sort((a, b) => a.order - b.order);
+    const items = await client.collection("textile_eliza").getFullList({ batch: 100 });
+    return items.sort((a, b) => a.order - b.order);
   });

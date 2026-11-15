@@ -1,38 +1,48 @@
 ---
+import type { ImageMetadata } from "astro";
 import { Header, Footer, MobileMenu } from "#/app/frame";
 import { GoogleAnalytics } from "#/features/analytics";
+import type { Language } from "#/features/i18n";
 import "#/app/styles/tokens.css";
 import "#/app/styles/base.css";
 import "#/app/styles/animations.css";
 import SeoHead from "./SeoHead.astro";
+import type { Crumb } from "./seo";
 
 export interface Props {
-    offset?: boolean;
-    title?: string;
-    description?: string;
-    keywords?: string;
-    image?: string;
-    url?: string;
-    type?: string;
+  lang: Language;
+  /** The page's path under its language (`/collections`); empty for the home page. */
+  path?: string;
+  title: string;
+  description: string;
+  /** A local photograph, or an absolute URL for the social preview. */
+  image?: ImageMetadata | string;
+  type?: "website" | "product";
+  /** Breadcrumbs below the home link: the page's own trail. */
+  crumbs?: Crumb[];
+  /** Extra schema.org nodes of the page, such as the product. */
+  nodes?: Record<string, unknown>[];
+  noindex?: boolean;
+  offset?: boolean;
 }
 
-const { lang = "lv" } = Astro.params;
-const { offset = true, type = "website", ...seo } = Astro.props as Props;
+const { lang, path = "", title, description, image, type = "website", crumbs = [], nodes = [], noindex = false, offset = true } = Astro.props;
 ---
 
+<!doctype html>
 <html lang={lang}>
-    <head>
-        <SeoHead lang={lang} type={type} {...seo} />
-        <GoogleAnalytics />
-    </head>
-    <body class="m-0 p-0 font-body">
-        <div id="main" class="flex min-h-[100vh] flex-col">
-            <Header />
-            <article class:list={["mt-[var(--header-height)] max-768:mt-[var(--header-height-mobile)] flex flex-col items-center flex-1", offset && "px-[var(--space-12)]"]}>
-                <slot />
-            </article>
-            <MobileMenu />
-            <Footer lang={lang} />
-        </div>
-    </body>
+  <head>
+    <SeoHead lang={lang} path={path} title={title} description={description} image={image} type={type} crumbs={crumbs} nodes={nodes} noindex={noindex} />
+    <GoogleAnalytics />
+  </head>
+  <body>
+    <div id="main" class="flex min-h-[100vh] flex-col">
+      <Header lang={lang} />
+      <main class:list={["mt-[var(--header-height)] max-768:mt-[var(--header-height-mobile)] flex flex-col items-center flex-1", offset && "px-[var(--space-12)]"]}>
+        <slot />
+      </main>
+      <MobileMenu lang={lang} />
+      <Footer lang={lang} />
+    </div>
+  </body>
 </html>

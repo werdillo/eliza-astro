@@ -1,0 +1,31 @@
+---
+import { productImage, productLink } from "#/catalog/products";
+import type { Language } from "#/features/i18n";
+import { LandingTile } from "#/components/landing-tile";
+import { P2 } from "#/components/typography";
+import { getMattresses } from "../api";
+
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const items = await getMattresses();
+const cards = await Promise.all(
+  items.map(async (item) => ({
+    item,
+    href: await productLink(lang, "mattress", item.id),
+    src: productImage(item, "mattress", lang) ?? "",
+  })),
+);
+---
+
+<div class="product-list">
+  {
+    cards.map(({ item, href, src }) => (
+      <LandingTile href={href} src={src} alt={item.name}>
+        <P2 as="p" class="landing-name">{item.name.toUpperCase()}</P2>
+      </LandingTile>
+    ))
+  }
+</div>

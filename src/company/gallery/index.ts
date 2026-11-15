@@ -1,1 +1,1 @@
-export { default as GalleryImages } from "./GalleryImages";
+export { default as GalleryImages } from "./GalleryImages.astro";

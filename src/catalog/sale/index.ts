@@ -1,1 +1,1 @@
-export { default as SaleGrid } from "./ui/SaleGrid.astro";
+export { default as SaleGrid } from "./SaleGrid.astro";

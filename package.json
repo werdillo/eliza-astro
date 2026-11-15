@@ -3,19 +3,29 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "bunx --bun astro dev",
-    "start": "bunx --bun astro dev",
-    "build": "bunx --bun astro build",
-    "preview": "bunx --bun astro preview",
-    "astro": "bunx --bun astro"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "typecheck": "astro check",
+    "lint": "oxlint -c configs/oxlint.config.mjs src",
+    "test": "vitest run --config configs/vitest.config.ts",
+    "check": "bun run typecheck && bun run lint && bun run test"
   },
   "dependencies": {
-    "@astrojs/sitemap": "3.7.3",
-    "@astrojs/solid-js": "^7.0.1",
-    "astro": "7.1.6",
-    "astro-compress": "^2.4.1",
-    "pocketbase": "^0.27.0",
-    "solid-js": "^1.9.14",
-    "swiper": "^14.0.7"
+    "@astrojs/sitemap": "^3.7.5",
+    "@astrojs/solid-js": "^7.1.6",
+    "astro": "^7.4.12",
+    "pocketbase": "^0.29.0",
+    "solid-js": "^1.9.19",
+    "swiper": "^14.4.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "eslint-plugin-solid": "^0.19.0",
+    "oxlint": "^1.93.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
   }
 }

@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import solidJs from "@astrojs/solid-js";
@@ -22,4 +23,15 @@ export default defineConfig({
       lastmod: new Date(),
     }),
   ],
+  vite: {
+    resolve: {
+      // `#/…` is `src/…`, the same alias tsconfig.json `paths` gives the type checker.
+      alias: [
+        {
+          find: /^#\//,
+          replacement: fileURLToPath(new URL("./src/", import.meta.url)),
+        },
+      ],
+    },
+  },
 });

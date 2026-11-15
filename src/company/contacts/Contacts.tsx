@@ -1,0 +1,118 @@
+import { For, createSignal, onMount, Show } from "solid-js";
+import type { Language } from "#/features/i18n";
+import type { RecordModel } from "#/core/pocketbase";
+import { getContacts } from "./api";
+
+interface Props {
+  lang: Language;
+}
+
+const skeletonRow = () => (
+  <div class="contacts-wrapper">
+    <div class="skeleton text title wide" />
+    <div class="skeleton text title wide" />
+    <div class="skeleton text title wide" />
+    <div class="skeleton text title wide" />
+  </div>
+);
+
+export default function Contacts(props: Props) {
+  const [items, setItems] = createSignal<RecordModel[]>([]);
+  const [loading, setLoading] = createSignal(true);
+
+  onMount(async () => {
+    try {
+      const contacts = await getContacts();
+      setItems(contacts);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error fetching contacts:", err);
+      setLoading(false);
+    }
+  });
+
+  const title: Record<string, string> = {
+    en: "Working time",
+    ru: "Время работы",
+    lv: "Darba laiks",
+  };
+
+  return (
+    <div class="contacts">
+      <Show
+        when={!loading()}
+        fallback={
+          <>
+            {skeletonRow()}
+            {skeletonRow()}
+            {skeletonRow()}
+          </>
+        }
+      >
+        <For each={items()}>
+          {(contact) => {
+            const lang = props.lang;
+            // Проверяем наличие хотя бы одного из полей с временем работы
+            const hasWorkingHours = () =>
+              Boolean(
+                contact[`weekday_${lang}`] ||
+                  contact[`break_${lang}`] ||
+                  contact[`weeken_${lang}`]
+              );
+
+            return (
+              <div class="contacts-wrapper">
+                <p class="-text xl special">{contact[`title_${lang}`]}</p>
+                <p class="-text">
+                  <a
+                    href={`https://maps.google.com/?q=${contact.address}`}
+                    target="_blank"
+                    class="contact-link"
+                  >
+                    {contact.address}
+                  </a>
+                </p>
+                <p class="-text">
+                  <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                </p>
+                <p class="-text">
+                  <For
+                    each={(contact.phone?.split(",") ?? []).map((phone: string) =>
+                      phone.trim(),
+                    )}
+                  >
+                    {(phone, index) => (
+                      <>
+                        {index() > 0 ? ", " : null}
+                        <a href={`tel:+371${phone}`}>{phone}</a>
+                      </>
+                    )}
+                  </For>
+                </p>
+
+                <Show when={hasWorkingHours()}>
+                  <p class="-text xl work-time">{title[lang]}</p>
+                  <Show when={contact[`weekday_${lang}`]}>
+                    <p class="-text">{contact[`weekday_${lang}`]}</p>
+                  </Show>
+                  <Show when={contact[`break_${lang}`]}>
+                    <p class="-text">{contact[`break_${lang}`]}</p>
+                  </Show>
+                  <Show when={contact[`weeken_${lang}`]}>
+                    <p class="-text">{contact[`weeken_${lang}`]}</p>
+                  </Show>
+                </Show>
+
+                <Show when={contact.show_event}>
+                  <p class="-text event-highlight">
+                    {contact[`event_${lang}`] || ""}
+                  </p>
+                </Show>
+              </div>
+            );
+          }}
+        </For>
+      </Show>
+    </div>
+  );
+}

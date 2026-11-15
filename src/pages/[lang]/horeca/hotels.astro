@@ -1,7 +1,8 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
-import BlogList from "../../../components/BlogList";
-import ComingSoon from "../../../components/ComingSoon.astro";
+import { Layout } from "#/app/layout";
+import type { Language } from "#/features/i18n";
+import { ComingSoon } from "#/features/coming-soon";
+import Pic6 from "#/catalog/collections/assets/Pic6.jpg";
 
 export function getStaticPaths() {
     return [
@@ -10,7 +11,7 @@ export function getStaticPaths() {
         { params: { lang: "ru" } },
     ];
 }
-const { lang } = Astro.params;
+const lang = Astro.params.lang as Language;
 
 // SEO data by language
 const seoData = {
@@ -39,7 +40,6 @@ const seoData = {
 
 const currentSeo = seoData[lang] || seoData.lv;
 ---
-
 <Layout
     offset={false}
     title={currentSeo.title}
@@ -49,6 +49,6 @@ const currentSeo = seoData[lang] || seoData.lv;
     image="/og-image-hotels.jpg"
     type="website"
 >
-    <ComingSoon lang={lang} />
+    <ComingSoon lang={lang} background={Pic6} />
     <!-- <BlogList lang={lang} type="hotels" client:only/> -->
 </Layout>

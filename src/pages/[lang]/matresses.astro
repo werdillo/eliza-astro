@@ -1,6 +1,7 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import Mat from "../../components/products/Mat";
+import { Layout } from "#/app/layout";
+import type { Language } from "#/features/i18n";
+import { Mat } from "#/catalog/mattresses";
 
 export function getStaticPaths() {
     return [
@@ -9,7 +10,7 @@ export function getStaticPaths() {
         { params: { lang: "ru" } },
     ];
 }
-const { lang } = Astro.params;
+const lang = Astro.params.lang as Language;
 
 // SEO data by language
 const seoData = {
@@ -38,7 +39,6 @@ const seoData = {
 
 const currentSeo = seoData[lang] || seoData.lv;
 ---
-
 <Layout
     title={currentSeo.title}
     description={currentSeo.description}

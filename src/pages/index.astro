@@ -1,14 +1,14 @@
 ---
 // The home page at the root: the Latvian home, whose canonical is `/lv/`.
-import { Layout, pages } from "#/app/layout";
+import { Layout } from "#/app/layout";
+import { homePage, HomeHero } from "#/site/home";
 import { Awards } from "#/site/company";
 import { CollectionCards } from "#/site/collections";
-import { HomeHero } from "#/site/home";
 
 const lang = "lv";
 ---
 
-<Layout offset={false} lang={lang} title={pages.home[lang].title} description={pages.home[lang].description}>
+<Layout offset={false} lang={lang} title={homePage[lang].title} description={homePage[lang].description}>
   <HomeHero lang={lang} />
   <CollectionCards lang={lang} />
   <Awards />

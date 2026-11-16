@@ -1,8 +1,8 @@
 ---
 // The old product URL, `/en/product?name=<path>`: sent on to `/en/product/<slug>/`.
-import { Redirect, pages } from "#/app/layout";
+import { Redirect } from "#/app/layout";
+import { mattressesPage, productRedirects } from "#/site/products";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { productRedirects } from "#/site/products";
 
 export async function getStaticPaths() {
   const map = await productRedirects("mattress");
@@ -13,4 +13,4 @@ const { lang } = Astro.params as { lang: Language };
 const { map } = Astro.props;
 ---
 
-<Redirect lang={lang} base={`/${lang}/mattress/`} fallback={`/${lang}/matresses/`} map={map} linkText={pages.mattresses[lang].h1 ?? ""} />
+<Redirect lang={lang} base={`/${lang}/mattress/`} fallback={`/${lang}/matresses/`} map={map} linkText={mattressesPage[lang].h1 ?? ""} />

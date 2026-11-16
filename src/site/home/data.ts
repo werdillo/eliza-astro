@@ -1,3 +1,4 @@
+import { copy } from "#/core/page";
 import type { ImageMetadata } from "astro";
 import type { Language } from "#/features/i18n";
 import Pic1 from "./assets/Pic1.jpg";
@@ -48,3 +49,10 @@ export const heroSlides: HeroSlide[] = [
     button: { en: "Shop Sale", lv: "Izpārdošana", ru: "Распродажа" },
   },
 ];
+
+/** The copy of the `home` page. */
+export const homePage = copy(
+    { title: "Eliza-K - Ekskluzīva premium mēbeles Latvijā | Rīga", description: "Eliza-K - ekskluzīvu premium mēbeļu ražotājs Latvijā un Rīgā. Kolekcijas Sophisticated Living, BBold, Basic. Kvalitatīvas mēbeles, individuāls dizains, matračus, tekstils.", h1: "Eliza-K" },
+    { title: "Eliza-K - Exclusive Premium Furniture in Latvia | Riga", description: "Eliza-K - manufacturer of exclusive premium furniture in Latvia and Riga. Collections Sophisticated Living, BBold, Basic. Quality furniture, individual design, mattresses, textiles.", h1: "Eliza-K" },
+    { title: "Eliza-K - Эксклюзивная премиум мебель в Латвии | Рига", description: "Eliza-K - производитель эксклюзивной премиум мебели в Латвии и Риге. Коллекции Sophisticated Living, BBold, Basic. Качественная мебель, индивидуальный дизайн, матрасы, текстиль.", h1: "Eliza-K" },
+);

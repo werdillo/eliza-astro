@@ -9,4 +9,5 @@ Slices:
 - `api/` — `contacts.ts` and `gallery.ts`, the PocketBase reads.
 - `ui/` — `Contacts`, `Awards`, `GalleryImages`.
 
-Door (`index.ts`): `Contacts`, `Awards`, `GalleryImages`, `contacts`, `contactTitles`, `ContactPoint`.
+Door (`index.ts`): `Contacts`, `Awards`, `GalleryImages`, `contacts`, `contactTitles`, `ContactPoint`,
+`contactPage`, `galleryPage`, `aboutUsPage`, `galleryNav`, `contactNav`.

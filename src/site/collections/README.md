@@ -10,4 +10,5 @@ Slices:
 - `api.ts` — the products of one brand.
 - `ui/` — `CollectionGrid`, `CollectionIndex`, `CollectionCards`.
 
-Door (`index.ts`): `CollectionGrid`, `CollectionIndex`, `CollectionCards`.
+Door (`index.ts`): `CollectionGrid`, `CollectionIndex`, `CollectionCards`, `collectionsPage`, `bboldPage`,
+`basicPage`, `mainLinks` (the box's menu entry).

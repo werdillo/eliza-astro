@@ -1,7 +1,7 @@
 ---
-import { Layout, pages } from "#/app/layout";
+import { Layout } from "#/app/layout";
+import { catalogsPage, CatalogsList } from "#/site/catalogs";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { CatalogsList } from "#/site/catalogs";
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
@@ -9,6 +9,6 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Language;
 ---
 
-<Layout lang={lang} path="/catalogs" title={pages.catalogs[lang].title} description={pages.catalogs[lang].description}>
+<Layout lang={lang} path="/catalogs" title={catalogsPage[lang].title} description={catalogsPage[lang].description}>
   <CatalogsList lang={lang} />
 </Layout>

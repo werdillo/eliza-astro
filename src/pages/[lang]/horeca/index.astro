@@ -1,7 +1,7 @@
 ---
-import { Layout, pages } from "#/app/layout";
+import { Layout } from "#/app/layout";
+import { horecaPage, SegmentsGrid } from "#/site/segments";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { SegmentsGrid } from "#/site/segments";
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
@@ -9,7 +9,7 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Language;
 ---
 
-<Layout offset={false} lang={lang} path="/horeca" title={pages.horeca[lang].title} description={pages.horeca[lang].description}>
-  <h1 class="sr-only">{pages.horeca[lang].h1}</h1>
+<Layout offset={false} lang={lang} path="/horeca" title={horecaPage[lang].title} description={horecaPage[lang].description}>
+  <h1 class="sr-only">{horecaPage[lang].h1}</h1>
   <SegmentsGrid lang={lang} />
 </Layout>

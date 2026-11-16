@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
  * A box is a folder directly inside a layer (`components/slider`, `site/products`, `core/fetch`),
  * or one of the two app boxes `app/layout` and `app/frame`. `site/shared` is not a box.
  */
-export const SRC = fileURLToPath(new URL("../..", import.meta.url));
+export const SRC = fileURLToPath(new URL("..", import.meta.url));
 
 /** Which layers each area may import (the area itself is always allowed). */
 export const LAYERS: Record<string, string[]> = {

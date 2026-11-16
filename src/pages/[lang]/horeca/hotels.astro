@@ -1,5 +1,6 @@
 ---
-import { Layout, pages } from "#/app/layout";
+import { Layout } from "#/app/layout";
+import { horecaPage, hotelsPage } from "#/site/segments";
 import { LANGUAGES, type Language } from "#/features/i18n";
 import { ComingSoon } from "#/features/coming-soon";
 export function getStaticPaths() {
@@ -7,9 +8,9 @@ export function getStaticPaths() {
 }
 
 const lang = Astro.params.lang as Language;
-const crumbs = [{ name: pages.horeca[lang].h1 ?? "", path: "/horeca" }, { name: pages.hotels[lang].h1 ?? "", path: "/horeca/hotels" }];
+const crumbs = [{ name: horecaPage[lang].h1 ?? "", path: "/horeca" }, { name: hotelsPage[lang].h1 ?? "", path: "/horeca/hotels" }];
 ---
 
-<Layout lang={lang} crumbs={crumbs} path="/horeca/hotels" title={pages.hotels[lang].title} description={pages.hotels[lang].description} offset={false}>
+<Layout lang={lang} crumbs={crumbs} path="/horeca/hotels" title={hotelsPage[lang].title} description={hotelsPage[lang].description} offset={false}>
   <ComingSoon lang={lang} />
 </Layout>

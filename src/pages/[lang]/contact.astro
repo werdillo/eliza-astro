@@ -1,7 +1,7 @@
 ---
-import { Layout, pages } from "#/app/layout";
+import { Layout } from "#/app/layout";
+import { contactPage, Contacts } from "#/site/company";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { Contacts } from "#/site/company";
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
@@ -9,7 +9,7 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Language;
 ---
 
-<Layout lang={lang} path="/contact" title={pages.contact[lang].title} description={pages.contact[lang].description}>
-  <h1 class="sr-only">{pages.contact[lang].h1}</h1>
+<Layout lang={lang} path="/contact" title={contactPage[lang].title} description={contactPage[lang].description}>
+  <h1 class="sr-only">{contactPage[lang].h1}</h1>
   <Contacts lang={lang} />
 </Layout>

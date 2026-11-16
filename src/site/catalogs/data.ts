@@ -1,3 +1,4 @@
+import { copy } from "#/core/page";
 import type { ImageMetadata } from "astro";
 import type { Language } from "#/features/i18n";
 import collection2018 from "./assets/collection_2018.jpg";
@@ -39,3 +40,10 @@ export const catalogCopy: Record<Language, { pageTitle: string; catalog: string 
   ru: { pageTitle: "Каталоги", catalog: "Каталог" },
   lv: { pageTitle: "Katalogi", catalog: "Katalogs" },
 };
+
+/** The copy of the `catalogs` page. */
+export const catalogsPage = copy(
+    { title: "Katalogi - Eliza-K | Iepriekšējo gadu katalogi", description: "Eliza-K katalogi PDF formātā: kolekcijas 2018, 2019 un 2021." },
+    { title: "Catalogue - Eliza-K | Catalogues of Previous Years", description: "Eliza-K catalogues in PDF: collections of 2018, 2019 and 2021." },
+    { title: "Каталоги - Eliza-K | Каталоги прошлых лет", description: "Каталоги Eliza-K в PDF: коллекции 2018, 2019 и 2021 годов." },
+);

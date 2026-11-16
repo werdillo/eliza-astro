@@ -1,7 +1,7 @@
 ---
-import { Layout, pages } from "#/app/layout";
+import { Layout } from "#/app/layout";
+import { collectionsPage, CollectionIndex } from "#/site/collections";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { CollectionIndex } from "#/site/collections";
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
@@ -9,7 +9,7 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Language;
 ---
 
-<Layout offset={false} lang={lang} path="/collections" title={pages.collections[lang].title} description={pages.collections[lang].description}>
-  <h1 class="sr-only">{pages.collections[lang].h1}</h1>
+<Layout offset={false} lang={lang} path="/collections" title={collectionsPage[lang].title} description={collectionsPage[lang].description}>
+  <h1 class="sr-only">{collectionsPage[lang].h1}</h1>
   <CollectionIndex lang={lang} />
 </Layout>

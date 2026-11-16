@@ -1,4 +1,4 @@
-import { defineConfig, presetWind4, type Variant } from "unocss";
+import { defineConfig, presetIcons, presetWind4, type Variant } from "unocss";
 
 /**
  * `max-600:` and `min-768:` are the old `@media (max-width: 600px)` and `@media (min-width: 768px)`,
@@ -40,10 +40,17 @@ const hov: Variant = {
 };
 
 export default defineConfig({
-  presets: [presetWind4({ preflights: { reset: false } })],
+  presets: [
+    presetWind4({ preflights: { reset: false } }),
+    // Icons are Tabler, drawn from @iconify-json/tabler; a box names one as `i-tabler-…`.
+    presetIcons({
+      scale: 1,
+      extraProperties: { display: "inline-block", "vertical-align": "middle" },
+    }),
+  ],
+  // Scan plain `.ts` too, where a box keeps its icon and menu data.
+  content: { pipeline: { include: [/\.(astro|ts)($|\?)/] } },
   variants: [viewport, hov],
-  // Scan the sources, not only the modules the server build renders.
-  content: { filesystem: ["src/**/*.{astro,ts}"] },
   theme: {
     // Colours and fonts are the tokens in src/app/styles/tokens.css.
     colors: {

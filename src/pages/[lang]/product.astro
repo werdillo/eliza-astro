@@ -1,6 +1,7 @@
 ---
 // The old product URL, `/en/product?name=<path>`: sent on to `/en/product/<slug>/`.
-import { Redirect, pages } from "#/app/layout";
+import { Redirect } from "#/app/layout";
+import { collectionsPage } from "#/site/collections";
 import { LANGUAGES, type Language } from "#/features/i18n";
 import { productRedirects } from "#/site/products";
 
@@ -13,4 +14,4 @@ const { lang } = Astro.params as { lang: Language };
 const { map } = Astro.props;
 ---
 
-<Redirect lang={lang} base={`/${lang}/product/`} fallback={`/${lang}/collections/`} map={map} linkText={pages.collections[lang].h1 ?? ""} />
+<Redirect lang={lang} base={`/${lang}/product/`} fallback={`/${lang}/collections/`} map={map} linkText={collectionsPage[lang].h1 ?? ""} />

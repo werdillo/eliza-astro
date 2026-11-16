@@ -1,16 +1,16 @@
 ---
-import { Layout, pages } from "#/app/layout";
+import { Layout } from "#/app/layout";
+import { collectionsPage, bboldPage, CollectionGrid } from "#/site/collections";
 import { LANGUAGES, type Language } from "#/features/i18n";
-import { CollectionGrid } from "#/site/collections";
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Language;
-const crumbs = [{ name: pages.collections[lang].h1 ?? "", path: "/collections" }, { name: pages.bbold[lang].h1 ?? "", path: "/collection/bbold" }];
+const crumbs = [{ name: collectionsPage[lang].h1 ?? "", path: "/collections" }, { name: bboldPage[lang].h1 ?? "", path: "/collection/bbold" }];
 ---
 
-<Layout lang={lang} crumbs={crumbs} path="/collection/bbold" title={pages.bbold[lang].title} description={pages.bbold[lang].description}>
-  <h1 class="sr-only">{pages.bbold[lang].h1}</h1>
+<Layout lang={lang} crumbs={crumbs} path="/collection/bbold" title={bboldPage[lang].title} description={bboldPage[lang].description}>
+  <h1 class="sr-only">{bboldPage[lang].h1}</h1>
   <CollectionGrid brand="bbold" lang={lang} />
 </Layout>

@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import type { Language } from "#/features/i18n";
 import { mainLinks, navLabel } from "./navigation";
 
@@ -19,11 +18,7 @@ const currentPath = Astro.url.pathname;
         const isSale = link.href === "/sale";
         const label = navLabel(link, lang);
         const state = isSale ? "text-sale hov:bg-glass" : isActive ? "text-white hov:bg-glass" : "text-glass-soft hov:text-highlight hov:bg-glass";
-        const iconState = isSale
-          ? "opacity-100 [filter:invert(27%)_sepia(51%)_saturate(2878%)_hue-rotate(346deg)_brightness(104%)_contrast(97%)]"
-          : isActive
-            ? "opacity-100"
-            : "opacity-[0.6] group-hover:opacity-100";
+        const iconState = isSale || isActive ? "opacity-100" : "opacity-[0.6] group-hover:opacity-100";
 
         return (
           <a
@@ -33,7 +28,7 @@ const currentPath = Astro.url.pathname;
             rel={link.external ? "noopener noreferrer" : undefined}
           >
             <div class="flex items-center justify-center w-[24px] h-[24px]">
-              {link.icon && <Image src={link.icon} alt="" class={`w-[20px] h-[20px] [transition:all_0.3s_ease] ${iconState}`} />}
+              {link.icon && <span class:list={[link.icon, "w-[20px] h-[20px] [transition:all_0.3s_ease]", iconState]} aria-hidden="true" />}
             </div>
             <span class:list={["text-p3", isSale && "text-sale"]}>{label}</span>
           </a>

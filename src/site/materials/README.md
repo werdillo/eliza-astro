@@ -10,4 +10,4 @@ Slices:
 - `api.ts` — the fabric collections.
 - `ui/` — `MaterialsList`, `TextileItems`.
 
-Door (`index.ts`): `MaterialsList`, `TextileItems`.
+Door (`index.ts`): `MaterialsList`, `TextileItems`, `textilePage`, `componentsPage`, `mainLinks`.

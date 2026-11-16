@@ -34,16 +34,16 @@ src/
     home/          home page hero
     shared/        product record type, type labels and collection photographs (imported by path)
   app/           composition root
-    layout/        document shell, SEO head and schema, page copy, Redirect
+    layout/        document shell, SEO head and schema, Redirect
     frame/         header, footer, mobile tab bar, navigation
     styles/        tokens.css, base.css, animations.css
-    tests/         layer, box and typography checks
+  tests/         the structure checks (layers, boxes, doors)
   pages/         Astro routes, thin: they compose the boxes above
 ```
 
 Layers import only the layers to their left, and a box is reached through its `index.ts` door. The rules
-are checked by `src/app/tests`. Text sizes, weights and line heights are set only by
-`src/components/typography` (checked by `src/app/tests/typography.test.ts`).
+are checked by `src/tests`. Text sizes, weights and line heights are set only by
+`src/components/typography` (checked by `src/components/typography/tests/typography.test.ts`).
 
 ## Content and deploys
 
@@ -106,8 +106,9 @@ build host; the browser needs no PocketBase access (no runtime fetches).
 ## Stack
 
 - Astro 7.4.12 (static output), `@astrojs/sitemap` 3.7.5 with the three locales.
-- UnoCSS 66.13.0 with `@unocss/astro` 66.13.0 (`presetWind4`, its reset off). Layout is utility classes on
-  the markup; `uno.config.ts` holds the viewport variants, the `hov:` variant and the layout shortcuts.
+- UnoCSS 66.13.0 with `@unocss/astro` 66.13.0 (`presetWind4`, its reset off; `presetIcons` with
+  `@iconify-json/tabler`). Layout is utility classes on the markup; `uno.config.ts` holds the viewport
+  variants, the `hov:` variant and the layout shortcuts.
   Text styles are plain CSS in `src/components/typography/typography.css` (a bare `<h2>` or `<p>` must
   already look right, which a utility cannot give).
 - Swiper 14.4.0 (`swiper/element/bundle`) for the sliders; the only shipped JavaScript file besides small

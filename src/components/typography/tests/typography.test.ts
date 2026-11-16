@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { expect, test } from "vitest";
-import { SRC } from "./layers";
+import { SRC } from "../../../tests/layers";
 
 const ROOT = join(SRC, "..");
 

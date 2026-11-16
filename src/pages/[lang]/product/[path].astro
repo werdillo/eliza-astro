@@ -1,6 +1,7 @@
 ---
-import { Layout, pageUrl, pages } from "#/app/layout";
-import { ProductPage, PRODUCT_SECTION, productImage, productMeta, productPages, productSchema } from "#/site/products";
+import { Layout, pageUrl } from "#/app/layout";
+import { collectionsPage } from "#/site/collections";
+import { productPage, ProductPage, PRODUCT_SECTION, productImage, productMeta, productPages, productSchema } from "#/site/products";
 import type { Language } from "#/features/i18n";
 
 export async function getStaticPaths() {
@@ -10,9 +11,9 @@ export async function getStaticPaths() {
 const { item, kind, lang } = Astro.props;
 const path = `/${PRODUCT_SECTION[kind]}/${item.slug}`;
 const image = productImage(item, kind, lang);
-const meta = productMeta(item, kind, lang, pages.product[lang as Language].description);
+const meta = productMeta(item, kind, lang, productPage[lang as Language].description);
 const crumbs = [
-  { name: pages.collections[lang as Language].h1 ?? "", path: "/collections" },
+  { name: collectionsPage[lang as Language].h1 ?? "", path: "/collections" },
   { name: item.name, path },
 ];
 ---

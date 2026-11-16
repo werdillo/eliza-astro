@@ -17,4 +17,5 @@ Slices:
 - `assets/fabrics/` — the three fabric photographs the product page shows.
 
 Door (`index.ts`): `ProductPage`, `SaleGrid`, `MatGrid`, `productPages`, `productRedirects`,
-`productLink`, `productImage`, `productMeta`, `productSchema`, `getProductsOf`, `PRODUCT_SECTION`.
+`productLink`, `productImage`, `productMeta`, `productSchema`, `getProductsOf`, `PRODUCT_SECTION`,
+`salePage`, `mattressesPage`, `productPage`, `saleProductPage`, `mattressPage`, `mainLinks`.

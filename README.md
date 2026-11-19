@@ -106,6 +106,11 @@ bun run check      # astro check, oxlint and the structure and typography tests
 Configuration: `PUBLIC_POCKETBASE_URL` in `.env.local` (see `.env.dist`). PocketBase must allow the
 build host; the browser needs no PocketBase access (no runtime fetches).
 
+Images: every photo goes through `astro:assets` at build. The PocketBase photos (the host of
+`PUBLIC_POCKETBASE_URL` is allowed in `image.domains`) are downloaded, cropped to the aspect the CSS
+shows, and served from the site as WebP with a `srcset`; Open Graph keeps the original URL. Downloads
+are cached in `node_modules/.astro`, so later builds only fetch new photos.
+
 Optional: `PUBLIC_GOOGLE_SITE_VERIFICATION` and `PUBLIC_YANDEX_VERIFICATION` hold the Search Console and
 Yandex Webmaster verification tokens. Each renders its `<meta>` tag only when set.
 

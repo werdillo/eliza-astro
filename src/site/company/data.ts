@@ -1,3 +1,4 @@
+import type { ImageMetadata } from "astro";
 import { copy } from "#/core/page";
 export interface ContactPoint {
   key: string;
@@ -53,8 +54,12 @@ export const workingHoursTitle: Record<string, string> = {
   lv: "Darba laiks",
 };
 
-/** The award certificates in `public/awards`, newest first. */
-export const awards = Array.from({ length: 13 }, (_, index) => `award_${13 - index}.jpg`);
+/** The award certificates in `assets/awards`, newest first (`award_13` is the newest). */
+const awardFiles = import.meta.glob<ImageMetadata>("./assets/awards/award_*.jpg", { eager: true, import: "default" });
+const awardNumber = (path: string) => Number(path.match(/award_(\d+)/)?.[1] ?? 0);
+export const awards: ImageMetadata[] = Object.keys(awardFiles)
+  .sort((a, b) => awardNumber(b) - awardNumber(a))
+  .map((path) => awardFiles[path]!);
 
 /** The copy of the `contact` page. */
 export const contactPage = copy(

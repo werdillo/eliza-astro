@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { fileUrl } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
 import { H2, H3 } from "#/components/typography";
@@ -22,7 +23,7 @@ const photos = [1, 2, 3, 4];
           item[`image${n}`] ? (
             <div class="textile-item">
               <H3 as="span" class="textile-label">{item[`text${n}`]}</H3>
-              <img class="textile-img" src={fileUrl(item, item[`image${n}`])} alt={item.name} width="1100" height="1100" loading="lazy" />
+              <Image class="textile-img" src={fileUrl(item, item[`image${n}`])} alt={item.name} width={800} height={800} fit="cover" widths={[400, 800]} sizes="(max-width: 600px) 50vw, (max-width: 1200px) 33vw, 25vw" format="webp" quality={78} />
             </div>
           ) : null,
         )}

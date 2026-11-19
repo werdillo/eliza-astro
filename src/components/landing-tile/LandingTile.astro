@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 /** A picture on a light card with its caption below, linking somewhere. */
 export interface Props {
   href: string;
@@ -11,7 +13,7 @@ const { href, src, alt } = Astro.props;
 
 <a href={href} class="block no-underline">
   <div class="landing">
-    <img src={src} alt={alt} width="1600" height="900" loading="lazy" class="landing-img" />
+    <Image src={src} alt={alt} width={1200} height={675} fit="cover" position="top" widths={[400, 800, 1200]} sizes="(max-width: 768px) 100vw, 25vw" format="webp" quality={78} class="landing-img" />
     <slot />
   </div>
 </a>

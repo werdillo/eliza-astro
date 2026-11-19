@@ -45,9 +45,24 @@ export const productSchema = (args: {
 
 /** The title and the description of a product page: the record's own text, or the kind's generic copy. */
 export const productMeta = (item: Product, kind: ProductKind, lang: Language, fallback: string) => {
-  const text = plainDescription(item, lang);
+  const text = plainDescription(item, lang).replace(/[\s.]+$/, "");
+  // A short record text (often only the dimensions, the same in every language) is not a description:
+  // it goes after the name, followed by the kind's generic copy in the page's language.
+  const full = text.length >= MIN_DESCRIPTION ? text : `${item.name}${text ? ` (${text})` : ""}. ${fallback}`;
   return {
     title: `${item.name} - Eliza-K | ${kindWord[kind][lang]}`,
-    description: text ? (text.length > 155 ? `${text.slice(0, 152).trimEnd()}…` : text) : `${item.name}. ${fallback}`,
+    description: clip(full, MAX_DESCRIPTION),
   };
+};
+
+/** The shortest record text used alone as a meta description, and the longest description search engines show. */
+const MIN_DESCRIPTION = 70;
+const MAX_DESCRIPTION = 160;
+
+/** The text cut to `max` characters at a word boundary, with an ellipsis when cut. */
+const clip = (text: string, max: number): string => {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  const space = cut.lastIndexOf(" ");
+  return `${(space > max * 0.6 ? cut.slice(0, space) : cut).replace(/[\s,.;:–-]+$/, "")}…`;
 };

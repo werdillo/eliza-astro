@@ -6,6 +6,7 @@ of completed projects. The contacts and the gallery are read from PocketBase at 
 Slices:
 
 - `data.ts` — the static addresses, the footer headings, the working-hours title and the award list.
+- `assets/awards/` — the award certificates (`award_N.jpg`, the highest number first); the build turns them into WebP.
 - `api/` — `contacts.ts` and `gallery.ts`, the PocketBase reads.
 - `ui/` — `Contacts`, `Awards`, `GalleryImages`.
 

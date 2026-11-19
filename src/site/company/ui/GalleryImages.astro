@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { fileUrl } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
 import { getGallery } from "../api";
@@ -15,7 +16,7 @@ const images: string[] = gallery?.image ?? [];
   {
     gallery &&
       images.map((image, index) => (
-      <img src={fileUrl(gallery, image)} alt={`${label[lang]} ${index + 1}`} width="1600" height="1000" loading="lazy" class="gallery-img" />
+      <Image src={fileUrl(gallery, image)} alt={`${label[lang]} ${index + 1}`} width={960} height={600} fit="cover" widths={[480, 960]} sizes="(max-width: 600px) 50vw, (max-width: 1200px) 33vw, 25vw" format="webp" quality={78} class="gallery-img" />
     ))
   }
 </div>

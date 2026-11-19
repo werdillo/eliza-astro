@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { fileUrl } from "#/core/pocketbase";
 import type { Product, ProductKind } from "#/site/shared/product";
 import { Slider } from "#/components/slider";
@@ -11,6 +12,8 @@ export interface Props {
 const { item, kind } = Astro.props;
 const images = item.images ?? [];
 const single = kind === "mattress" ? item.image : images[0];
+// The slider is 65vw wide on desktop and full width below 1200px; the photo is cropped to 16:9 as the CSS shows it.
+const photo = { width: 1600, height: 900, fit: "cover" as const, widths: [640, 1024, 1600], sizes: "(max-width: 1200px) 100vw, 65vw", format: "webp" as const, quality: 80 };
 ---
 
 {
@@ -27,11 +30,11 @@ const single = kind === "mattress" ? item.image : images[0];
     >
       {images.map((image, index) => (
         <swiper-slide>
-          <img src={fileUrl(item, image)} alt={item.name} width="1600" height="900" class="product-slider" loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : undefined} />
+          <Image src={fileUrl(item, image)} alt={item.name} {...photo} class="product-slider" loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : undefined} />
         </swiper-slide>
       ))}
     </Slider>
   ) : (
-    <img src={fileUrl(item, single)} alt={item.name} width="1600" height="900" class="product-slider" fetchpriority="high" />
+    <Image src={fileUrl(item, single)} alt={item.name} {...photo} class="product-slider" loading="eager" fetchpriority="high" />
   )
 }

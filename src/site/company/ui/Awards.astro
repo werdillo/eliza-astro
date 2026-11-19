@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { Slider } from "#/components/slider";
 import type { Language } from "#/features/i18n";
 import { awards } from "../data";
@@ -13,7 +14,7 @@ const label: Record<Language, string> = { lv: "Eliza-K apbalvojums", en: "Eliza-
             awards.map((image) => (
                 <swiper-slide>
                     <div class="flex justify-center">
-                        <img src={`/awards/${image}`} alt={label[lang]} loading="lazy" class="max-w-[160px] h-auto w-full max-768:w-full max-768:max-w-[110px]" />
+                        <Image src={image} alt={label[lang]} width={320} widths={[160, 320]} sizes="(max-width: 768px) 110px, 160px" format="webp" quality={80} class="max-w-[160px] h-auto w-full max-768:w-full max-768:max-w-[110px]" />
                     </div>
                 </swiper-slide>
             ))

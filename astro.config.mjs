@@ -5,7 +5,7 @@ import UnoCSS from "@unocss/astro";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://eliza-k.lv",
+  site: "https://eliza-mebeles.lv",
   integrations: [
     UnoCSS({ injectReset: false }),
     sitemap({
@@ -17,10 +17,13 @@ export default defineConfig({
           ru: "ru",
         },
       },
-      filter: (page) => !page.includes("/admin") && !page.includes("/test"),
+      // Out of the sitemap: the noindex pages — the old `?name=` redirects and the "coming soon" placeholders.
+      filter: (page) =>
+        !page.includes("/admin") &&
+        !page.includes("/test") &&
+        !/\/(lv|en|ru)\/(product|mattress|sale-product|about-us|horeca\/(hotels|cafe|projects))\/$/.test(page),
       changefreq: "weekly",
       priority: 0.7,
-      lastmod: new Date(),
     }),
   ],
   vite: {

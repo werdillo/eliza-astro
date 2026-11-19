@@ -14,9 +14,11 @@ export interface Props {
   crumbs: Crumb[];
   nodes: Record<string, unknown>[];
   noindex: boolean;
+  /** An error page served for any URL: it has no address of its own, so it gets no canonical, alternates, og:url or schema. */
+  error?: boolean;
 }
 
-const { lang, path, title, description, image, type, crumbs, nodes, noindex } = Astro.props;
+const { lang, path, title, description, image, type, crumbs, nodes, noindex, error = false } = Astro.props;
 
 const url = pageUrl(lang, path);
 const home = { name: homeLabel[lang], url: pageUrl(lang) };
@@ -25,22 +27,27 @@ const picture = typeof image === "string" ? { src: image, width: undefined, heig
 const absolute = (src: string) => (src.startsWith("http") ? src : `${siteUrl}${src}`);
 const imageUrl = absolute(picture.src);
 const schema = JSON.stringify(structuredData({ title, description, url, lang, crumbs: trail, nodes }));
+const hreflangs = error ? [] : alternates(path);
+const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const yandexVerification = import.meta.env.PUBLIC_YANDEX_VERIFICATION;
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 <meta name="author" content="Eliza-K" />
+{googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+{yandexVerification && <meta name="yandex-verification" content={yandexVerification} />}
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" href="/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="/logo512.png" />
-<link rel="canonical" href={url} />
+{!error && <link rel="canonical" href={url} />}
 
 <title>{title}</title>
 <meta name="description" content={description} />
 
 <meta property="og:type" content={type} />
-<meta property="og:url" content={url} />
+{!error && <meta property="og:url" content={url} />}
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageUrl} />
@@ -49,20 +56,20 @@ const schema = JSON.stringify(structuredData({ title, description, url, lang, cr
 <meta property="og:site_name" content="Eliza-K" />
 <meta property="og:locale" content={ogLocale(lang)} />
 {
-  alternates(path)
+  hreflangs
     .filter((alt) => alt.lang !== "x-default" && alt.lang !== lang)
     .map((alt) => <meta property="og:locale:alternate" content={ogLocale(alt.lang)} />)
 }
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content={url} />
+{!error && <meta name="twitter:url" content={url} />}
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl} />
 
-{alternates(path).map((alt) => <link rel="alternate" hreflang={alt.lang} href={alt.href} />)}
+{hreflangs.map((alt) => <link rel="alternate" hreflang={alt.lang} href={alt.href} />)}
 
-<script type="application/ld+json" set:html={schema} />
+{!error && <script type="application/ld+json" set:html={schema} />}
 
 <meta name="format-detection" content="telephone=no" />
 <meta name="theme-color" content="#ffffff" />

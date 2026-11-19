@@ -37,7 +37,7 @@ const copy: Record<Language, { porolonTitle: string; porolonText: string; textil
 export const materialCards = (lang: Language): MaterialCard[] => {
   const t = copy[lang] ?? copy.lv;
   return [
-    { image: porolon, title: t.porolonTitle, text: t.porolonText, href: "http://porolons.lv/", external: true },
+    { image: porolon, title: t.porolonTitle, text: t.porolonText, href: "https://porolons.lv/", external: true },
     { image: textile, title: t.textileTitle, text: t.textileText, href: `/${lang}/textile`, external: false },
   ];
 };

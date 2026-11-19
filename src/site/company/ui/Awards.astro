@@ -1,6 +1,10 @@
 ---
 import { Slider } from "#/components/slider";
+import type { Language } from "#/features/i18n";
 import { awards } from "../data";
+
+const { lang } = Astro.props as { lang: Language };
+const label: Record<Language, string> = { lv: "Eliza-K apbalvojums", en: "Eliza-K award", ru: "Награда Eliza-K" };
 ---
 
 <div class="flex items-center justify-center w-full my-[var(--space-30)] gap-[var(--space-40)_var(--space-20)] flex-wrap max-768:p-0">
@@ -9,7 +13,7 @@ import { awards } from "../data";
             awards.map((image) => (
                 <swiper-slide>
                     <div class="flex justify-center">
-                        <img src={`/awards/${image}`} alt="Award certificate" loading="lazy" class="max-w-[160px] h-auto w-full max-768:w-full max-768:max-w-[110px]" />
+                        <img src={`/awards/${image}`} alt={label[lang]} loading="lazy" class="max-w-[160px] h-auto w-full max-768:w-full max-768:max-w-[110px]" />
                     </div>
                 </swiper-slide>
             ))

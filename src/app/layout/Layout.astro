@@ -23,21 +23,23 @@ export interface Props {
   /** Extra schema.org nodes of the page, such as the product. */
   nodes?: Record<string, unknown>[];
   noindex?: boolean;
+  /** The 404 page: served for any URL, so it has no canonical, alternates or schema. */
+  error?: boolean;
   offset?: boolean;
 }
 
-const { lang, path = "", title, description, image, type = "website", crumbs = [], nodes = [], noindex = false, offset = true } = Astro.props;
+const { lang, path = "", title, description, image, type = "website", crumbs = [], nodes = [], noindex = false, error = false, offset = true } = Astro.props;
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
-    <SeoHead lang={lang} path={path} title={title} description={description} image={image} type={type} crumbs={crumbs} nodes={nodes} noindex={noindex} />
+    <SeoHead lang={lang} path={path} title={title} description={description} image={image} type={type} crumbs={crumbs} nodes={nodes} noindex={noindex} error={error} />
     <GoogleAnalytics />
   </head>
   <body>
     <div id="main" class="flex min-h-[100vh] flex-col">
-      <Header lang={lang} />
+      <Header lang={lang} error={error} />
       <main class:list={["mt-[var(--header-height)] max-768:mt-[var(--header-height-mobile)] flex flex-col items-center flex-1", offset && "px-[var(--space-12)]"]}>
         <slot />
       </main>

@@ -11,6 +11,6 @@ const lang = Astro.params.lang as Language;
 const crumbs = [{ name: horecaPage[lang].h1 ?? "", path: "/horeca" }, { name: projectsPage[lang].h1 ?? "", path: "/horeca/projects" }];
 ---
 
-<Layout lang={lang} crumbs={crumbs} path="/horeca/projects" title={projectsPage[lang].title} description={projectsPage[lang].description} offset={false}>
+<Layout noindex lang={lang} crumbs={crumbs} path="/horeca/projects" title={projectsPage[lang].title} description={projectsPage[lang].description} offset={false}>
   <ComingSoon lang={lang} />
 </Layout>

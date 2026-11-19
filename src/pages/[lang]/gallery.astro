@@ -11,5 +11,5 @@ const lang = Astro.params.lang as Language;
 
 <Layout lang={lang} path="/gallery" title={galleryPage[lang].title} description={galleryPage[lang].description}>
   <h1 class="sr-only">{galleryPage[lang].h1}</h1>
-  <GalleryImages />
+  <GalleryImages lang={lang} />
 </Layout>

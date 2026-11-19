@@ -8,12 +8,14 @@ import { mainLinks, navLabel, secondaryLinks } from "./navigation";
 
 export interface Props {
   lang: Language;
+  /** The 404 page: its own path means nothing in another language, so the switcher goes to the home pages. */
+  error?: boolean;
 }
 
-const { lang } = Astro.props;
+const { lang, error = false } = Astro.props;
 const currentPath = Astro.url.pathname;
 /** The page's path under its language, for the language switcher: `/collections/`. */
-const pathUnderLang = currentPath.replace(/^\/(lv|en|ru)(?=\/|$)/, "") || "/";
+const pathUnderLang = error ? "/" : currentPath.replace(/^\/(lv|en|ru)(?=\/|$)/, "") || "/";
 
 const burgerLinks: BurgerLink[] = secondaryLinks.map((link) => ({
   href: link.href.startsWith("http") ? link.href : langPath(lang, link.href),

@@ -26,14 +26,21 @@ export interface Crumb {
 /** The name of the home link in breadcrumbs, by language. */
 export const homeLabel: Record<Language, string> = { lv: "Sākumlapa", en: "Home", ru: "Главная" };
 
+/** The company's one-line description in schema.org, by language. */
+export const organizationDescription: Record<Language, string> = {
+  lv: "Ekskluzīvu premium mēbeļu ražotājs Latvijā",
+  en: "Manufacturer of exclusive premium furniture in Latvia",
+  ru: "Производитель эксклюзивной премиум мебели в Латвии",
+};
+
 /** The company as schema.org: the Organization node every page refers to, with the addresses of the footer. */
-export const organizationNode = () => ({
+export const organizationNode = (lang: Language) => ({
   "@type": "Organization",
   "@id": `${siteUrl}/#organization`,
   name: "Eliza-K",
   url: siteUrl,
   logo: { "@type": "ImageObject", url: `${siteUrl}/logo512.png` },
-  description: "Производитель эксклюзивной премиум мебели в Латвии",
+  description: organizationDescription[lang],
   email: contacts[0].mail,
   telephone: `+371${contacts[0].phone[0]}`,
   address: {
@@ -58,13 +65,13 @@ export const structuredData = (page: {
   title: string;
   description: string;
   url: string;
-  lang: string;
+  lang: Language;
   crumbs?: { name: string; url: string }[];
   nodes?: Record<string, unknown>[];
 }) => ({
   "@context": "https://schema.org",
   "@graph": [
-    organizationNode(),
+    organizationNode(page.lang),
     {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,

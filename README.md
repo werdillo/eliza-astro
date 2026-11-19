@@ -87,6 +87,9 @@ Record changes take effect after the rebuild. The product URL of a record is its
 The slug is the record's `path`, lower case with accents folded and dashes between words. When two records
 of one collection share a slug, both get their record id appended.
 
+Any unknown URL gets the 404 page (`src/pages/404.astro`, noindex, no canonical), with links to the three
+home pages and the collections.
+
 Old `?name=` links (`/{lang}/product?name=…`, `/{lang}/sale-product?name=…`, `/{lang}/mattress?name=…`)
 are redirect pages (`noindex`): they send the visitor to the new URL. A name with no page (a hidden sale
 item, an unknown name) goes to the listing.
@@ -102,6 +105,9 @@ bun run check      # astro check, oxlint and the structure and typography tests
 
 Configuration: `PUBLIC_POCKETBASE_URL` in `.env.local` (see `.env.dist`). PocketBase must allow the
 build host; the browser needs no PocketBase access (no runtime fetches).
+
+Optional: `PUBLIC_GOOGLE_SITE_VERIFICATION` and `PUBLIC_YANDEX_VERIFICATION` hold the Search Console and
+Yandex Webmaster verification tokens. Each renders its `<meta>` tag only when set.
 
 ## Stack
 

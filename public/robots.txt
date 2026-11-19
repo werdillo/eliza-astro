@@ -7,4 +7,4 @@ Disallow: /src/
 Disallow: /dist/
 
 # The sitemap index lists every page in every language.
-Sitemap: https://eliza-k.lv/sitemap-index.xml
+Sitemap: https://eliza-mebeles.lv/sitemap-index.xml

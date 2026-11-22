@@ -1,9 +1,10 @@
 ---
+import { Image } from "astro:assets";
 import { productImage, productLink } from "../../routes";
 import type { Language } from "#/features/i18n";
-import { LandingTile } from "#/components/landing-tile";
-import { P2 } from "#/components/typography";
+import { H2, H4, P1 } from "#/components/typography";
 import { getMattresses } from "../../api";
+import { mattressFields, mattressesPage } from "../../data";
 
 export interface Props {
   lang: Language;
@@ -12,20 +13,44 @@ export interface Props {
 const { lang } = Astro.props;
 const items = await getMattresses();
 const cards = await Promise.all(
-  items.map(async (item) => ({
-    item,
-    href: await productLink(lang, "mattress", item.id),
-    src: productImage(item, "mattress", lang) ?? "",
-  })),
+  [...items]
+    .sort((a, b) => (a.index || 0) - (b.index || 0))
+    .map(async (item) => ({
+      item,
+      href: await productLink(lang, "mattress", item.id),
+      src: productImage(item, "mattress", lang) ?? "",
+    })),
 );
+
+// The known construction types first; a type added in the CMS later still gets listed, after them.
+const fields = [...new Set([...Object.keys(mattressFields), ...cards.map(({ item }) => String(item.field ?? ""))])];
+const groups = fields
+  .map((field) => ({
+    label: mattressFields[field]?.[lang],
+    cards: cards.filter(({ item }) => String(item.field ?? "") === field),
+  }))
+  .filter((group) => group.cards.length > 0);
 ---
 
-<div class="product-list">
+<div class="mat-list">
+  <H2 as="h1" class="m-0">{mattressesPage[lang].h1}</H2>
   {
-    cards.map(({ item, href, src }) => (
-      <LandingTile href={href} src={src} alt={item.name}>
-        <P2 as="p" class="landing-name">{item.name.toUpperCase()}</P2>
-      </LandingTile>
+    groups.map((group) => (
+      <section>
+        {group.label && <H4 as="h2" class="mat-group-title">{group.label}</H4>}
+        <div class="mat-grid">
+          {group.cards.map(({ item, href, src }) => (
+            <a href={href} class="mat-card">
+              {/* The poster's top holds the name, height and cutaway; its lower part is small print for the mattress page. */}
+              <Image src={src} alt={item.name} width={900} height={810} fit="cover" position="top" widths={[450, 900]} sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw" format="webp" quality={80} class="mat-card-img" />
+              <span class="mat-card-footer">
+                <P1 as="span">{item.name}</P1>
+                <span class="i-tabler-arrow-right shrink-0" aria-hidden="true" />
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
     ))
   }
 </div>

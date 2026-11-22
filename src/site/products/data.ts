@@ -29,6 +29,13 @@ export const translations = {
   },
 };
 
+/** The mattress construction types (the record's `field`), in the order the list shows them. */
+export const mattressFields: Record<string, Record<"lv" | "en" | "ru", string>> = {
+  pocket: { lv: "Matrači ar Pocket atsperēm", en: "Pocket spring mattresses", ru: "Матрасы с пружинами Pocket" },
+  bonnel: { lv: "Matrači ar Bonnel atsperēm", en: "Bonnel spring mattresses", ru: "Матрасы с пружинами Bonnel" },
+  stylex: { lv: "Bezatsperu matrači", en: "Springless mattresses", ru: "Беспружинные матрасы" },
+};
+
 /** The word that titles a page of each kind: "Produkts - Eliza-K | …", "Product - …". */
 export const kindWord = {
   def: { lv: "Produkts", en: "Product", ru: "Продукт" },

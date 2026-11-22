@@ -12,10 +12,10 @@ Slices:
   record's picture.
 - `schema.ts` — the meta description, Product JSON-LD and the page title and description.
 - `data.ts` — the page words by language and the word that titles each kind.
-- `ui/product/` — `ProductPage` and its parts.
+- `ui/product/` — `ProductPage` and its parts, and `MattressPage`, the mattress's own layout.
 - `ui/listings/` — `SaleGrid`, `MatGrid`.
 - `assets/fabrics/` — the three fabric photographs the product page shows.
 
-Door (`index.ts`): `ProductPage`, `SaleGrid`, `MatGrid`, `productPages`, `productRedirects`,
+Door (`index.ts`): `ProductPage`, `MattressPage`, `SaleGrid`, `MatGrid`, `productPages`, `productRedirects`,
 `productLink`, `productImage`, `productMeta`, `productSchema`, `getProductsOf`, `PRODUCT_SECTION`,
 `salePage`, `mattressesPage`, `productPage`, `saleProductPage`, `mattressPage`, `mainLinks`.

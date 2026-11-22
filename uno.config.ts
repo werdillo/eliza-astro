@@ -94,6 +94,7 @@ export default defineConfig({
     "product-item": "grid mb-[var(--space-4)] grid-cols-[65%_minmax(0,1fr)] gap-[var(--space-20)] w-[100vw] max-1200:grid-cols-[minmax(0,1fr)]",
     "product-swiper": "max-w-[65vw] max-1200:max-w-[100vw]",
     "product-slider": "w-full h-auto aspect-[16/9] object-cover",
+    "product-slider-whole": "block w-full h-auto aspect-[16/9] object-contain max-768:aspect-[1/1]",
     "product-right": "flex flex-col justify-end gap-[var(--space-16)] px-[var(--space-50)] max-600:px-[var(--space-8)]",
     "product-price-row": "flex items-center gap-[var(--space-12)]",
     "product-price": "text-sale",
@@ -103,9 +104,27 @@ export default defineConfig({
     "product-card": "flex flex-col box-border gap-[var(--space-20)] min-h-[300px] py-[var(--space-30)] px-[var(--space-50)] max-600:p-[var(--space-8)]",
     "product-textile": "grid grid-cols-[1fr_1fr_1fr] gap-[var(--space-20)]",
 
+    // Mattress list and mattress page.
+    "mat-list": "w-full max-w-[1320px] py-[var(--space-30)] flex flex-col gap-[var(--space-30)]",
+    "mat-group-title": "mt-0 mb-[var(--space-16)]",
+    "mat-grid": "grid grid-cols-[repeat(4,minmax(0,1fr))] gap-[var(--space-20)] max-1200:grid-cols-[repeat(2,minmax(0,1fr))] max-600:grid-cols-[minmax(0,1fr)]",
+    "mat-card": "flex flex-col bg-white text-ink-deep border border-solid border-photo [transition:var(--duration-base)] hov:[box-shadow:var(--shadow-tile-hover)]",
+    "mat-card-img": "block w-full h-auto aspect-[10/9] object-cover object-top",
+    "mat-card-footer": "flex items-center justify-between gap-[var(--space-12)] p-[var(--space-16)] border-t border-t-solid border-t-photo",
+    "mat-page": "w-full max-w-[1320px] py-[var(--space-30)] grid grid-cols-[minmax(0,3fr)_minmax(300px,2fr)] items-start gap-[var(--space-50)] max-900:grid-cols-[minmax(0,1fr)] max-900:gap-[var(--space-20)] max-900:py-[var(--space-16)]",
+    "mat-poster": "block w-full h-auto border border-solid border-photo box-border",
+    // Desktop: the side column fills the screen, the name and buttons at its bottom. Below 900px the same block is a
+    // panel in the poster's cell, stuck over it above the 48px tab bar; the poster's padding keeps its end uncovered.
+    "mat-poster-box": "min-w-0 max-900:row-start-1 max-900:col-start-1 max-900:pb-[224px] max-767:pb-[192px]",
+    "mat-aside": "sticky top-[calc(var(--header-height)+var(--space-30))] box-border h-[calc(100vh-var(--header-height)-var(--space-60))] flex flex-col justify-end gap-[var(--space-16)] max-900:h-auto max-900:top-auto max-900:row-start-1 max-900:col-start-1 max-900:self-end max-900:z-10 max-900:bottom-[var(--space-8)] max-767:bottom-[calc(48px+var(--space-8))] max-900:gap-[var(--space-8)] max-900:p-[var(--space-12)] max-900:bg-white max-900:[box-shadow:var(--shadow-tile-hover)]",
+    "mat-actions": "flex flex-col gap-[var(--space-12)] max-900:grid max-900:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] max-900:gap-[var(--space-8)]",
+    "mat-action": "box-border flex items-center justify-center w-full h-[52px] px-[var(--space-20)] no-underline cursor-pointer max-900:h-[44px] max-900:px-[var(--space-8)]",
+    "mat-action-primary": "bg-button text-white max-900:col-span-2",
+    "mat-action-outline": "bg-white border border-solid border-button text-ink",
+
     // Fabric pages.
-    "textile-title": "inline-block mb-[var(--space-30)] mt-[var(--space-40)] max-550:mb-[var(--space-16)] max-550:mt-[var(--space-30)]",
-    "textile-grid": "grid grid-cols-[1fr_1fr_1fr_1fr] gap-[var(--space-16)] max-1200:grid-cols-[1fr_1fr_1fr] max-600:grid-cols-[1fr_1fr]",
+    "textile-title": "block mb-[var(--space-8)] text-center",
+    "textile-grid": "w-full my-[var(--space-30)] grid grid-cols-[repeat(4,minmax(0,1fr))] gap-[var(--space-16)] max-1200:grid-cols-[repeat(3,minmax(0,1fr))] max-600:grid-cols-[repeat(2,minmax(0,1fr))]",
     "textile-item": "relative text-center [transition:var(--duration-fast)] overflow-hidden",
     "textile-img": "w-full h-auto aspect-[1/1] object-cover",
     "textile-label": "absolute top-[75%] left-[50%] [transform:translate(-50%,-50%)] w-[85%] text-white max-550:text-p3",

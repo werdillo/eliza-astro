@@ -7,6 +7,7 @@ import { H2, H3, H4, P1, P2 } from "#/components/typography";
 import { discountLabel, translations } from "../../data";
 import ProductGallery from "./ProductGallery.astro";
 import ProductFabrics from "./ProductFabrics.astro";
+import { PdfViewer } from "#/features/pdf-viewer";
 
 export interface Props {
   item: Product;
@@ -22,8 +23,8 @@ const typeName = type && type !== "other" ? typeLabel(lang, type) : undefined;
 const sale = kind === "sale" && Boolean(item.price || item.oldPrice);
 const badge = kind === "sale" ? discountLabel(item) : undefined;
 const links = [
-  ...(item.schema ? [{ href: fileUrl(item, item.schema), label: t.dimensions }] : []),
-  ...(html ? [{ href: "/files/cleaning.pdf", label: t.cleaning }] : []),
+  ...(item.schema ? [{ id: "dimensions", href: fileUrl(item, item.schema), label: t.dimensions }] : []),
+  ...(html ? [{ id: "cleaning", href: "/files/cleaning.pdf", label: t.cleaning }] : []),
 ];
 ---
 
@@ -64,7 +65,7 @@ const links = [
       </a>
       {
         links.map((link) => (
-          <a href={link.href} target="_blank" rel="noopener noreferrer" class="mat-action mat-action-outline">
+          <a href={link.href} target="_blank" rel="noopener noreferrer" class="mat-action mat-action-outline" data-pdf={link.href.toLowerCase().endsWith(".pdf") ? link.id : undefined} data-title={`${item.name} — ${link.label}`}>
             <P1 as="span">{link.label}</P1>
           </a>
         ))
@@ -72,3 +73,4 @@ const links = [
     </div>
   </aside>
 </div>
+{links.length > 0 && <PdfViewer lang={lang} />}

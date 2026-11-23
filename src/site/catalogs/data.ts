@@ -34,11 +34,21 @@ export const catalogs: Catalog[] = [
   },
 ];
 
-/** The page title and the word before each year, by language. */
+/** The labels of the in-browser reader. */
+/** The page title, the word before each year and the reader's labels, by language. */
 export const catalogCopy: Record<Language, { pageTitle: string; catalog: string }> = {
-  en: { pageTitle: "Catalogue", catalog: "Catalogue" },
-  ru: { pageTitle: "Каталоги", catalog: "Каталог" },
-  lv: { pageTitle: "Katalogi", catalog: "Katalogs" },
+  en: {
+    pageTitle: "Catalogue",
+    catalog: "Catalogue",
+  },
+  ru: {
+    pageTitle: "Каталоги",
+    catalog: "Каталог",
+  },
+  lv: {
+    pageTitle: "Katalogi",
+    catalog: "Katalogs",
+  },
 };
 
 /** The copy of the `catalogs` page. */

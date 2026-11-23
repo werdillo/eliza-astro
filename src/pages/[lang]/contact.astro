@@ -9,7 +9,6 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Language;
 ---
 
-<Layout lang={lang} path="/contact" title={contactPage[lang].title} description={contactPage[lang].description}>
-  <h1 class="sr-only">{contactPage[lang].h1}</h1>
+<Layout lang={lang} path="/contact" title={contactPage[lang].title} description={contactPage[lang].description} offset={false}>
   <Contacts lang={lang} />
 </Layout>

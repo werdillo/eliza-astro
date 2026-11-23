@@ -6,6 +6,8 @@ import type { Product } from "#/site/shared/product";
 import { H2, P1, P2 } from "#/components/typography";
 import { mattressFields, translations } from "../../data";
 import { productImage } from "../../routes";
+import { ImageZoom } from "#/features/image-zoom";
+import { PdfViewer } from "#/features/pdf-viewer";
 
 export interface Props {
   item: Product;
@@ -21,8 +23,18 @@ const fieldLabel = mattressFields[String(item.field ?? "")]?.[lang];
 
 <div class="mat-page">
   <div class="mat-poster-box">
-    {src && <Image src={src} alt={item.name} width={1400} height={2100} fit="contain" widths={[640, 1024, 1400]} sizes="(max-width: 900px) 100vw, 60vw" format="webp" quality={82} class="mat-poster" loading="eager" fetchpriority="high" />}
+    {
+      src && (
+        <div class="relative" data-zoom-group>
+          <Image src={src} alt={item.name} width={1400} height={2100} fit="contain" widths={[640, 1024, 1400]} sizes="(max-width: 900px) 100vw, 60vw" format="webp" quality={82} class="mat-poster zoom-target" data-zoom-src={src} loading="eager" fetchpriority="high" />
+          <button type="button" class="zoom-open" data-zoom-open aria-label={t.enlarge}>
+            <span class="i-tabler-zoom-in" aria-hidden="true" />
+          </button>
+        </div>
+      )
+    }
   </div>
+  {src && <ImageZoom lang={lang} />}
 
   <aside class="mat-aside">
     <div class="flex flex-col gap-[var(--space-4)]">
@@ -35,14 +47,15 @@ const fieldLabel = mattressFields[String(item.field ?? "")]?.[lang];
       </a>
       {
         file && (
-          <a href={fileUrl(item, file)} target="_blank" rel="noopener noreferrer" class="mat-action mat-action-outline">
+          <a href={fileUrl(item, file)} target="_blank" rel="noopener noreferrer" class="mat-action mat-action-outline" data-pdf={file.toLowerCase().endsWith(".pdf") ? "dimensions" : undefined} data-title={`${item.name} — ${t.dimensions}`}>
             <P1 as="span">{t.dimensions}</P1>
           </a>
         )
       }
-      <a href={`/files/cleaning-mattresses-${lang}.pdf`} target="_blank" rel="noopener noreferrer" class="mat-action mat-action-outline">
+      <a href={`/files/cleaning-mattresses-${lang}.pdf`} target="_blank" rel="noopener noreferrer" class="mat-action mat-action-outline" data-pdf="cleaning" data-title={`${item.name} — ${t.cleaning}`}>
         <P1 as="span">{t.cleaning}</P1>
       </a>
     </div>
   </aside>
 </div>
+<PdfViewer lang={lang} />

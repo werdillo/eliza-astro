@@ -1,0 +1,171 @@
+---
+import type { Language } from "#/features/i18n";
+import { H5, P2, P3 } from "#/components/typography";
+import { pdfLabels } from "./data";
+
+export interface Props {
+  lang: Language;
+}
+
+const copy = pdfLabels[Astro.props.lang];
+---
+
+{/* Opens for any link with `data-pdf`. The link itself stays a plain link to the PDF for when scripts are off. */}
+<dialog class="pdf-view" data-pdf-dialog>
+  <div class="pdf-view-bar">
+    <H5 as="h2" class="pdf-view-title" data-pdf-title />
+    <P3 as="label" class="pdf-view-counter">
+      <span class="sr-only">{copy.page}</span>
+      <input class="pdf-view-input text-p3" data-pdf-page type="text" inputmode="numeric" autocomplete="off" />
+      <span aria-hidden="true">/</span>
+      <span data-pdf-total></span>
+    </P3>
+    <div class="pdf-view-tools">
+      <button type="button" class="pdf-view-tool max-768:hidden" data-pdf-zoom-out aria-label={copy.zoomOut} title={copy.zoomOut}>
+        <span class="i-tabler-zoom-out" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="pdf-view-tool max-768:hidden" data-pdf-zoom-in aria-label={copy.zoomIn} title={copy.zoomIn}>
+        <span class="i-tabler-zoom-in" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="pdf-view-tool pdf-view-full" data-pdf-fullscreen aria-label={copy.fullscreen} title={copy.fullscreen}>
+        <span class="pdf-view-full-on i-tabler-maximize" aria-hidden="true"></span>
+        <span class="pdf-view-full-off i-tabler-minimize" aria-hidden="true"></span>
+      </button>
+      <a class="pdf-view-tool" data-pdf-download download target="_blank" rel="noopener noreferrer" aria-label={copy.download} title={copy.download}>
+        <span class="i-tabler-download" aria-hidden="true"></span>
+      </a>
+      <button type="button" class="pdf-view-tool" data-pdf-close aria-label={copy.close} title={copy.close} autofocus>
+        <span class="i-tabler-x" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="pdf-view-stage" data-pdf-stage>
+    <div class="pdf-view-track" data-pdf-track></div>
+    <button type="button" class="pdf-view-nav left-[var(--space-12)]" data-pdf-prev aria-label={copy.previous}>
+      <span class="i-tabler-chevron-left" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="pdf-view-nav right-[var(--space-12)]" data-pdf-next aria-label={copy.next}>
+      <span class="i-tabler-chevron-right" aria-hidden="true"></span>
+    </button>
+    <div class="pdf-view-state" data-pdf-loader role="status">
+      <span class="pdf-view-spinner i-tabler-loader-2" aria-hidden="true"></span>
+      <P2 as="span">{copy.loading} <span data-pdf-percent></span></P2>
+    </div>
+    <div class="pdf-view-state" data-pdf-error role="alert" hidden>
+      <P2 as="p" class="m-0">{copy.error}</P2>
+      <a class="pdf-view-fallback" data-pdf-original target="_blank" rel="noopener noreferrer"><P2 as="span">{copy.openPdf}</P2></a>
+    </div>
+  </div>
+
+  <div class="pdf-view-thumbs" data-pdf-thumbs data-label={copy.page}></div>
+  <input class="pdf-view-range" data-pdf-range type="range" min="1" value="1" aria-label={copy.page} />
+</dialog>
+
+<script>
+  import type { PdfSession } from "./viewer";
+
+  const dialog = document.querySelector<HTMLDialogElement>("[data-pdf-dialog]");
+
+  if (dialog) {
+    const links = [...document.querySelectorAll<HTMLAnchorElement>("a[data-pdf]")];
+    const title = dialog.querySelector<HTMLElement>("[data-pdf-title]")!;
+    const download = dialog.querySelector<HTMLAnchorElement>("[data-pdf-download]")!;
+    const original = dialog.querySelector<HTMLAnchorElement>("[data-pdf-original]")!;
+    const loader = dialog.querySelector<HTMLElement>("[data-pdf-loader]")!;
+    const failure = dialog.querySelector<HTMLElement>("[data-pdf-error]")!;
+
+    let session: PdfSession | null = null;
+    let id = "";
+    let attempt = 0;
+    let pushed = false;
+    let opener: HTMLElement | null = null;
+    let rootOverflow = "";
+
+    const linkFor = (wanted: string) => links.find((link) => link.dataset.pdf === wanted);
+
+    /** The URL of an open document: `#catalog-2019-12` is page 12 of the link with `data-pdf="catalog-2019"`. */
+    const parse = () => {
+      const hash = location.hash.slice(1);
+      if (linkFor(hash)) return { id: hash, leaf: 1 };
+      const match = /^(.+)-(\d+)$/.exec(hash);
+      return match && linkFor(match[1]!) ? { id: match[1]!, leaf: Number(match[2]) } : null;
+    };
+    const hashFor = (leaf: number) => `#${id}-${leaf}`;
+
+    const open = async (link: HTMLAnchorElement, leaf: number) => {
+      const thisAttempt = ++attempt;
+      session?.destroy();
+      session = null;
+      id = link.dataset.pdf!;
+      title.textContent = link.dataset.title ?? "";
+      download.href = link.href;
+      original.href = link.href;
+      loader.hidden = false;
+      failure.hidden = true;
+      if (!dialog.open) {
+        rootOverflow = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = "hidden";
+        dialog.showModal();
+      }
+      try {
+        const { openPdf } = await import("./viewer");
+        if (thisAttempt !== attempt || !dialog.open) return;
+        session = openPdf(dialog, link.href, leaf, link.hasAttribute("data-pdf-book"), (shown) => {
+          if (dialog.open) history.replaceState(history.state, "", hashFor(shown));
+        });
+      } catch {
+        if (thisAttempt !== attempt) return;
+        loader.hidden = true;
+        failure.hidden = false;
+      }
+    };
+
+    for (const link of links) {
+      link.addEventListener("click", (event) => {
+        // Opening in a new tab or saving the file stays the browser's job.
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        opener = link;
+        id = link.dataset.pdf!;
+        history.pushState({ pdf: id }, "", hashFor(1));
+        pushed = true;
+        void open(link, 1);
+      });
+    }
+
+    dialog.querySelector("[data-pdf-close]")?.addEventListener("click", () => dialog.close());
+
+    dialog.addEventListener("close", () => {
+      attempt++;
+      session?.destroy();
+      session = null;
+      if (document.fullscreenElement) void document.exitFullscreen();
+      document.documentElement.style.overflow = rootOverflow;
+      if (parse()) {
+        if (pushed) history.back();
+        else history.replaceState(history.state, "", location.pathname + location.search);
+      }
+      pushed = false;
+      opener?.focus({ preventScroll: true });
+      opener = null;
+    });
+
+    const sync = () => {
+      const wanted = parse();
+      const link = wanted && linkFor(wanted.id);
+      if (!wanted || !link) {
+        if (dialog.open) {
+          pushed = false;
+          dialog.close();
+        }
+        return;
+      }
+      if (dialog.open && id === wanted.id && session) session.goToLeaf(wanted.leaf);
+      else void open(link, wanted.leaf);
+    };
+
+    addEventListener("popstate", sync);
+    if (parse()) sync();
+  }
+</script>

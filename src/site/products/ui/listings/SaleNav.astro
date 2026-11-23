@@ -1,0 +1,93 @@
+---
+/**
+ * The sale list with its sticky category bar. Chips are plain links to the group sections, so without JavaScript
+ * every item stays on the page and a chip jumps to its group. The script turns them into a filter kept in the URL hash.
+ */
+import { GridToggle } from "#/components/grid-toggle";
+import { P3 } from "#/components/typography";
+import type { Language } from "#/features/i18n";
+import { allLabel, columnsLabel, saleNavLabel } from "#/site/shared/typeLabels";
+
+export interface Props {
+  groups: { slug: string; label: string; count: number }[];
+  lang: Language;
+}
+
+const { groups, lang } = Astro.props;
+const total = groups.reduce((sum, group) => sum + group.count, 0);
+const chips = [{ slug: "all", label: allLabel[lang], count: total }, ...groups];
+---
+
+<div id="all" class="relative w-full">
+  {
+    groups.length > 1 ? (
+      <div class="sale-nav" data-sale-bar>
+        <nav class="sale-nav-chips" aria-label={saleNavLabel[lang]}>
+          {chips.map((chip) => (
+            <a href={`#${chip.slug}`} class="sale-nav-chip" data-sale-chip={chip.slug} aria-current={chip.slug === "all" ? "true" : undefined}>
+              <P3 as="span">{chip.label}</P3>
+              <P3 as="span" class="opacity-70">{chip.count}</P3>
+            </a>
+          ))}
+        </nav>
+        <GridToggle label={columnsLabel[lang]} />
+      </div>
+    ) : (
+      <GridToggle label={columnsLabel[lang]} />
+    )
+  }
+  <slot />
+  {/* Inline and after the sections, so a shared link shows its category before the first paint. */}
+  <script is:inline>
+    (function () {
+      var root = document.currentScript.parentElement;
+      var bar = root.querySelector("[data-sale-bar]");
+      if (!bar) return;
+      var list = bar.querySelector("nav");
+      var chips = Array.prototype.slice.call(bar.querySelectorAll("[data-sale-chip]"));
+      var sections = Array.prototype.slice.call(root.querySelectorAll("[data-sale-group]"));
+
+      function current() {
+        var slug = location.hash.slice(1);
+        return sections.some(function (section) { return section.id === slug; }) ? slug : "all";
+      }
+      function apply() {
+        var slug = current();
+        sections.forEach(function (section) {
+          section.hidden = slug !== "all" && section.id !== slug;
+        });
+        chips.forEach(function (chip) {
+          var active = chip.dataset.saleChip === slug;
+          if (active) {
+            chip.setAttribute("aria-current", "true");
+            list.scrollLeft = chip.offsetLeft - (list.clientWidth - chip.offsetWidth) / 2;
+          } else {
+            chip.removeAttribute("aria-current");
+          }
+        });
+      }
+      /** After the list gets shorter, brings its start back under the bar instead of leaving the visitor below it. */
+      function toListStart() {
+        var start = root.getBoundingClientRect().top + scrollY - parseFloat(getComputedStyle(bar).top);
+        if (scrollY > start) scrollTo(0, start);
+      }
+
+      bar.addEventListener("click", function (event) {
+        var chip = event.target.closest("[data-sale-chip]");
+        if (!chip || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        var slug = chip.dataset.saleChip;
+        if (slug !== current()) {
+          history.pushState(null, "", slug === "all" ? location.pathname + location.search : "#" + slug);
+        }
+        apply();
+        toListStart();
+      });
+      addEventListener("hashchange", function () {
+        apply();
+        toListStart();
+      });
+      apply();
+    })();
+  </script>
+</div>

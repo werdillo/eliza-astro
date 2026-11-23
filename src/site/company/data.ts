@@ -54,6 +54,13 @@ export const workingHoursTitle: Record<string, string> = {
   lv: "Darba laiks",
 };
 
+/** The labels of the map and the location actions on the contacts page. */
+export const contactMapLabels: Record<string, { map: string; showOnMap: string; route: string }> = {
+  en: { map: "Map", showOnMap: "Show on map", route: "Get directions" },
+  ru: { map: "Карта", showOnMap: "Показать на карте", route: "Проложить маршрут" },
+  lv: { map: "Karte", showOnMap: "Rādīt kartē", route: "Maršruts" },
+};
+
 /** The award certificates in `assets/awards`, newest first (`award_13` is the newest). */
 const awardFiles = import.meta.glob<ImageMetadata>("./assets/awards/award_*.jpg", { eager: true, import: "default" });
 const awardNumber = (path: string) => Number(path.match(/award_(\d+)/)?.[1] ?? 0);

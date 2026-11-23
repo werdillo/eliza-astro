@@ -3,8 +3,10 @@ import { Image, inferRemoteSize } from "astro:assets";
 import { fileUrl } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
 import type { Product } from "#/site/shared/product";
+import { Slider } from "#/components/slider";
 import { P3 } from "#/components/typography";
 import { translations } from "../../data";
+import { ImageZoom } from "#/features/image-zoom";
 
 export interface Props {
   item: Product;
@@ -25,18 +27,25 @@ const ratios = await Promise.all(
 );
 ---
 
-<div class="gal" data-gallery>
-  <div class="gal-track" data-track style={`--gal-ratio: ${ratios[0] ?? "4 / 3"}`}>
+<div class="gal" data-gallery data-zoom-group style={`--gal-ratio: ${ratios[0] ?? "4 / 3"}`}>
+  <Slider class="gal-track" slidesPerView="1" speed="350">
     {
       images.map((image, index) => (
-        <div class="gal-slide" data-ratio={ratios[index]}>
+        <swiper-slide class="gal-slide" data-ratio={ratios[index]}>
           {/* The photo is shown whole; a blurred copy of it fills the rest of the screen. */}
           <Image src={fileUrl(item, image)} alt="" width={96} height={96} fit="cover" format="webp" quality={50} class="gal-blur" aria-hidden="true" loading={index === 0 ? "eager" : "lazy"} />
-          <Image src={fileUrl(item, image)} alt={item.name} width={2000} height={2000} fit="contain" widths={[640, 1024, 1600, 2000]} sizes="(max-width: 900px) 100vw, 72vw" format="webp" quality={82} class="gal-img" loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : undefined} />
-        </div>
+          <Image src={fileUrl(item, image)} alt={item.name} width={2000} height={2000} fit="contain" widths={[640, 1024, 1600, 2000]} sizes="(max-width: 900px) 100vw, 72vw" format="webp" quality={82} class="gal-img zoom-target" data-zoom-src={fileUrl(item, image)} draggable="false" loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : undefined} />
+        </swiper-slide>
       ))
     }
-  </div>
+  </Slider>
+  {
+    images.length > 0 && (
+      <button type="button" class="zoom-open" data-zoom-open aria-label={t.enlarge}>
+        <span class="i-tabler-zoom-in" aria-hidden="true" />
+      </button>
+    )
+  }
   {
     many && (
       <>
@@ -58,10 +67,15 @@ const ratios = await Promise.all(
     )
   }
 </div>
+{images.length > 0 && <ImageZoom lang={lang} />}
 
 <script>
   for (const gallery of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
-    const track = gallery.querySelector<HTMLElement>("[data-track]");
+    const track = gallery.querySelector<HTMLElement & { swiper?: { activeIndex: number; slideTo: (index: number, speed?: number) => void } }>("swiper-container");
+    // Closing the zoomed view leaves the gallery on the photo that was being looked at.
+    gallery.addEventListener("zoom-closed", (event) => {
+      track?.swiper?.slideTo((event as CustomEvent<number>).detail, 0);
+    });
     const thumbs = [...gallery.querySelectorAll<HTMLElement>("[data-thumb]")];
     const count = gallery.querySelector<HTMLElement>("[data-count]");
     const slides = [...gallery.querySelectorAll<HTMLElement>("[data-ratio]")];
@@ -70,20 +84,17 @@ const ratios = await Promise.all(
     let current = 0;
     const show = (index: number) => {
       current = index;
-      track.style.setProperty("--gal-ratio", slides[index]?.dataset.ratio ?? "4 / 3");
+      gallery.style.setProperty("--gal-ratio", slides[index]?.dataset.ratio ?? "4 / 3");
       thumbs.forEach((thumb, i) => thumb.setAttribute("aria-current", String(i === index)));
       thumbs[index].parentElement?.scrollTo({ left: thumbs[index].offsetLeft - thumbs[0].offsetLeft, behavior: "smooth" });
       if (count) count.textContent = `${index + 1} / ${thumbs.length}`;
     };
-    const go = (index: number) => {
-      const next = (index + thumbs.length) % thumbs.length;
-      track.scrollTo({ left: next * track.clientWidth, behavior: "smooth" });
-    };
+    const go = (index: number) => track.swiper?.slideTo((index + thumbs.length) % thumbs.length);
 
-    track.addEventListener("scroll", () => {
-      const index = Math.round(track.scrollLeft / track.clientWidth);
+    track.addEventListener("swiperslidechange", () => {
+      const index = track.swiper?.activeIndex ?? 0;
       if (index !== current && thumbs[index]) show(index);
-    }, { passive: true });
+    });
     gallery.querySelector("[data-prev]")?.addEventListener("click", () => go(current - 1));
     gallery.querySelector("[data-next]")?.addEventListener("click", () => go(current + 1));
     thumbs.forEach((thumb, index) => thumb.addEventListener("click", () => go(index)));

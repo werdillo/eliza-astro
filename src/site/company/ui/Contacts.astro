@@ -1,8 +1,8 @@
 ---
 import type { Language } from "#/features/i18n";
-import { H3, H4, H5, P1 } from "#/components/typography";
+import { H1, H3, H4, H5, P1, P2 } from "#/components/typography";
 import { getContacts } from "../api";
-import { workingHoursTitle } from "../data";
+import { contactMapLabels, contactPage, workingHoursTitle } from "../data";
 
 export interface Props {
   lang: Language;
@@ -10,51 +10,125 @@ export interface Props {
 
 const { lang } = Astro.props;
 const contacts = await getContacts();
+const labels = contactMapLabels[lang]!;
+
+/** The foam workshop's own Google Maps place, because searching its address lands among its neighbours. */
+const foamPlace = {
+  address: "52A",
+  id: "0x46eecf1ae790db37%3A0x341a98d829cf03d0",
+  name: "Поролон для производства и частных лиц",
+  lat: "56.950301",
+  lng: "24.171423",
+  coords: "56.950301,24.171423",
+};
+const isFoam = (address: string) => address.includes(foamPlace.address);
+const foamEmbedUrl = () =>
+  `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1400!2d${foamPlace.lng}!3d${foamPlace.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s${foamPlace.id}!2s${encodeURIComponent(foamPlace.name)}!5e0!3m2!1s${lang}!2slv!4v1700000000000`;
+
+const embedUrl = (address: string) =>
+  isFoam(address)
+    ? foamEmbedUrl()
+    : `https://www.google.com/maps?q=${encodeURIComponent(address)}&hl=${lang}&z=16&output=embed`;
+const routeUrl = (address: string) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(isFoam(address) ? foamPlace.coords : address)}`;
+const mapTitle = (address: string) => `${labels.map}: ${address}`;
+
+/** The map opens on the first location that has an address. */
+const firstAddress = contacts.find((contact) => contact.address)?.address as string | undefined;
 ---
 
-<div class="contacts-grid">
-  {
-    contacts.map((contact) => {
-      const hasWorkingHours = Boolean(contact[`weekday_${lang}`] || contact[`break_${lang}`] || contact[`weeken_${lang}`]);
-      const phones = String(contact.phone ?? "")
-        .split(",")
-        .map((phone: string) => phone.trim())
-        .filter(Boolean);
+<div class="contact-page" data-contact-page>
+  <div class="contact-list">
+    <H1 class="m-0">{contactPage[lang].h1}</H1>
+    {
+      contacts.map((contact) => {
+        const address = contact.address as string;
+        const hours = [contact[`weekday_${lang}`], contact[`break_${lang}`], contact[`weeken_${lang}`]].filter(Boolean);
+        const phones = String(contact.phone ?? "")
+          .split(",")
+          .map((phone: string) => phone.trim())
+          .filter(Boolean);
 
-      return (
-        <section class="contacts-wrapper">
-          <H3 as="h2" class="h-[78px] max-1000:h-auto">{contact[`title_${lang}`]}</H3>
-          <P1>
-            <a href={`https://maps.google.com/?q=${contact.address}`} target="_blank" rel="noopener noreferrer">
-              {contact.address}
-            </a>
-          </P1>
-          <P1>
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          </P1>
-          <P1>
-            {phones.map((phone, index) => (
-              <>
-                {index > 0 ? ", " : null}
-                <a href={`tel:+371${phone}`}>{phone}</a>
-              </>
-            ))}
-          </P1>
-
-          {hasWorkingHours && (
-            <div>
-              <H4 as="h3" class="mt-[var(--space-30)]">{workingHoursTitle[lang]}</H4>
-              {contact[`weekday_${lang}`] && <P1>{contact[`weekday_${lang}`]}</P1>}
-              {contact[`break_${lang}`] && <P1>{contact[`break_${lang}`]}</P1>}
-              {contact[`weeken_${lang}`] && <P1>{contact[`weeken_${lang}`]}</P1>}
+        return (
+          <section class="contact-item">
+            <H3 as="h2" class="m-0">{contact[`title_${lang}`]}</H3>
+            <div class="contact-links">
+              {address && <P1 class="m-0">{address}</P1>}
+              {phones.map((phone) => (
+                <P1 class="m-0">
+                  <a href={`tel:+371${phone}`}>{phone}</a>
+                </P1>
+              ))}
+              {contact.email && (
+                <P1 class="m-0">
+                  <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                </P1>
+              )}
             </div>
-          )}
 
-          {contact.show_event && (
-            <H5 as="p" class="text-sale">{contact[`event_${lang}`] || ""}</H5>
-          )}
-        </section>
-      );
-    })
+            {hours.length > 0 && (
+              <div class="contact-hours">
+                <H4 as="h3" class="m-0 text-ink">{workingHoursTitle[lang]}</H4>
+                {hours.map((line) => <P2 class="m-0">{line}</P2>)}
+              </div>
+            )}
+
+            {contact.show_event && <H5 as="p" class="m-0 text-sale">{contact[`event_${lang}`] || ""}</H5>}
+
+            {address && (
+              <div class="contact-actions">
+                <button
+                  type="button"
+                  class="contact-action"
+                  data-map-src={embedUrl(address)}
+                  data-map-title={mapTitle(address)}
+                  aria-pressed={address === firstAddress ? "true" : "false"}
+                >
+                  <P2 as="span" class="m-0">{labels.showOnMap}</P2>
+                </button>
+                <a href={routeUrl(address)} target="_blank" rel="noopener noreferrer" class="contact-action">
+                  <P2 as="span" class="m-0">{labels.route}</P2>
+                </a>
+              </div>
+            )}
+          </section>
+        );
+      })
+    }
+  </div>
+
+  {
+    firstAddress && (
+      <div class="contact-map">
+        <iframe
+          class="contact-frame"
+          src={embedUrl(firstAddress)}
+          title={mapTitle(firstAddress)}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        />
+      </div>
+    )
   }
 </div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-contact-page]").forEach((page) => {
+    const frame = page.querySelector("iframe");
+    const buttons = [...page.querySelectorAll<HTMLButtonElement>("[data-map-src]")];
+    if (!frame) return;
+
+    for (const button of buttons) {
+      button.addEventListener("click", () => {
+        const { mapSrc, mapTitle } = button.dataset;
+        if (mapSrc && frame.src !== mapSrc) frame.src = mapSrc;
+        if (mapTitle) frame.title = mapTitle;
+        for (const other of buttons) other.setAttribute("aria-pressed", String(other === button));
+
+        // On a phone the map sits above the list, so bring it back into view.
+        if (frame.getBoundingClientRect().bottom < 60) frame.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
+  });
+</script>

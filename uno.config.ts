@@ -50,6 +50,8 @@ export default defineConfig({
   ],
   // Scan plain `.ts` too, where a box keeps its icon and menu data.
   content: { pipeline: { include: [/\.(astro|ts)($|\?)/] } },
+  // Made by the catalogue reader's script, which is loaded on demand and so is not scanned during the build.
+  safelist: ["zoom-swiper", "zoom-box", "zoom-slide", "zoom-spinner", "zoom-photo", "i-tabler-loader-2", "pdf-view-slide", "pdf-view-sheet", "pdf-view-canvas", "pdf-view-thumb"],
   variants: [viewport, hov],
   theme: {
     // Colours and fonts are the tokens in src/app/styles/tokens.css.
@@ -82,6 +84,11 @@ export default defineConfig({
     // Product lists (the regular and sale grids).
     "grid-toggle": "absolute top-[var(--space-20)] right-0 flex gap-[var(--space-4)]",
     "grid-toggle-button": "flex items-center justify-center w-[32px] h-[32px] p-0 border border-solid border-photo rounded-[var(--radius-small)] bg-white text-ink cursor-pointer [&[aria-pressed=true]]:bg-button [&[aria-pressed=true]]:text-white [&[aria-pressed=true]]:border-button",
+    // The sale category bar: chips scroll sideways, the 3/4 (1/2) toggle stands at its right edge.
+    "sale-nav": "sticky z-20 top-[var(--header-height)] max-768:top-[var(--header-height-mobile)] flex items-center gap-[var(--space-12)] py-[var(--space-8)] bg-white border-b border-b-solid border-b-photo [&>.grid-toggle]:static [&>.grid-toggle]:shrink-0",
+    "sale-nav-chips": "relative flex-1 min-w-0 flex gap-[var(--space-4)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+    "sale-nav-chip": "shrink-0 box-border flex items-center gap-[var(--space-4)] h-[32px] max-768:h-[36px] px-[var(--space-8)] whitespace-nowrap no-underline text-ink border border-solid border-photo rounded-[var(--radius-small)] bg-white hov:border-button [&[aria-current=true]]:bg-button [&[aria-current=true]]:text-white [&[aria-current=true]]:border-button",
+    "sale-nav-section": "w-full scroll-mt-[calc(var(--header-height)+49px)] max-768:scroll-mt-[calc(var(--header-height-mobile)+53px)]",
     "list-title": "mt-[var(--space-20)]",
     "product-list": "w-full grid grid-cols-[1fr_1fr_1fr_1fr] gap-[var(--space-30)_var(--space-20)] my-[var(--space-20)] max-768:grid-cols-[1fr] max-768:gap-[var(--space-12)]",
     "landing": "[transition:var(--duration-slow)] pb-[var(--space-2)] w-full rounded-[var(--radius-tiny)] [&:active]:[opacity:0] [&:active]:[transform:scale(1.1)] hov:[box-shadow:var(--shadow-product-hover)]",
@@ -106,14 +113,28 @@ export default defineConfig({
 
     // Product photo gallery.
     "gal": "relative h-full min-w-0 overflow-hidden bg-layout max-900:h-auto",
-    "gal-track": "flex h-full overflow-x-auto [scroll-snap-type:x_mandatory] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-900:w-full max-900:h-auto max-900:aspect-[var(--gal-ratio)] max-900:max-h-[75svh]",
-    "gal-slide": "relative flex-[0_0_100%] min-w-0 h-full overflow-hidden [scroll-snap-align:start]",
+    "gal-track": "block h-full overflow-hidden max-900:w-full max-900:h-auto max-900:aspect-[var(--gal-ratio)] max-900:max-h-[75svh]",
+    "gal-slide": "relative w-full h-full overflow-hidden",
     "gal-blur": "absolute inset-0 w-full h-full object-cover [filter:blur(24px)_brightness(0.9)] [transform:scale(1.15)]",
     "gal-img": "relative block w-full h-full object-contain",
     "gal-nav": "absolute z-10 top-[50%] [transform:translateY(-50%)] flex items-center justify-center w-[44px] h-[44px] p-0 border-0 rounded-[50%] bg-white text-ink [box-shadow:var(--shadow-tile)] cursor-pointer",
     "gal-count": "absolute z-10 right-[var(--space-12)] bottom-[var(--space-12)] px-[var(--space-8)] py-[var(--space-2)] bg-layout text-white rounded-[var(--radius-small)]",
     "gal-thumbs": "absolute z-10 left-[var(--space-12)] bottom-[var(--space-12)] max-w-[calc(100%-110px)] flex gap-[var(--space-8)] p-[var(--space-2)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-600:hidden",
     "gal-thumb": "flex-[0_0_72px] h-[48px] p-0 border-0 bg-transparent cursor-pointer opacity-70 [transition:var(--duration-fast)] [&[aria-current=true]]:opacity-100 [&[aria-current=true]]:[outline:2px_solid_var(--color-text)]",
+
+    // Fullscreen photo viewer with zoom.
+    "zoom-target": "cursor-zoom-in",
+    "zoom-open": "absolute z-10 top-[var(--space-12)] right-[var(--space-12)] flex items-center justify-center w-[44px] h-[44px] p-0 border-0 rounded-[50%] bg-white text-ink [box-shadow:var(--shadow-tile)] cursor-pointer",
+    "zoom-dialog": "fixed inset-0 w-[100vw] h-[100dvh] max-w-none max-h-none m-0 p-0 border-0 overflow-hidden bg-[#000000eb] text-white [&::backdrop]:bg-[#000000eb]",
+    "zoom-stage": "absolute inset-0 overflow-hidden select-none",
+    "zoom-swiper": "block w-full h-full",
+    "zoom-box": "flex items-center justify-center w-full h-full",
+    "zoom-slide": "relative w-full h-full overflow-hidden [&[data-loaded]_img]:opacity-100 [&[data-loaded]_.zoom-spinner]:hidden",
+    "zoom-spinner": "absolute left-[50%] top-[50%] ml-[-16px] mt-[-16px] w-[32px] h-[32px] text-white animate-spin",
+    "zoom-photo": "block max-w-none max-h-none opacity-0 [transition:opacity_200ms,transform_300ms]",
+    "zoom-button": "absolute z-10 flex items-center justify-center w-[44px] h-[44px] p-0 border-0 rounded-[50%] bg-white text-ink cursor-pointer [&[hidden]]:hidden",
+    "zoom-side": "top-[50%] [transform:translateY(-50%)]",
+    "zoom-count": "absolute z-10 left-[50%] bottom-[var(--space-12)] [transform:translateX(-50%)] px-[var(--space-8)] py-[var(--space-2)] bg-layout text-white rounded-[var(--radius-small)] [&[hidden]]:hidden",
 
     // Mattress list and mattress page.
     "mat-list": "w-full max-w-[1320px] py-[var(--space-30)] flex flex-col gap-[var(--space-30)]",
@@ -141,12 +162,20 @@ export default defineConfig({
     "textile-label": "absolute top-[75%] left-[50%] [transform:translate(-50%,-50%)] w-[85%] text-white max-550:text-p3",
 
     // Company contacts.
-    "contacts-grid": "w-full grid grid-cols-[1fr_1fr_1fr] gap-[var(--space-30)] max-1200:grid-cols-[1fr] max-1200:gap-[var(--space-12)]",
-    "contacts-wrapper": "mt-[var(--space-12)] mb-[var(--space-30)]",
+    "contact-page": "w-full grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] max-900:grid-cols-[minmax(0,1fr)]",
+    "contact-list": "box-border flex flex-col gap-[var(--space-30)] p-[var(--space-40)] max-900:order-2 max-900:p-[var(--space-16)] max-900:pb-[var(--space-30)]",
+    "contact-item": "flex flex-col gap-[var(--space-8)] pt-[var(--space-30)] border-0 border-t border-solid border-[var(--color-photo)] max-900:pt-[var(--space-20)]",
+    "contact-links": "flex flex-col gap-[var(--space-4)] [&_a]:underline [&_a]:underline-offset-3",
+    "contact-hours": "flex flex-col gap-[var(--space-2)] mt-[var(--space-8)] text-price-old",
+    "contact-actions": "flex flex-wrap gap-[var(--space-8)] mt-[var(--space-12)]",
+    "contact-action": "box-border inline-flex items-center justify-center min-h-[44px] px-[var(--space-16)] bg-white border border-solid border-button text-ink cursor-pointer no-underline aria-pressed:bg-button aria-pressed:text-white",
+    "contact-map": "sticky top-[var(--header-height)] h-[calc(100svh-var(--header-height))] max-900:static max-900:order-1 max-900:h-[45svh]",
+    "contact-frame": "block w-full h-full border-0",
 
     // Photo grid.
     "gallery-grid": "w-full py-[var(--space-12)] grid grid-cols-[1fr_1fr_1fr_1fr] gap-[var(--space-30)] max-1200:grid-cols-[1fr_1fr_1fr] max-1200:gap-[var(--space-12)] max-600:grid-cols-[1fr_1fr]",
-    "gallery-img": "w-full h-auto aspect-[16/10] object-cover",
+    "gallery-open": "block w-full p-0 border-0 bg-transparent cursor-zoom-in",
+    "gallery-img": "block w-full h-auto aspect-[16/10] object-cover",
 
     // Site header and footer.
     "header-links": "flex flex-wrap items-center gap-[var(--space-40)] max-1500:gap-[var(--space-30)] max-1430:gap-[var(--space-30)] max-1400:gap-[var(--space-20)] max-1300:gap-[var(--space-16)] max-600:gap-[var(--space-12)]",
@@ -165,6 +194,27 @@ export default defineConfig({
     "catalog-link": "flex justify-center",
     "catalog-img": "[filter:var(--drop-catalog)] min-h-[240px] h-[360px] flex w-auto mb-[var(--space-12)] [transition:var(--duration-fast)] hov:[filter:var(--drop-catalog-hover)] hov:[transform:scale(1.02)] [&:active]:[transform:scale(1.1)] max-1500:h-[260px] max-1500:min-h-[260px] max-1200:h-[220px] max-1200:min-h-[220px]",
     "catalog-label": "block mx-auto text-center",
+    // The catalogue reader: a dark full-screen room, the pages are the only light thing in it.
+    "pdf-view": "fixed inset-0 w-[100vw] h-[100dvh] max-w-none max-h-none m-0 p-0 border-0 overflow-hidden bg-[#1c1c1c] text-white [&[open]]:flex [&[open]]:flex-col [&::backdrop]:bg-[#1c1c1c]",
+    "pdf-view-bar": "shrink-0 flex items-center gap-[var(--space-12)] h-[56px] px-[var(--space-12)] max-768:h-[48px] max-768:px-[var(--space-8)]",
+    "pdf-view-title": "m-0 flex-1 min-w-0 truncate max-768:hidden",
+    "pdf-view-counter": "m-0 flex items-center gap-[var(--space-4)] whitespace-nowrap max-768:flex-1",
+    "pdf-view-input": "box-border w-[72px] h-[32px] px-[var(--space-4)] text-center text-white bg-[var(--color-glass)] border-0 rounded-[var(--radius-small)] focus:outline-none focus:bg-[var(--color-glass-strong)]",
+    "pdf-view-tools": "flex-1 flex items-center justify-end gap-[var(--space-4)] max-768:flex-none",
+    "pdf-view-tool": "flex items-center justify-center w-[40px] h-[40px] p-0 border-0 rounded-[var(--radius-small)] bg-transparent text-white cursor-pointer no-underline hov:bg-[var(--color-glass)] [&[hidden]]:hidden",
+    "pdf-view-full": "[&>.pdf-view-full-off]:hidden [[data-fullscreen]_&>.pdf-view-full-on]:hidden [[data-fullscreen]_&>.pdf-view-full-off]:block",
+    "pdf-view-stage": "relative flex-1 min-h-0 overflow-hidden select-none [touch-action:none] cursor-default",
+    "pdf-view-track": "flex w-full h-full [will-change:transform]",
+    "pdf-view-slide": "flex-[0_0_100%] min-w-0 h-full flex items-center justify-center overflow-hidden",
+    "pdf-view-sheet": "shrink-0 flex bg-white [box-shadow:0_8px_32px_rgba(0,0,0,0.5)] [will-change:transform]",
+    "pdf-view-canvas": "block h-full",
+    "pdf-view-nav": "absolute z-10 top-[50%] [transform:translateY(-50%)] flex items-center justify-center w-[44px] h-[44px] p-0 border-0 rounded-[50%] bg-white text-ink [box-shadow:var(--shadow-tile)] cursor-pointer disabled:opacity-0 disabled:pointer-events-none max-768:hidden",
+    "pdf-view-state": "absolute inset-0 z-20 flex flex-col items-center justify-center gap-[var(--space-12)] p-[var(--space-20)] text-center bg-[#1c1c1c] [&[hidden]]:hidden",
+    "pdf-view-spinner": "w-[32px] h-[32px] animate-spin motion-reduce:animate-none",
+    "pdf-view-fallback": "px-[var(--space-20)] py-[var(--space-8)] bg-white text-ink no-underline rounded-[var(--radius-small)]",
+    "pdf-view-thumbs": "relative shrink-0 flex gap-[var(--space-8)] h-[84px] box-border px-[var(--space-12)] py-[var(--space-8)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-768:hidden",
+    "pdf-view-thumb": "shrink-0 flex h-full p-0 border-0 bg-[#3a3a3a] cursor-pointer opacity-50 overflow-hidden [transition:opacity_var(--duration-fast)] hov:opacity-100 [&[aria-current=true]]:opacity-100 [&[aria-current=true]]:[outline:2px_solid_white]",
+    "pdf-view-range": "hidden max-768:block shrink-0 w-[calc(100%-32px)] mx-auto my-[var(--space-8)] h-[28px] accent-white",
 
     // Image tiles: the collection index and the HoReCa segments.
     "tile-grid": "grid grid-cols-[1fr_1fr_1fr] w-full gap-0 p-0 mx-auto max-1024:grid-cols-[1fr]",

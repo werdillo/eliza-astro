@@ -10,6 +10,7 @@ export const translations = {
     oldPrice: "Was",
     previous: "Previous photo",
     next: "Next photo",
+    enlarge: "Enlarge photo",
   },
   ru: {
     sendEmail: "Отправить email",
@@ -21,6 +22,7 @@ export const translations = {
     oldPrice: "Было",
     previous: "Предыдущее фото",
     next: "Следующее фото",
+    enlarge: "Увеличить фото",
   },
   lv: {
     sendEmail: "Sūtīt e-pastu",
@@ -32,6 +34,7 @@ export const translations = {
     oldPrice: "Bija",
     previous: "Iepriekšējais foto",
     next: "Nākamais foto",
+    enlarge: "Palielināt foto",
   },
 };
 

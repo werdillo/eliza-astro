@@ -16,6 +16,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.5",
     "astro": "^7.4.12",
+    "pdfjs-dist": "^6.5.438",
     "pocketbase": "^0.29.0",
     "swiper": "^14.4.0"
   },

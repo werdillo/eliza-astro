@@ -1,0 +1,246 @@
+---
+import type { Language } from "#/features/i18n";
+import { P3 } from "#/components/typography";
+import { zoomLabels } from "./data";
+
+export interface Props {
+  lang: Language;
+}
+
+const t = zoomLabels[Astro.props.lang];
+---
+
+{/* Opens for any image with `data-zoom-src` inside a `data-zoom-group`; the group is what the viewer walks through. */}
+<dialog class="zoom-dialog" data-zoom-dialog role="dialog" aria-modal="true">
+  <div class="zoom-stage" data-zoom-stage></div>
+  <button type="button" class="zoom-button top-[var(--space-12)] right-[var(--space-12)]" data-zoom-close aria-label={t.close} autofocus>
+    <span class="i-tabler-x" aria-hidden="true" />
+  </button>
+  <button type="button" class="zoom-button zoom-side left-[var(--space-12)]" data-zoom-prev aria-label={t.previous}>
+    <span class="i-tabler-chevron-left" aria-hidden="true" />
+  </button>
+  <button type="button" class="zoom-button zoom-side right-[var(--space-12)]" data-zoom-next aria-label={t.next}>
+    <span class="i-tabler-chevron-right" aria-hidden="true" />
+  </button>
+  <P3 as="span" class="zoom-count" data-zoom-count />
+</dialog>
+
+<script>
+  import { register, type SwiperContainer } from "swiper/element/bundle";
+
+  register();
+
+  const MAX_SCALE = 5;
+  const TAP_SCALE = 2.5;
+
+  const dialog = document.querySelector<HTMLDialogElement>("[data-zoom-dialog]");
+  const stage = dialog?.querySelector<HTMLElement>("[data-zoom-stage]");
+
+  if (dialog && stage) {
+    const prev = dialog.querySelector<HTMLElement>("[data-zoom-prev]");
+    const next = dialog.querySelector<HTMLElement>("[data-zoom-next]");
+    const count = dialog.querySelector<HTMLElement>("[data-zoom-count]");
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+
+    let slider: SwiperContainer | null = null;
+    let sources: HTMLImageElement[] = [];
+    let photos: HTMLImageElement[] = [];
+    let group: HTMLElement | null = null;
+    let opener: HTMLElement | null = null;
+    let index = 0;
+    let rootOverflow = "";
+
+    /** Sizes a photo to fill the screen whole; Swiper's zoom limits its panning by this box. */
+    const fit = (photo: HTMLImageElement) => {
+      if (!photo.naturalWidth) return;
+      const ratio = Math.min(stage.clientWidth / photo.naturalWidth, stage.clientHeight / photo.naturalHeight);
+      photo.style.width = `${photo.naturalWidth * ratio}px`;
+      photo.style.height = `${photo.naturalHeight * ratio}px`;
+    };
+
+    const load = (target: number) => {
+      const photo = photos[target];
+      const source = sources[target];
+      if (!photo || !source || photo.dataset.requested) return;
+      photo.dataset.requested = "true";
+      photo.onload = () => {
+        fit(photo);
+        photo.closest("swiper-slide")?.toggleAttribute("data-loaded", true);
+      };
+      photo.onerror = () => {
+        photo.onerror = null;
+        photo.src = source.currentSrc || source.src;
+      };
+      photo.src = source.dataset.zoomSrc ?? source.src;
+    };
+
+    const show = (target: number) => {
+      index = target;
+      if (count) count.textContent = `${index + 1} / ${sources.length}`;
+      dialog.setAttribute("aria-label", sources[index]?.alt ?? "");
+      // The neighbours load ahead, so turning to them shows a ready photo.
+      for (const offset of [0, 1, -1]) load((index + offset + sources.length) % sources.length);
+    };
+
+    const go = (target: number) => {
+      slider?.swiper.zoom.out();
+      slider?.swiper.slideTo((target + sources.length) % sources.length);
+    };
+
+    /** Zooms the current photo to `ratio` at the point of the event. */
+    const zoomAt = (event: Event, ratio: number) => {
+      const swiper = slider?.swiper;
+      const box = swiper?.slides[swiper.activeIndex]?.querySelector(".swiper-zoom-container");
+      if (!swiper || !box) return;
+      box.setAttribute("data-swiper-zoom", String(ratio));
+      swiper.zoom.in(event as unknown as number);
+      box.removeAttribute("data-swiper-zoom");
+    };
+
+    const toggle = (event: Event) => {
+      const zoom = slider?.swiper.zoom;
+      if (!zoom) return;
+      if (zoom.scale > 1) zoom.out();
+      else zoomAt(event, TAP_SCALE);
+    };
+
+    const build = (start: number) => {
+      photos = sources.map((source) => {
+        const photo = document.createElement("img");
+        photo.className = "zoom-photo";
+        photo.alt = source.alt;
+        photo.draggable = false;
+        return photo;
+      });
+      const element = document.createElement("swiper-container") as SwiperContainer;
+      element.className = "zoom-swiper";
+      element.setAttribute("init", "false");
+      element.append(
+        ...photos.map((photo) => {
+          const slide = document.createElement("swiper-slide");
+          slide.className = "zoom-slide";
+          const box = document.createElement("div");
+          box.className = "swiper-zoom-container zoom-box";
+          box.append(photo);
+          const spinner = document.createElement("span");
+          spinner.className = "zoom-spinner i-tabler-loader-2";
+          spinner.setAttribute("aria-hidden", "true");
+          slide.append(box, spinner);
+          return slide;
+        }),
+      );
+      Object.assign(element, {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        // An unhurried drag past a small part of the screen still turns the photo.
+        longSwipesRatio: 0.15,
+        speed: reducedMotion.matches ? 0 : 320,
+        initialSlide: start,
+        zoom: { maxRatio: MAX_SCALE, toggle: false },
+      });
+      stage.replaceChildren(element);
+      element.initialize();
+      slider = element;
+
+      const { swiper } = element;
+      swiper.on("slideChange", () => show(swiper.activeIndex));
+      swiper.on("zoomChange", (_swiper, scale) => {
+        stage.style.cursor = scale > 1 ? "grab" : "";
+        // While zoomed, a drag only moves the photo; reaching its edge does not turn the page.
+        swiper.allowSlideNext = swiper.allowSlidePrev = scale <= 1;
+      });
+      swiper.on("click", (_swiper, event) => {
+        const pointer = event as unknown as PointerEvent;
+        const onPhoto = (pointer.target as Element | null)?.closest?.("img");
+        if (!onPhoto && swiper.zoom.scale === 1) {
+          dialog.close();
+          return;
+        }
+        if (pointer.pointerType === "mouse") toggle(pointer);
+      });
+      swiper.on("doubleTap", (_swiper, event) => {
+        const pointer = event as unknown as PointerEvent;
+        if (pointer.pointerType !== "mouse") toggle(pointer);
+      });
+    };
+
+    const open = (from: HTMLElement, target: number, focusBack: HTMLElement) => {
+      group = from;
+      sources = [...from.querySelectorAll<HTMLImageElement>("[data-zoom-src]")];
+      if (sources.length === 0) return;
+      opener = focusBack;
+      const many = sources.length > 1;
+      prev?.toggleAttribute("hidden", !many);
+      next?.toggleAttribute("hidden", !many);
+      count?.toggleAttribute("hidden", !many);
+      rootOverflow = document.documentElement.style.overflow;
+      document.documentElement.style.overflow = "hidden";
+      dialog.showModal();
+      build(target);
+      show(target);
+    };
+
+    dialog.addEventListener("close", () => {
+      document.documentElement.style.overflow = rootOverflow;
+      stage.style.cursor = "";
+      stage.replaceChildren();
+      slider = null;
+      photos = [];
+      group?.dispatchEvent(new CustomEvent("zoom-closed", { detail: index }));
+      opener?.focus({ preventScroll: true });
+    });
+
+    dialog.querySelector("[data-zoom-close]")?.addEventListener("click", () => dialog.close());
+    prev?.addEventListener("click", () => go(index - 1));
+    next?.addEventListener("click", () => go(index + 1));
+    dialog.addEventListener("keydown", (event) => {
+      if (sources.length < 2) return;
+      if (event.key === "ArrowLeft") go(index - 1);
+      if (event.key === "ArrowRight") go(index + 1);
+    });
+    addEventListener("resize", () => {
+      if (!dialog.open) return;
+      slider?.swiper.zoom.out();
+      photos.forEach(fit);
+      slider?.swiper.update();
+    });
+
+    stage.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      const zoom = slider?.swiper.zoom;
+      if (!zoom) return;
+      const target = Math.min(MAX_SCALE, zoom.scale * Math.exp(-Math.max(-100, Math.min(100, event.deltaY)) * 0.004));
+      if (target <= 1.02) {
+        if (zoom.scale > 1) zoom.out();
+      } else if (zoom.scale === 1) {
+        zoomAt(event, target);
+      } else {
+        zoom.in(target);
+      }
+    }, { passive: false });
+
+    // A press that travelled is a swipe of the gallery, not a click on the photo.
+    const TAP_DISTANCE = 8;
+    let press = { x: 0, y: 0 };
+    document.addEventListener("pointerdown", (event) => {
+      press = { x: event.clientX, y: event.clientY };
+    }, { passive: true });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element) || dialog.contains(target)) return;
+      const button = target.closest<HTMLElement>("[data-zoom-open]");
+      const photo = target.closest<HTMLImageElement>("[data-zoom-src]") ?? button?.querySelector<HTMLImageElement>("[data-zoom-src]");
+      const from = (button ?? photo)?.closest<HTMLElement>("[data-zoom-group]");
+      if (!from) return;
+      if (!button && Math.hypot(event.clientX - press.x, event.clientY - press.y) > TAP_DISTANCE) return;
+      const focusBack = button ?? from.querySelector<HTMLElement>("[data-zoom-open]") ?? from;
+      if (photo) {
+        open(from, [...from.querySelectorAll("[data-zoom-src]")].indexOf(photo), focusBack);
+        return;
+      }
+      const track = from.querySelector<HTMLElement & { swiper?: { activeIndex: number } }>("swiper-container");
+      open(from, track?.swiper?.activeIndex ?? 0, focusBack);
+    });
+  }
+</script>

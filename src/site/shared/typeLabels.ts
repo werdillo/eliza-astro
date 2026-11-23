@@ -14,5 +14,15 @@ export const columnsLabel: Record<Language, string> = {
   lv: "Preces rindā",
 };
 
+/** The chip of the sale category bar that shows every group. */
+export const allLabel: Record<Language, string> = { en: "All", ru: "Все", lv: "Visas" };
+
+/** What the sale category bar is, for screen readers. */
+export const saleNavLabel: Record<Language, string> = {
+  en: "Sale categories",
+  ru: "Категории распродажи",
+  lv: "Izpārdošanas kategorijas",
+};
+
 /** The label of a group; an unknown group shows its own name. */
 export const typeLabel = (lang: Language, type: string): string => typeLabels[lang][type.toLowerCase()] ?? type;

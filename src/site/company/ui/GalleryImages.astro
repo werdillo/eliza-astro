@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { fileUrl } from "#/core/pocketbase";
+import { ImageZoom } from "#/features/image-zoom";
 import type { Language } from "#/features/i18n";
 import { getGallery } from "../api";
 
@@ -12,11 +13,14 @@ const images: string[] = gallery?.image ?? [];
 
 ---
 
-<div class="gallery-grid">
+<div class="gallery-grid" data-zoom-group>
   {
     gallery &&
       images.map((image, index) => (
-      <Image src={fileUrl(gallery, image)} alt={`${label[lang]} ${index + 1}`} width={960} height={600} fit="cover" widths={[480, 960]} sizes="(max-width: 600px) 50vw, (max-width: 1200px) 33vw, 25vw" format="webp" quality={78} class="gallery-img" />
+      <button type="button" class="gallery-open" data-zoom-open>
+        <Image src={fileUrl(gallery, image)} alt={`${label[lang]} ${index + 1}`} width={960} height={600} fit="cover" widths={[480, 960]} sizes="(max-width: 600px) 50vw, (max-width: 1200px) 33vw, 25vw" format="webp" quality={78} class="gallery-img" data-zoom-src={fileUrl(gallery, image)} />
+      </button>
     ))
   }
 </div>
+{images.length > 0 && <ImageZoom lang={lang} />}

@@ -2,8 +2,9 @@
 import { fileUrl } from "#/core/pocketbase";
 import { productLink } from "#/site/products";
 import type { Product } from "#/site/shared/product";
-import { typeLabel } from "#/site/shared/typeLabels";
+import { columnsLabel, typeLabel } from "#/site/shared/typeLabels";
 import type { Language } from "#/features/i18n";
+import { GridToggle } from "#/components/grid-toggle";
 import { LandingTile } from "#/components/landing-tile";
 import { H3, P2 } from "#/components/typography";
 import { getBrandProducts } from "../api";
@@ -26,17 +27,20 @@ for (const item of items) {
 }
 ---
 
-{
-  [...groups].map(([type, cards]) => (
-    <section class="w-full">
-      <H3 as="h2" class="list-title">{typeLabel(lang, type)}</H3>
-      <div class="product-list">
-        {cards.map(({ item, href }) => (
-          <LandingTile href={href} src={fileUrl(item, item.images[0])} alt={item.name}>
-            <P2 as="p" class="landing-name">{item.name.toUpperCase()}</P2>
-          </LandingTile>
-        ))}
-      </div>
-    </section>
-  ))
-}
+<div class="relative w-full">
+  <GridToggle label={columnsLabel[lang]} />
+  {
+    [...groups].map(([type, cards]) => (
+      <section class="w-full">
+        <H3 as="h2" class="list-title">{typeLabel(lang, type)}</H3>
+        <div class="product-list">
+          {cards.map(({ item, href }) => (
+            <LandingTile href={href} src={fileUrl(item, item.images[0])} alt={item.name}>
+              <P2 as="p" class="landing-name">{item.name.toUpperCase()}</P2>
+            </LandingTile>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</div>

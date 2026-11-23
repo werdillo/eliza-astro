@@ -79,7 +79,9 @@ export default defineConfig({
   // Layout only. Text sizes, weights and line heights are the typography components (src/components/typography);
   // a class here never sets them (src/app/tests/typography.test.ts checks it).
   shortcuts: {
-    // Product lists (the regular, sale and mattress grids).
+    // Product lists (the regular and sale grids).
+    "grid-toggle": "absolute top-[var(--space-20)] right-0 flex gap-[var(--space-4)]",
+    "grid-toggle-button": "flex items-center justify-center w-[32px] h-[32px] p-0 border border-solid border-photo rounded-[var(--radius-small)] bg-white text-ink cursor-pointer [&[aria-pressed=true]]:bg-button [&[aria-pressed=true]]:text-white [&[aria-pressed=true]]:border-button",
     "list-title": "mt-[var(--space-20)]",
     "product-list": "w-full grid grid-cols-[1fr_1fr_1fr_1fr] gap-[var(--space-30)_var(--space-20)] my-[var(--space-20)] max-768:grid-cols-[1fr] max-768:gap-[var(--space-12)]",
     "landing": "[transition:var(--duration-slow)] pb-[var(--space-2)] w-full rounded-[var(--radius-tiny)] [&:active]:[opacity:0] [&:active]:[transform:scale(1.1)] hov:[box-shadow:var(--shadow-product-hover)]",
@@ -90,19 +92,28 @@ export default defineConfig({
     "landing-old-price": "text-price-old line-through",
     "landing-price": "text-sale",
 
-    // Product page.
-    "product-item": "grid mb-[var(--space-4)] grid-cols-[65%_minmax(0,1fr)] gap-[var(--space-20)] w-[100vw] max-1200:grid-cols-[minmax(0,1fr)]",
-    "product-swiper": "max-w-[65vw] max-1200:max-w-[100vw]",
-    "product-slider": "w-full h-auto aspect-[16/9] object-cover",
-    "product-slider-whole": "block w-full h-auto aspect-[16/9] object-contain max-768:aspect-[1/1]",
-    "product-right": "flex flex-col justify-end gap-[var(--space-16)] px-[var(--space-50)] max-600:px-[var(--space-8)]",
-    "product-price-row": "flex items-center gap-[var(--space-12)]",
-    "product-price": "text-sale",
-    "product-old-price": "text-price-old line-through",
-    "product-button": "inline-flex items-center justify-center min-w-[140px] h-[40px] px-[var(--space-20)] mt-[var(--space-4)] bg-button text-white no-underline cursor-pointer",
-    "product-button-xl": "inline-flex items-center justify-center min-w-[140px] h-[60px] w-full px-[var(--space-20)] mt-[var(--space-4)] bg-button text-white no-underline cursor-pointer max-600:h-[50px] max-600:w-[60%]",
-    "product-card": "flex flex-col box-border gap-[var(--space-20)] min-h-[300px] py-[var(--space-30)] px-[var(--space-50)] max-600:p-[var(--space-8)]",
-    "product-textile": "grid grid-cols-[1fr_1fr_1fr] gap-[var(--space-20)]",
+    // Product page (regular and sale items): the photo fills the screen, all the information is in the right column,
+    // which scrolls by itself with the buttons fixed at its bottom. Below 900px: photo, then information, buttons stuck
+    // above the 48px tab bar.
+    "prod-page": "w-full grid grid-cols-[minmax(0,1fr)_minmax(360px,28vw)] h-[calc(100dvh-var(--header-height))] min-h-[560px] max-900:block max-900:h-auto max-900:min-h-0",
+    "prod-aside": "box-border h-full min-h-0 flex flex-col bg-white max-900:h-auto",
+    "prod-info": "flex-1 min-h-0 overflow-y-auto flex flex-col gap-[var(--space-20)] px-[var(--space-30)] pt-[var(--space-30)] pb-[var(--space-20)] max-900:overflow-visible max-900:px-[var(--space-12)] max-900:pt-[var(--space-16)]",
+    "prod-head": "flex flex-col gap-[var(--space-4)] min-w-0",
+    "prod-price-row": "flex flex-wrap items-center gap-[var(--space-8)_var(--space-12)]",
+    "prod-badge": "px-[var(--space-8)] py-[var(--space-2)] bg-sale text-white rounded-[var(--radius-tiny)]",
+    "prod-actions": "flex flex-col gap-[var(--space-8)] px-[var(--space-30)] py-[var(--space-16)] bg-white border-t border-t-solid border-t-photo max-900:sticky max-900:z-10 max-900:bottom-0 max-767:bottom-[46px] max-900:grid max-900:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] max-900:px-[var(--space-12)] max-900:py-[var(--space-8)]",
+    "prod-fabrics": "grid grid-cols-[repeat(3,minmax(0,1fr))] gap-[var(--space-8)]",
+
+    // Product photo gallery.
+    "gal": "relative h-full min-w-0 overflow-hidden bg-layout max-900:h-auto",
+    "gal-track": "flex h-full overflow-x-auto [scroll-snap-type:x_mandatory] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-900:w-full max-900:h-auto max-900:aspect-[var(--gal-ratio)] max-900:max-h-[75svh]",
+    "gal-slide": "relative flex-[0_0_100%] min-w-0 h-full overflow-hidden [scroll-snap-align:start]",
+    "gal-blur": "absolute inset-0 w-full h-full object-cover [filter:blur(24px)_brightness(0.9)] [transform:scale(1.15)]",
+    "gal-img": "relative block w-full h-full object-contain",
+    "gal-nav": "absolute z-10 top-[50%] [transform:translateY(-50%)] flex items-center justify-center w-[44px] h-[44px] p-0 border-0 rounded-[50%] bg-white text-ink [box-shadow:var(--shadow-tile)] cursor-pointer",
+    "gal-count": "absolute z-10 right-[var(--space-12)] bottom-[var(--space-12)] px-[var(--space-8)] py-[var(--space-2)] bg-layout text-white rounded-[var(--radius-small)]",
+    "gal-thumbs": "absolute z-10 left-[var(--space-12)] bottom-[var(--space-12)] max-w-[calc(100%-110px)] flex gap-[var(--space-8)] p-[var(--space-2)] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-600:hidden",
+    "gal-thumb": "flex-[0_0_72px] h-[48px] p-0 border-0 bg-transparent cursor-pointer opacity-70 [transition:var(--duration-fast)] [&[aria-current=true]]:opacity-100 [&[aria-current=true]]:[outline:2px_solid_var(--color-text)]",
 
     // Mattress list and mattress page.
     "mat-list": "w-full max-w-[1320px] py-[var(--space-30)] flex flex-col gap-[var(--space-30)]",

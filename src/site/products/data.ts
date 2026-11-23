@@ -8,6 +8,8 @@ export const translations = {
     fabrics: "Fabrics",
     price: "Price",
     oldPrice: "Was",
+    previous: "Previous photo",
+    next: "Next photo",
   },
   ru: {
     sendEmail: "Отправить email",
@@ -17,6 +19,8 @@ export const translations = {
     fabrics: "Ткани",
     price: "Цена",
     oldPrice: "Было",
+    previous: "Предыдущее фото",
+    next: "Следующее фото",
   },
   lv: {
     sendEmail: "Sūtīt e-pastu",
@@ -26,8 +30,14 @@ export const translations = {
     fabrics: "Audumi",
     price: "Cena",
     oldPrice: "Bija",
+    previous: "Iepriekšējais foto",
+    next: "Nākamais foto",
   },
 };
+
+/** The discount of a sale item as a badge ("-45%"); nothing when there is no real reduction. */
+export const discountLabel = ({ price, oldPrice }: { price?: number; oldPrice?: number }): string | undefined =>
+  price && oldPrice && oldPrice > price ? `-${Math.round(100 - (100 * price) / oldPrice)}%` : undefined;
 
 /** The mattress construction types (the record's `field`), in the order the list shows them. */
 export const mattressFields: Record<string, Record<"lv" | "en" | "ru", string>> = {

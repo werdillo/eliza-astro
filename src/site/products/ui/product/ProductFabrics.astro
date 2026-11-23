@@ -1,41 +1,28 @@
 ---
+import { Image } from "astro:assets";
 import type { Language } from "#/features/i18n";
-import type { Product, ProductKind } from "#/site/shared/product";
-import { H3, P1 } from "#/components/typography";
+import { H4 } from "#/components/typography";
 import { translations } from "../../data";
 import falcone from "../../assets/fabrics/falcone.jpeg";
 import matrix from "../../assets/fabrics/matrix.jpeg";
 import salvador from "../../assets/fabrics/salvador.jpeg";
 
 export interface Props {
-  item: Product;
-  kind: ProductKind;
   lang: Language;
 }
 
-const { item, kind, lang } = Astro.props;
+const { lang } = Astro.props;
 const t = translations[lang];
 const fabrics = [
-  { src: matrix.src, alt: "Matrix" },
-  { src: falcone.src, alt: "Falcone" },
-  { src: salvador.src, alt: "Salvador" },
+  { src: matrix, alt: "Matrix" },
+  { src: falcone, alt: "Falcone" },
+  { src: salvador, alt: "Salvador" },
 ];
 ---
 
-{
-  kind !== "mattress" && (item[`description_${lang}`] as string | undefined) && (
-    <div class="product-card">
-      <H3 as="h2">{t.fabrics}</H3>
-      <div class="product-textile">
-        {fabrics.map((fabric) => (
-          <img src={fabric.src} alt={fabric.alt} width="1100" height="1100" loading="lazy" class="w-full h-auto" />
-        ))}
-      </div>
-      <div class="flex gap-[var(--space-12)]">
-        <a href="/files/cleaning.pdf" target="_blank" rel="noopener noreferrer" class="product-button">
-          <P1 as="span">{t.cleaning}</P1>
-        </a>
-      </div>
-    </div>
-  )
-}
+<section class="flex flex-col gap-[var(--space-12)]">
+  <H4 as="h2" class="m-0">{t.fabrics}</H4>
+  <div class="prod-fabrics">
+    {fabrics.map((fabric) => <Image src={fabric.src} alt={fabric.alt} width={320} format="webp" quality={78} class="block w-full h-auto" />)}
+  </div>
+</section>

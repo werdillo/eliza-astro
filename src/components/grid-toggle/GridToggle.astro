@@ -1,0 +1,64 @@
+---
+/**
+ * Chooses how many product cards stand in a row: 3 or 4 on a computer, 1 or 2 on a phone. Each choice is kept in
+ * the visitor's browser and set on `<html>` as `data-grid-cols` / `data-grid-cols-mobile`, which
+ * `app/styles/base.css` reads.
+ */
+export interface Props {
+  /** What the control is, for screen readers. */
+  label: string;
+}
+
+const { label } = Astro.props;
+const options = [
+  { cols: "1", screen: "mobile", only: "min-769:hidden", active: true },
+  { cols: "2", screen: "mobile", only: "min-769:hidden", active: false },
+  { cols: "3", screen: "desktop", only: "max-768:hidden", active: false },
+  { cols: "4", screen: "desktop", only: "max-768:hidden", active: true },
+];
+---
+
+<div class="grid-toggle" role="group" aria-label={label}>
+  {
+    options.map(({ cols, screen, only, active }) => (
+      <button type="button" class:list={["grid-toggle-button", only]} data-cols={cols} data-screen={screen} aria-pressed={active ? "true" : "false"}>
+        {cols}
+      </button>
+    ))
+  }
+</div>
+{/* Inline and right here, so a saved choice applies before the cards below are painted. */}
+<script is:inline>
+  (function () {
+    var screens = {
+      desktop: { key: "eliza-grid-cols", attr: "gridCols", fallback: "4" },
+      mobile: { key: "eliza-grid-cols-mobile", attr: "gridColsMobile", fallback: "1" },
+    };
+    var box = document.currentScript.previousElementSibling;
+    var buttons = box.querySelectorAll("[data-cols]");
+    function apply(screen, cols) {
+      document.documentElement.dataset[screens[screen].attr] = cols;
+      buttons.forEach(function (button) {
+        if (button.dataset.screen === screen) button.setAttribute("aria-pressed", String(button.dataset.cols === cols));
+      });
+    }
+    Object.keys(screens).forEach(function (screen) {
+      var saved = null;
+      try {
+        saved = localStorage.getItem(screens[screen].key);
+      } catch (e) {}
+      var valid = Array.prototype.some.call(buttons, function (button) {
+        return button.dataset.screen === screen && button.dataset.cols === saved;
+      });
+      apply(screen, valid ? saved : screens[screen].fallback);
+    });
+    box.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-cols]");
+      if (!button) return;
+      apply(button.dataset.screen, button.dataset.cols);
+      try {
+        localStorage.setItem(screens[button.dataset.screen].key, button.dataset.cols);
+      } catch (e) {}
+    });
+  })();
+</script>

@@ -1,0 +1,91 @@
+---
+import { Image, inferRemoteSize } from "astro:assets";
+import { fileUrl } from "#/core/pocketbase";
+import type { Language } from "#/features/i18n";
+import type { Product } from "#/site/shared/product";
+import { P3 } from "#/components/typography";
+import { translations } from "../../data";
+
+export interface Props {
+  item: Product;
+  lang: Language;
+}
+
+const { item, lang } = Astro.props;
+const t = translations[lang];
+const images = item.images ?? [];
+const many = images.length > 1;
+// On a phone the frame takes the proportions of the current photo, so it has no strips above and below it.
+const ratios = await Promise.all(
+  images.map((image) =>
+    inferRemoteSize(fileUrl(item, image))
+      .then(({ width, height }) => `${width} / ${height}`)
+      .catch(() => "4 / 3"),
+  ),
+);
+---
+
+<div class="gal" data-gallery>
+  <div class="gal-track" data-track style={`--gal-ratio: ${ratios[0] ?? "4 / 3"}`}>
+    {
+      images.map((image, index) => (
+        <div class="gal-slide" data-ratio={ratios[index]}>
+          {/* The photo is shown whole; a blurred copy of it fills the rest of the screen. */}
+          <Image src={fileUrl(item, image)} alt="" width={96} height={96} fit="cover" format="webp" quality={50} class="gal-blur" aria-hidden="true" loading={index === 0 ? "eager" : "lazy"} />
+          <Image src={fileUrl(item, image)} alt={item.name} width={2000} height={2000} fit="contain" widths={[640, 1024, 1600, 2000]} sizes="(max-width: 900px) 100vw, 72vw" format="webp" quality={82} class="gal-img" loading={index === 0 ? "eager" : "lazy"} fetchpriority={index === 0 ? "high" : undefined} />
+        </div>
+      ))
+    }
+  </div>
+  {
+    many && (
+      <>
+        <button type="button" class="gal-nav left-[var(--space-12)]" data-prev aria-label={t.previous}>
+          <span class="i-tabler-chevron-left" aria-hidden="true" />
+        </button>
+        <button type="button" class="gal-nav right-[var(--space-12)]" data-next aria-label={t.next}>
+          <span class="i-tabler-chevron-right" aria-hidden="true" />
+        </button>
+        <P3 as="span" class="gal-count" data-count>1 / {images.length}</P3>
+        <div class="gal-thumbs">
+          {images.map((image, index) => (
+            <button type="button" class="gal-thumb" data-thumb aria-label={`${item.name} ${index + 1}`} aria-current={index === 0 ? "true" : "false"}>
+              <Image src={fileUrl(item, image)} alt="" width={144} height={96} fit="cover" format="webp" quality={70} class="block w-full h-full object-cover" />
+            </button>
+          ))}
+        </div>
+      </>
+    )
+  }
+</div>
+
+<script>
+  for (const gallery of document.querySelectorAll<HTMLElement>("[data-gallery]")) {
+    const track = gallery.querySelector<HTMLElement>("[data-track]");
+    const thumbs = [...gallery.querySelectorAll<HTMLElement>("[data-thumb]")];
+    const count = gallery.querySelector<HTMLElement>("[data-count]");
+    const slides = [...gallery.querySelectorAll<HTMLElement>("[data-ratio]")];
+    if (!track || thumbs.length === 0) continue;
+
+    let current = 0;
+    const show = (index: number) => {
+      current = index;
+      track.style.setProperty("--gal-ratio", slides[index]?.dataset.ratio ?? "4 / 3");
+      thumbs.forEach((thumb, i) => thumb.setAttribute("aria-current", String(i === index)));
+      thumbs[index].parentElement?.scrollTo({ left: thumbs[index].offsetLeft - thumbs[0].offsetLeft, behavior: "smooth" });
+      if (count) count.textContent = `${index + 1} / ${thumbs.length}`;
+    };
+    const go = (index: number) => {
+      const next = (index + thumbs.length) % thumbs.length;
+      track.scrollTo({ left: next * track.clientWidth, behavior: "smooth" });
+    };
+
+    track.addEventListener("scroll", () => {
+      const index = Math.round(track.scrollLeft / track.clientWidth);
+      if (index !== current && thumbs[index]) show(index);
+    }, { passive: true });
+    gallery.querySelector("[data-prev]")?.addEventListener("click", () => go(current - 1));
+    gallery.querySelector("[data-next]")?.addEventListener("click", () => go(current + 1));
+    thumbs.forEach((thumb, index) => thumb.addEventListener("click", () => go(index)));
+  }
+</script>

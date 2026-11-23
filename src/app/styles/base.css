@@ -7,6 +7,26 @@
     margin: 0;
 }
 
+/* The visitor's choice of cards in a row (components/grid-toggle): 3 instead of 4, or 2 instead of 1 on a phone. */
+@media (min-width: 769px) {
+    html[data-grid-cols="3"] .product-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    html[data-grid-cols-mobile="2"] .product-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* In a narrow card the price goes under the name. */
+    html[data-grid-cols-mobile="2"] .sale-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+}
+
 swiper-container {
     max-width: 100vw;
     width: 100%;

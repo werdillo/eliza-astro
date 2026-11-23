@@ -2,8 +2,9 @@
 import { fileUrl } from "#/core/pocketbase";
 import { productLink } from "../../routes";
 import type { Product } from "#/site/shared/product";
-import { typeLabel } from "#/site/shared/typeLabels";
+import { columnsLabel, typeLabel } from "#/site/shared/typeLabels";
 import type { Language } from "#/features/i18n";
+import { GridToggle } from "#/components/grid-toggle";
 import { LandingTile } from "#/components/landing-tile";
 import { H3, H5, P2, P3 } from "#/components/typography";
 import { getSaleItems } from "../../api";
@@ -27,27 +28,30 @@ const cards = new Map<string, string>();
 for (const item of items) cards.set(item.id, await productLink(lang, "sale", item.id));
 ---
 
-{
-  [...groups].map(([type, group]) => (
-    <section class="w-full">
-      <H3 as="h2" class="list-title">{typeLabel(lang, type)}</H3>
-      <div class="product-list">
-        {group.map((item) => (
-          <LandingTile href={cards.get(item.id) ?? "#"} src={fileUrl(item, item.images[0])} alt={item.name}>
-            {item.price ? (
-              <div class="flex justify-between items-center mt-[4px] gap-[12px] p-[2px]">
-                <P2 as="p" class="sale-name">{item.name.toUpperCase()}</P2>
-                <div class="landing-price-row m-0 shrink-0">
-                  {item.oldPrice && <P3 as="span" class="landing-old-price">€{item.oldPrice}</P3>}
-                  <H5 as="span" class="landing-price">€{item.price}</H5>
+<div class="relative w-full">
+  <GridToggle label={columnsLabel[lang]} />
+  {
+    [...groups].map(([type, group]) => (
+      <section class="w-full">
+        <H3 as="h2" class="list-title">{typeLabel(lang, type)}</H3>
+        <div class="product-list">
+          {group.map((item) => (
+            <LandingTile href={cards.get(item.id) ?? "#"} src={fileUrl(item, item.images[0])} alt={item.name}>
+              {item.price ? (
+                <div class="sale-row flex justify-between items-center mt-[4px] gap-[12px] p-[2px]">
+                  <P2 as="p" class="sale-name">{item.name.toUpperCase()}</P2>
+                  <div class="landing-price-row m-0 shrink-0">
+                    {item.oldPrice && <P3 as="span" class="landing-old-price">€{item.oldPrice}</P3>}
+                    <H5 as="span" class="landing-price">€{item.price}</H5>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <P2 as="p" class="landing-name">{item.name.toUpperCase()}</P2>
-            )}
-          </LandingTile>
-        ))}
-      </div>
-    </section>
-  ))
-}
+              ) : (
+                <P2 as="p" class="landing-name">{item.name.toUpperCase()}</P2>
+              )}
+            </LandingTile>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</div>

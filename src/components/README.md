@@ -9,3 +9,4 @@ Boxes:
 - `burger-menu/` — mobile menu button and panel.
 - `image-tile/` — a photograph with a label, linking somewhere.
 - `landing-tile/` — a picture on a light card with a caption below.
+- `grid-toggle/` — chooses 3 or 4 product cards in a row (1 or 2 on a phone), remembered in the visitor's browser.

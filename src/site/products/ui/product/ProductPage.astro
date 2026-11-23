@@ -1,9 +1,11 @@
 ---
+import { fileUrl } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
 import type { Product, ProductKind } from "#/site/shared/product";
-import ProductImageSlider from "./ProductImageSlider.astro";
-import ProductInfo from "./ProductInfo.astro";
-import ProductDescription from "./ProductDescription.astro";
+import { typeLabel } from "#/site/shared/typeLabels";
+import { H2, H3, H4, P1, P2 } from "#/components/typography";
+import { discountLabel, translations } from "../../data";
+import ProductGallery from "./ProductGallery.astro";
 import ProductFabrics from "./ProductFabrics.astro";
 
 export interface Props {
@@ -13,16 +15,60 @@ export interface Props {
 }
 
 const { item, kind, lang } = Astro.props;
+const t = translations[lang];
+const html = item[`description_${lang}`] as string | undefined;
+const type = item.type || item.types;
+const typeName = type && type !== "other" ? typeLabel(lang, type) : undefined;
+const sale = kind === "sale" && Boolean(item.price || item.oldPrice);
+const badge = kind === "sale" ? discountLabel(item) : undefined;
+const links = [
+  ...(item.schema ? [{ href: fileUrl(item, item.schema), label: t.dimensions }] : []),
+  ...(html ? [{ href: "/files/cleaning.pdf", label: t.cleaning }] : []),
+];
 ---
 
-<div>
-  <div class="product-item">
-    <ProductImageSlider item={item} kind={kind} />
-    <ProductInfo item={item} kind={kind} lang={lang} />
-  </div>
+<div class="prod-page">
+  <ProductGallery item={item} lang={lang} />
 
-  <div class="product-item">
-    <ProductDescription item={item} lang={lang} />
-    <ProductFabrics kind={kind} item={item} lang={lang} />
-  </div>
+  <aside class="prod-aside">
+    <div class="prod-info">
+      <div class:list={["prod-head", (kind === "sale" || !html) && "mt-auto"]}>
+        {typeName && <P2 as="p" class="m-0 text-price-old">{typeName}</P2>}
+        <H2 as="h1" class="m-0">{item.name}</H2>
+        {
+          sale && (
+            <div class="prod-price-row">
+              {item.price && <H3 as="span" class="text-sale">€{item.price}</H3>}
+              {item.oldPrice && <P1 as="span" class="text-price-old line-through">€{item.oldPrice}</P1>}
+              {badge && <P2 as="span" class="prod-badge">{badge}</P2>}
+            </div>
+          )
+        }
+      </div>
+
+      {
+        html && (
+          <section class="flex flex-col gap-[var(--space-8)]">
+            {kind !== "sale" && <H4 as="h2" class="m-0">{t.description}</H4>}
+            {/* Descriptions are HTML written in the CMS by the site owner. */}
+            <div class="text-p2 [&>p:first-child]:mt-0 [&>p:last-child]:mb-0" set:html={html} />
+          </section>
+        )
+      }
+      {html && kind !== "sale" && <ProductFabrics lang={lang} />}
+    </div>
+
+    <div class="prod-actions">
+      <a href="mailto:teika@eliza-k.lv" class="mat-action mat-action-primary">
+        <P1 as="span">{t.sendEmail}</P1>
+      </a>
+      {
+        links.map((link) => (
+          <a href={link.href} target="_blank" rel="noopener noreferrer" class="mat-action mat-action-outline">
+            <P1 as="span">{link.label}</P1>
+          </a>
+        ))
+      }
+    </div>
+  </aside>
 </div>

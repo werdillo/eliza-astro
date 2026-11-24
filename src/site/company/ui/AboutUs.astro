@@ -69,7 +69,7 @@ const cards = [
     <div class="about-cards">
       {
         cards.map((card) => (
-          <a href={langPath(lang, card.href)} class:list={["about-card", card.area]}>
+          <a href={langPath(lang, card.href)} class:list={["group about-card", card.area]}>
             <Image src={card.image} alt="" sizes={card.sizes} format="webp" quality={80} class:list={["about-card-photo", card.photo]} />
             <span class="about-card-body">
               <H3 as="h3" class="m-0">{card.title}</H3>

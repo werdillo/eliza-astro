@@ -237,7 +237,7 @@ export default defineConfig({
     "about-fields": "flex flex-col gap-[var(--space-50)] max-600:gap-[var(--space-30)]",
     "about-fields-head": "flex flex-col items-center gap-[var(--space-12)] max-w-[720px] mx-auto text-center",
     "about-cards": "grid grid-cols-[repeat(12,minmax(0,1fr))] gap-[32px] max-900:grid-cols-[minmax(0,1fr)] max-600:gap-[var(--space-16)]",
-    "about-card": "group relative flex items-end overflow-hidden bg-layout text-white no-underline after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(0deg,var(--color-scrim-60)_0%,var(--color-scrim-20)_40%,var(--color-clear)_70%)]",
+    "about-card": "relative flex items-end overflow-hidden bg-layout text-white no-underline after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(0deg,var(--color-scrim-60)_0%,var(--color-scrim-20)_40%,var(--color-clear)_70%)]",
     "about-card-wide": "col-[1/span_8] h-[420px] max-900:col-auto max-900:h-[300px]",
     "about-card-narrow": "col-[9/span_4] h-[420px] max-900:col-auto max-900:h-[300px]",
     "about-card-half": "col-span-6 h-[320px] max-900:col-auto max-900:h-[260px]",

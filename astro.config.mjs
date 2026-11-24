@@ -44,6 +44,11 @@ export default defineConfig({
     }),
   ],
   vite: {
+    build: {
+      // pdf.js (`features/pdf-viewer/viewer.ts`, ~510 kB) is one library that cannot be split further; it is already
+      // loaded with a dynamic import only when a PDF is opened, so the default 500 kB warning is noise.
+      chunkSizeWarningLimit: 600,
+    },
     resolve: {
       // `#/…` is `src/…`, the same alias tsconfig.json `paths` gives the type checker.
       alias: [

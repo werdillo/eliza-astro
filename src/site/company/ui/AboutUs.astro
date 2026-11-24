@@ -1,0 +1,97 @@
+---
+import { Image } from "astro:assets";
+import { H1, H3, P1, P2, P3 } from "#/components/typography";
+import { langPath, type Language } from "#/features/i18n";
+import Pic6 from "../../shared/assets/collections/Pic6.jpg";
+import Pic7 from "../../shared/assets/collections/Pic7.jpg";
+import { aboutCopy } from "../about";
+import beds from "../assets/about/beds.png";
+import craft from "../assets/about/craft.jpg";
+import fabrics from "../assets/about/fabrics.png";
+import portrait from "../assets/about/portrait.jpg";
+import production from "../assets/about/production.jpg";
+
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = aboutCopy[lang];
+const cards = [
+  { href: "/collections", image: Pic6, title: t.sofas.title, text: t.sofas.text, area: "about-card-wide", sizes: "(max-width: 900px) 100vw, 736px", photo: "" },
+  { href: "/mattress", image: beds, title: t.beds.title, text: t.beds.text, area: "about-card-narrow", sizes: "(max-width: 900px) 100vw, 352px", photo: "" },
+  { href: "/collections", image: Pic7, title: t.chairs, area: "about-card-half", sizes: "(max-width: 900px) 100vw, 544px", photo: "object-[28%_78%]" },
+  { href: "/textile", image: fabrics, title: t.fabrics, area: "about-card-half", sizes: "(max-width: 900px) 100vw, 544px", photo: "" },
+];
+---
+
+<div class="about">
+  <section class="about-section about-hero">
+    <div class="about-hero-head">
+      <P3 as="p" class="about-est">EST. 1994</P3>
+      <H1 class="m-0 text-center">{t.heading}</H1>
+    </div>
+    <Image src={portrait} alt={t.photoAlt.showroom} widths={[640, 1024, 1200]} sizes="(max-width: 1280px) 100vw, 1120px" format="webp" quality={84} class="about-hero-photo" loading="eager" fetchpriority="high" />
+  </section>
+
+  <div class="about-rule">
+    <section class="about-section about-columns">
+      <div class="about-copy">
+        <H3 as="h2" class="m-0">{t.historyTitle}</H3>
+        <P1 class="m-0">{t.history}</P1>
+      </div>
+      <div class="about-reach">
+        <P3 as="h2" class="about-label">{t.reachTitle}</P3>
+        <ul class="about-countries">
+          {t.countries.map((country) => <li class="about-country"><P2 as="span">{country}</P2></li>)}
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="about-band">
+    <section class="about-section about-columns items-center">
+      <Image src={craft} alt={t.photoAlt.craft} sizes="(max-width: 900px) 100vw, 544px" format="webp" quality={84} class="about-photo" />
+      <div class="about-copy">
+        <P3 as="p" class="about-label">{t.craftLabel}</P3>
+        <H3 as="h2" class="m-0">{t.craftTitle}</H3>
+        <P1 class="m-0">{t.craft}</P1>
+        <a href={langPath(lang, "/contact")} class="about-action"><P2 as="span">{t.craftAction}</P2></a>
+      </div>
+    </section>
+  </div>
+
+  <section class="about-section about-fields">
+    <div class="about-fields-head">
+      <H3 as="h2" class="m-0">{t.fieldsTitle}</H3>
+      <P1 class="m-0">{t.fields}</P1>
+    </div>
+    <div class="about-cards">
+      {
+        cards.map((card) => (
+          <a href={langPath(lang, card.href)} class:list={["about-card", card.area]}>
+            <Image src={card.image} alt="" sizes={card.sizes} format="webp" quality={80} class:list={["about-card-photo", card.photo]} />
+            <span class="about-card-body">
+              <H3 as="h3" class="m-0">{card.title}</H3>
+              {card.text && <P2 as="span">{card.text}</P2>}
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="about-rule-top">
+    <section class="about-section about-columns about-columns-care items-center">
+      <div class="about-copy">
+        <P3 as="p" class="about-label">Sustainable FSC producer</P3>
+        <H3 as="h2" class="m-0">{t.careTitle}</H3>
+        <P1 class="m-0">{t.care}</P1>
+        <ul class="about-points">
+          {t.carePoints.map((point) => <li class="about-point"><P2 as="span">{point}</P2></li>)}
+        </ul>
+      </div>
+      <Image src={production} alt={t.photoAlt.production} sizes="(max-width: 900px) 100vw, 544px" format="webp" quality={84} class="about-photo" />
+    </section>
+  </div>
+</div>

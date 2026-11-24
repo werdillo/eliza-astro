@@ -84,7 +84,7 @@ export const galleryPage = copy(
 
 /** The copy of the `aboutUs` page. */
 export const aboutUsPage = copy(
-    { title: "Par mums - Eliza-K", description: "Par Eliza-K: ražotājs Rīgā. Drīzumā.", h1: "Par mums" },
-    { title: "About us - Eliza-K", description: "About Eliza-K: a manufacturer in Riga. Coming soon.", h1: "About us" },
-    { title: "О нас - Eliza-K", description: "Eliza-K: производитель в Риге. Скоро.", h1: "О нас" },
+    { title: "Par mums - Eliza-K", description: "Eliza-K kopš 1994. gada: ar rokām darinātas mēbeles, matrači un audumi pēc individuāla pasūtījuma Rīgā.", h1: "Par mums" },
+    { title: "About us - Eliza-K", description: "Eliza-K since 1994: hand-made and custom-made furniture, mattresses and fabrics from Riga.", h1: "About us" },
+    { title: "О нас - Eliza-K", description: "Eliza-K с 1994 года: мебель ручной работы и на заказ, матрацы и ткани из Риги.", h1: "О нас" },
 );

@@ -19,10 +19,10 @@ const { image, title, text, button, href, first } = Astro.props;
 <div class="relative w-full h-[600px] max-768:h-[400px] max-480:h-[300px]">
   <Image src={image} alt="" loading={first ? "eager" : "lazy"} fetchpriority={first ? "high" : undefined} class="absolute top-0 left-0 w-full h-full object-cover object-center" />
   <div class="absolute top-0 left-0 w-full h-full flex items-center justify-start [background:linear-gradient(90deg,var(--color-scrim-50)_0%,var(--color-scrim-20)_50%,var(--color-clear)_100%)]">
-    <div class="max-w-[700px] ml-[var(--space-70)] [padding:[0_var(--space-40)] text-white text-left max-768:ml-[var(--space-30)] max-768:[padding:[0_var(--space-20)]">
-      <H1 as={first ? "h1" : "h2"} class="uppercase tracking-[2px] [margin:[0_0_var(--space-20)_0] max-768:[margin-bottom:var(--space-16)]">{title}</H1>
-      <P1 class="[margin:[0_0_var(--space-40)_0] [opacity:0.95] max-768:[margin-bottom:var(--space-30)]">{text}</P1>
-      <a href={href} class="inline-block uppercase tracking-[1px] [padding:[var(--space-16)_var(--space-40)] bg-white text-layout no-underline [border:2px_solid_var(--color-text)] [transition:all_0.3s_ease] hov:[background:transparent] hov:text-white max-768:[padding:[var(--space-12)_var(--space-30)] max-480:[padding:[var(--space-12)_var(--space-20)]">
+    <div class="max-w-[700px] ml-[var(--space-70)] [padding:0_var(--space-40)] text-white text-left max-768:ml-[var(--space-30)] max-768:[padding:0_var(--space-20)]">
+      <H1 as={first ? "h1" : "h2"} class="uppercase tracking-[2px] [margin:0_0_var(--space-20)_0] max-768:[margin-bottom:var(--space-16)]">{title}</H1>
+      <P1 class="[margin:0_0_var(--space-40)_0] [opacity:0.95] max-768:[margin-bottom:var(--space-30)]">{text}</P1>
+      <a href={href} class="inline-block uppercase tracking-[1px] [padding:var(--space-16)_var(--space-40)] bg-white text-layout no-underline [border:2px_solid_var(--color-text)] [transition:all_0.3s_ease] hov:[background:transparent] hov:text-white max-768:[padding:var(--space-12)_var(--space-30)] max-480:[padding:var(--space-12)_var(--space-20)]">
         <H6 as="span">{button}</H6>
       </a>
     </div>

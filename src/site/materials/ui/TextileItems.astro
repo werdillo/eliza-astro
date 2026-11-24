@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import { fileUrl } from "#/core/pocketbase";
 import type { Language } from "#/features/i18n";
-import { H3, H4 } from "#/components/typography";
+import { H3, P2 } from "#/components/typography";
 import { getTextileItems } from "../api";
 
 export interface Props {
@@ -23,10 +23,12 @@ const tiles = items.flatMap((item) =>
   {
     tiles.map(({ item, n, heading }) => (
       <div class="min-w-0">
-        <H4 as={heading} class="textile-title">{item[`title_${lang}`]}</H4>
         <div class="textile-item">
-          <H3 as="span" class="textile-label">{item[`text${n}`]}</H3>
           <Image class="textile-img" src={fileUrl(item, item[`image${n}`])} alt={item[`title_${lang}`] || item.name} width={800} height={800} fit="cover" widths={[400, 800]} sizes="(max-width: 600px) 50vw, (max-width: 1200px) 33vw, 25vw" format="webp" quality={78} />
+          <div class="textile-caption">
+            <H3 as={heading} class="m-0">{item[`title_${lang}`]}</H3>
+            {item[`text${n}`] && <P2 as="span">{item[`text${n}`]}</P2>}
+          </div>
         </div>
       </div>
     ))

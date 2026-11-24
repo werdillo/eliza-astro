@@ -155,11 +155,10 @@ export default defineConfig({
     "mat-action-outline": "bg-white border border-solid border-button text-ink",
 
     // Fabric pages.
-    "textile-title": "block mb-[var(--space-8)] text-center",
     "textile-grid": "w-full my-[var(--space-30)] grid grid-cols-[repeat(4,minmax(0,1fr))] gap-[var(--space-16)] max-1200:grid-cols-[repeat(3,minmax(0,1fr))] max-600:grid-cols-[repeat(2,minmax(0,1fr))]",
     "textile-item": "relative text-center [transition:var(--duration-fast)] overflow-hidden",
-    "textile-img": "w-full h-auto aspect-[1/1] object-cover",
-    "textile-label": "absolute top-[75%] left-[50%] [transform:translate(-50%,-50%)] w-[85%] text-white max-550:text-p3",
+    "textile-img": "block w-full h-auto aspect-[1/1] object-cover",
+    "textile-caption": "absolute inset-0 box-border flex flex-col items-center justify-center gap-[var(--space-4)] p-[var(--space-12)] text-center text-white [text-shadow:0_1px_8px_var(--color-scrim-60)] [overflow-wrap:anywhere]",
 
     // Company contacts.
     "contact-page": "w-full grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] max-900:grid-cols-[minmax(0,1fr)]",
@@ -179,16 +178,16 @@ export default defineConfig({
 
     // Site header and footer.
     "header-links": "flex flex-wrap items-center gap-[var(--space-40)] max-1500:gap-[var(--space-30)] max-1430:gap-[var(--space-30)] max-1400:gap-[var(--space-20)] max-1300:gap-[var(--space-16)] max-600:gap-[var(--space-12)]",
-    "header-link": "[transition:all_0.3s_ease] whitespace-nowrap no-underline max-1050:hidden",
-    "header-sale-size": "[padding:[var(--space-4)_var(--space-12)] rounded-[var(--radius-sale)] max-1430:[padding:[var(--space-4)_var(--space-12)] max-1300:[padding:[var(--space-4)_var(--space-12)]",
+    "header-link": "[transition:color_0.3s_ease,box-shadow_0.3s_ease] whitespace-nowrap no-underline max-1050:hidden",
+    "header-sale-size": "[padding:var(--space-4)_var(--space-12)] rounded-[var(--radius-sale)] max-1430:[padding:var(--space-4)_var(--space-12)] max-1300:[padding:var(--space-4)_var(--space-12)]",
     "header-sale": "header-sale-size [background:linear-gradient(135deg,var(--color-sale)_0%,var(--color-sale-deep)_100%)] [box-shadow:var(--shadow-sale)] hov:[background:linear-gradient(135deg,var(--color-sale-bright)_0%,var(--color-sale-bright-deep)_100%)] hov:shadow-[var(--shadow-sale-hover)]",
     "header-sale-live": "header-sale-size [background:linear-gradient(135deg,var(--color-sale-bright)_0%,var(--color-sale-bright-deep)_100%)] [box-shadow:var(--shadow-sale-hover)]",
-    "mobile-link": "flex flex-col items-center gap-[var(--space-2)] [padding:[var(--space-4)_var(--space-4)] rounded-[var(--radius-pill)] [transition:all_0.3s_ease] min-w-[50px]",
+    "mobile-link": "flex flex-col items-center gap-[var(--space-2)] [padding:var(--space-4)_var(--space-4)] rounded-[var(--radius-pill)] [transition:all_0.3s_ease] min-w-[50px]",
     "footer-link": "text-white no-underline [transition:color_0.2s_ease] hov:text-accent",
     "social-icon": "flex items-center justify-center w-[48px] h-[48px] max-767:w-[44px] max-767:h-[44px] rounded-[50%] bg-glass text-white [transition:all_0.3s_ease] no-underline hov:bg-accent hov:text-layout",
 
     // Printed catalogues.
-    "catalogs-title": "mt-[var(--space-40)] w-[30%] text-center max-768:[margin:[var(--space-20)_auto] max-768:w-[90%]",
+    "catalogs-title": "mt-[var(--space-40)] w-[30%] text-center max-768:[margin:var(--space-20)_auto] max-768:w-[90%]",
     "catalogs": "w-full flex flex-wrap gap-[10vw] [place-content:center] py-[var(--space-20)] my-[var(--space-20)]",
     "catalog": "pb-[var(--space-20)] flex justify-center flex-col",
     "catalog-link": "flex justify-center",
@@ -216,7 +215,38 @@ export default defineConfig({
     "pdf-view-thumb": "shrink-0 flex h-full p-0 border-0 bg-[#3a3a3a] cursor-pointer opacity-50 overflow-hidden [transition:opacity_var(--duration-fast)] hov:opacity-100 [&[aria-current=true]]:opacity-100 [&[aria-current=true]]:[outline:2px_solid_white]",
     "pdf-view-range": "hidden max-768:block shrink-0 w-[calc(100%-32px)] mx-auto my-[var(--space-8)] h-[28px] accent-white",
 
-    // Image tiles: the collection index and the HoReCa segments.
+    // The "About us" page: an airy centred layout in the site's colours and type.
+    "about": "w-full bg-white text-ink",
+    "about-section": "box-border w-full max-w-[1280px] mx-auto px-[80px] py-[96px] max-1024:px-[var(--space-40)] max-1024:py-[var(--space-70)] max-600:px-[var(--space-16)] max-600:py-[var(--space-50)]",
+    "about-hero": "flex flex-col gap-[var(--space-50)] max-600:gap-[var(--space-30)]",
+    "about-hero-head": "flex flex-col items-center gap-[var(--space-20)] max-w-[928px] mx-auto",
+    "about-est": "m-0 text-center uppercase tracking-[0.4em] text-price-old",
+    "about-hero-photo": "block w-full h-auto aspect-[16/9] object-cover object-[center_30%] max-600:aspect-[3/2]",
+    "about-rule": "border-y border-y-solid border-y-photo border-x-0",
+    "about-rule-top": "border-t border-t-solid border-t-photo border-x-0 border-b-0",
+    "about-band": "w-full bg-[#f7f7f7]",
+    "about-columns": "grid grid-cols-[repeat(12,minmax(0,1fr))] gap-[32px] [&>*:first-child]:col-[1/span_6] [&>*:last-child]:col-[8/span_5] max-900:grid-cols-[minmax(0,1fr)] max-900:[&>*:first-child]:col-auto max-900:[&>*:last-child]:col-auto max-900:gap-[var(--space-40)]",
+    "about-columns-care": "[&>*:first-child]:col-[1/span_5] [&>*:last-child]:col-[7/span_6] max-900:[&>*:first-child]:col-auto max-900:[&>*:last-child]:col-auto",
+    "about-copy": "flex flex-col items-start gap-[var(--space-20)]",
+    "about-reach": "box-border flex flex-col gap-[var(--space-30)] p-[var(--space-40)] bg-[#f7f7f7] max-600:p-[var(--space-20)]",
+    "about-label": "m-0 uppercase tracking-[0.12em] text-price-old",
+    "about-countries": "grid grid-cols-[repeat(2,minmax(0,1fr))] gap-x-[var(--space-30)] gap-y-[var(--space-16)] m-0 p-0 list-none max-600:gap-x-[var(--space-16)]",
+    "about-country": "pb-[var(--space-8)] border-b border-b-solid border-b-[#e2e2e2]",
+    "about-photo": "block w-full h-auto aspect-[4/3] object-cover",
+    "about-action": "inline-block mt-[var(--space-8)] px-[var(--space-40)] py-[var(--space-16)] uppercase tracking-[1px] bg-layout text-white no-underline [border:2px_solid_var(--color-layout)] [transition:all_0.3s_ease] hov:bg-white hov:text-ink max-600:box-border max-600:w-full max-600:text-center",
+    "about-fields": "flex flex-col gap-[var(--space-50)] max-600:gap-[var(--space-30)]",
+    "about-fields-head": "flex flex-col items-center gap-[var(--space-12)] max-w-[720px] mx-auto text-center",
+    "about-cards": "grid grid-cols-[repeat(12,minmax(0,1fr))] gap-[32px] max-900:grid-cols-[minmax(0,1fr)] max-600:gap-[var(--space-16)]",
+    "about-card": "group relative flex items-end overflow-hidden bg-layout text-white no-underline after:content-[''] after:absolute after:inset-0 after:[background:linear-gradient(0deg,var(--color-scrim-60)_0%,var(--color-scrim-20)_40%,var(--color-clear)_70%)]",
+    "about-card-wide": "col-[1/span_8] h-[420px] max-900:col-auto max-900:h-[300px]",
+    "about-card-narrow": "col-[9/span_4] h-[420px] max-900:col-auto max-900:h-[300px]",
+    "about-card-half": "col-span-6 h-[320px] max-900:col-auto max-900:h-[260px]",
+    "about-card-photo": "absolute inset-0 block w-full h-full object-cover [transition:transform_var(--duration-slow)_ease] group-hover:[transform:scale(1.03)]",
+    "about-card-body": "relative z-[1] flex flex-col gap-[var(--space-4)] p-[var(--space-30)] max-600:p-[var(--space-20)]",
+    "about-points": "flex flex-col gap-[var(--space-12)] m-0 p-0 list-none",
+    "about-point": "flex items-center gap-[var(--space-12)] before:content-[''] before:shrink-0 before:w-[6px] before:h-[6px] before:rounded-[50%] before:bg-button",
+
+    // Image tiles: the collection index.
     "tile-grid": "grid grid-cols-[1fr_1fr_1fr] w-full gap-0 p-0 mx-auto max-1024:grid-cols-[1fr]",
     "tile-link": "block no-underline",
     "tile": "relative w-full h-[82vh] min-h-[500px] overflow-hidden cursor-pointer flex justify-center items-center bg-scrim max-1024:h-auto max-1024:min-h-[250px] [&:hover_img]:[opacity:0.5] [&:hover_img]:[transform:scale(1.01)] [&:hover_img]:[filter:grayscale(0.5)]",

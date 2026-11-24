@@ -11,6 +11,13 @@ const pocketbaseHost = PUBLIC_POCKETBASE_URL ? new URL(PUBLIC_POCKETBASE_URL).ho
 // https://astro.build/config
 export default defineConfig({
   site: "https://eliza-mebeles.lv",
+  // HoReCa became the "About us" page; its old addresses keep working.
+  redirects: {
+    "/[lang]/horeca": "/[lang]/about-us",
+    "/[lang]/horeca/hotels": "/[lang]/about-us",
+    "/[lang]/horeca/cafe": "/[lang]/about-us",
+    "/[lang]/horeca/projects": "/[lang]/about-us",
+  },
   image: {
     domains: pocketbaseHost ? [pocketbaseHost] : [],
   },
@@ -25,13 +32,13 @@ export default defineConfig({
           ru: "ru",
         },
       },
-      // Out of the sitemap: the root duplicate and the noindex pages — the old `?name=` redirects and the "coming soon" placeholders.
+      // Out of the sitemap: the root duplicate and the noindex pages — the old `?name=` redirects and the old HoReCa addresses.
       filter: (page) =>
         // The root is the Latvian home again (its canonical is `/lv/`), so only `/lv/` is listed.
         page !== "https://eliza-mebeles.lv/" &&
         !page.includes("/admin") &&
         !page.includes("/test") &&
-        !/\/(lv|en|ru)\/(product|mattress|sale-product|about-us|horeca\/(hotels|cafe|projects))\/$/.test(page),
+        !/\/(lv|en|ru)\/(product|mattress|sale-product|horeca(\/(hotels|cafe|projects))?)\/$/.test(page),
       changefreq: "weekly",
       priority: 0.7,
     }),

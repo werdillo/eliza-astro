@@ -9,8 +9,7 @@ The public site's matrix. Each box is a subject of the site; what the boxes have
 | `collections/` | The collection index, one collection's grid, and the home collection cards. |
 | `materials/` | The components page (foam and textile) and the fabric page. |
 | `catalogs/` | The printed catalogues. |
-| `company/` | The contacts, awards and gallery. |
-| `segments/` | The HoReCa segments (hotels, restaurants, cafes). |
+| `company/` | The about page, contacts, awards and gallery. |
 | `home/` | The home page hero. |
 
 `shared/` holds the product type and labels and the collection photographs. The home page is composed by
